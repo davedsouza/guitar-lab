@@ -16,6 +16,38 @@ export default function Home() {
 
         {/* Main Content Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {/* How to Use This App Card */}
+          <Link href="/how-to-use">
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/20 transition-all cursor-pointer border border-white/20 hover:scale-105">
+              <div className="text-4xl mb-4">📱</div>
+              <h2 className="text-2xl font-bold text-white mb-3">
+                How to Use This App
+              </h2>
+              <p className="text-purple-200 mb-4">
+                New here? Get an overview of all modules and follow structured learning paths for beginner, intermediate, or advanced levels.
+              </p>
+              <div className="text-purple-300 font-semibold">
+                View Guide →
+              </div>
+            </div>
+          </Link>
+
+          {/* Beginner Module Card */}
+          <Link href="/beginner">
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/20 transition-all cursor-pointer border border-white/20 hover:scale-105">
+              <div className="text-4xl mb-4">🌟</div>
+              <h2 className="text-2xl font-bold text-white mb-3">
+                Beginner Module
+              </h2>
+              <p className="text-purple-200 mb-4">
+                Just starting out? Learn guitar anatomy, how to hold your guitar, read chord diagrams, and play your first chords.
+              </p>
+              <div className="text-purple-300 font-semibold">
+                Start Here →
+              </div>
+            </div>
+          </Link>
+
           {/* Chord Building Card */}
           <Link href="/chord-builder">
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/20 transition-all cursor-pointer border border-white/20 hover:scale-105">
@@ -177,59 +209,44 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Features Section */}
+        {/* How to Use This App Section */}
         <div className="mt-16 max-w-7xl mx-auto">
-          <h3 className="text-2xl font-bold text-white text-center mb-8">
-            What You'll Learn
-          </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white/5 backdrop-blur rounded-xl p-6 border border-white/10">
-              <h4 className="text-lg font-semibold text-white mb-2">
-                Music Theory
-              </h4>
-              <p className="text-purple-200 text-sm">
-                Understand intervals, scales, and how chords are built from notes
-              </p>
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+            <h3 className="text-2xl font-bold text-white text-center mb-8">
+              Recommended Learning Path
+            </h3>
+            <div className="grid md:grid-cols-5 gap-4">
+              <div className="bg-white/10 rounded-xl p-5 text-center">
+                <div className="bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mx-auto mb-3">1</div>
+                <div className="text-white font-semibold mb-1">Beginner Module</div>
+                <div className="text-purple-200 text-xs">Learn guitar basics, chords, and how to read diagrams</div>
+              </div>
+              <div className="bg-white/10 rounded-xl p-5 text-center">
+                <div className="bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mx-auto mb-3">2</div>
+                <div className="text-white font-semibold mb-1">Practice Daily</div>
+                <div className="text-purple-200 text-xs">Master G, C, D, Em, Am, E, A with clean transitions</div>
+              </div>
+              <div className="bg-white/10 rounded-xl p-5 text-center">
+                <div className="bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mx-auto mb-3">3</div>
+                <div className="text-white font-semibold mb-1">Learn Songs</div>
+                <div className="text-purple-200 text-xs">Use Chord Progressions to play real music</div>
+              </div>
+              <div className="bg-white/10 rounded-xl p-5 text-center">
+                <div className="bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mx-auto mb-3">4</div>
+                <div className="text-white font-semibold mb-1">Explore Theory</div>
+                <div className="text-purple-200 text-xs">Dive into Scales and Chord Building</div>
+              </div>
+              <div className="bg-white/10 rounded-xl p-5 text-center">
+                <div className="bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mx-auto mb-3">5</div>
+                <div className="text-white font-semibold mb-1">Master Fretboard</div>
+                <div className="text-purple-200 text-xs">Learn CAGED to play anywhere on the neck</div>
+              </div>
             </div>
-            <div className="bg-white/5 backdrop-blur rounded-xl p-6 border border-white/10">
-              <h4 className="text-lg font-semibold text-white mb-2">
-                CAGED System
-              </h4>
-              <p className="text-purple-200 text-sm">
-                Connect 5 chord shapes across the neck to unlock the entire fretboard
-              </p>
-            </div>
-            <div className="bg-white/5 backdrop-blur rounded-xl p-6 border border-white/10">
-              <h4 className="text-lg font-semibold text-white mb-2">
-                Fretboard Notes
-              </h4>
-              <p className="text-purple-200 text-sm">
-                Visualize and memorize all notes across the entire fretboard
-              </p>
-            </div>
-            <div className="bg-white/5 backdrop-blur rounded-xl p-6 border border-white/10">
-              <h4 className="text-lg font-semibold text-white mb-2">
-                Popular Progressions
-              </h4>
-              <p className="text-purple-200 text-sm">
-                Master the progressions used in thousands of hit songs
-              </p>
-            </div>
-            <div className="bg-white/5 backdrop-blur rounded-xl p-6 border border-white/10">
-              <h4 className="text-lg font-semibold text-white mb-2">
-                Scale Mastery
-              </h4>
-              <p className="text-purple-200 text-sm">
-                Learn scale patterns and positions across the entire fretboard
-              </p>
-            </div>
-            <div className="bg-white/5 backdrop-blur rounded-xl p-6 border border-white/10">
-              <h4 className="text-lg font-semibold text-white mb-2">
-                Nashville Numbers
-              </h4>
-              <p className="text-purple-200 text-sm">
-                Master the universal chord numbering system used by pros
-              </p>
+            <div className="mt-6 bg-green-500/20 border border-green-500/50 rounded-lg p-4 text-center">
+              <div className="text-green-200 font-semibold mb-1">New to Guitar?</div>
+              <div className="text-green-100 text-sm">
+                Start with the <span className="font-bold">Beginner Module</span> above - it covers everything you need to get started!
+              </div>
             </div>
           </div>
         </div>

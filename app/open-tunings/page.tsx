@@ -728,11 +728,12 @@ function FretboardTab() {
   const CHROM = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B']
   const INTERVAL_LABELS = ['R','♭2','2','♭3','3','4','♭5','5','♭6','6','♭7','7']
 
-  const EXPLORER_TUNINGS: Record<string, { semitones: number[]; labels: string[] }> = {
-    "Open G": { semitones: [2, 7, 2, 7, 11, 2],  labels: ["D","G","D","G","B","D"] },
-    "Open D": { semitones: [2, 9, 2, 6, 9, 2],   labels: ["D","A","D","F#","A","D"] },
-    "DADGAD": { semitones: [2, 9, 2, 7, 9, 2],   labels: ["D","A","D","G","A","D"] },
-    "Open E": { semitones: [4, 11, 4, 8, 11, 4], labels: ["E","B","E","G#","B","E"] },
+  type TuningDef = { semitones: number[]; labels: string[]; openChord: string; openKey: number; barreQuality: string }
+  const EXPLORER_TUNINGS: Record<string, TuningDef> = {
+    "Open G": { semitones: [2, 7, 2, 7, 11, 2],  labels: ["D","G","D","G","B","D"],  openChord: "G Major", openKey: 7,  barreQuality: "Major" },
+    "Open D": { semitones: [2, 9, 2, 6, 9, 2],   labels: ["D","A","D","F#","A","D"], openChord: "D Major", openKey: 2,  barreQuality: "Major" },
+    "DADGAD": { semitones: [2, 9, 2, 7, 9, 2],   labels: ["D","A","D","G","A","D"],  openChord: "D sus4",  openKey: 2,  barreQuality: "Sus4"  },
+    "Open E": { semitones: [4, 11, 4, 8, 11, 4], labels: ["E","B","E","G#","B","E"], openChord: "E Major", openKey: 4,  barreQuality: "Major" },
   }
 
   const CHORD_INTERVALS: Record<string, number[]> = {
@@ -756,19 +757,37 @@ function FretboardTab() {
     "Mixolydian": [0, 2, 4, 5, 7, 9, 10],
   }
 
+  type Preset = { label: string; tuning: string; mode: "chords" | "scales"; root: number; type: string }
+  const PRESETS: Preset[] = [
+    { label: "G Maj",    tuning: "Open G", mode: "chords", root: 7,  type: "Major"      },
+    { label: "C Maj",    tuning: "Open G", mode: "chords", root: 0,  type: "Major"      },
+    { label: "D Maj",    tuning: "Open G", mode: "chords", root: 2,  type: "Major"      },
+    { label: "G Blues",  tuning: "Open G", mode: "scales", root: 7,  type: "Blues"      },
+    { label: "G Pent",   tuning: "Open G", mode: "scales", root: 7,  type: "Pent Minor" },
+    { label: "D Maj",    tuning: "Open D", mode: "chords", root: 2,  type: "Major"      },
+    { label: "A Maj",    tuning: "Open D", mode: "chords", root: 9,  type: "Major"      },
+    { label: "D Sus4",   tuning: "DADGAD", mode: "chords", root: 2,  type: "Sus4"       },
+    { label: "D Dorian", tuning: "DADGAD", mode: "scales", root: 2,  type: "Dorian"     },
+    { label: "E Maj",    tuning: "Open E", mode: "chords", root: 4,  type: "Major"      },
+    { label: "A Maj",    tuning: "Open E", mode: "chords", root: 9,  type: "Major"      },
+    { label: "E Blues",  tuning: "Open E", mode: "scales", root: 4,  type: "Blues"      },
+  ]
+
+  const [showHowTo, setShowHowTo] = useState(true)
   const [tuningName, setTuningName] = useState("Open G")
   const [mode, setMode] = useState<"chords" | "scales">("chords")
-  const [rootIdx, setRootIdx] = useState(2)  // D = 2
+  const [rootIdx, setRootIdx] = useState(7)  // G = 7, matches Open G
   const [chordType, setChordType] = useState("Major")
   const [scaleType, setScaleType] = useState("Major")
   const [showIntervals, setShowIntervals] = useState(false)
+  const [capoFret, setCapoFret] = useState(0)
 
   // SVG layout constants
-  const FW = 40     // fret width
-  const SH = 24     // string spacing
-  const NX = 55     // nut x position
-  const TY = 18     // top string y
-  const NF = 12     // number of frets
+  const FW = 40
+  const SH = 24
+  const NX = 55
+  const TY = 18
+  const NF = 12
   const SVG_W = NX + NF * FW + 20
   const SVG_H = TY + 5 * SH + 34
 
@@ -776,11 +795,13 @@ function FretboardTab() {
   const intervals = mode === "chords" ? CHORD_INTERVALS[chordType] : SCALE_INTERVALS[scaleType]
   const activeNotes = new Set(intervals.map(i => (rootIdx + i) % 12))
 
-  // Display string 0 = high e (tuning index 5), string 5 = low E (tuning index 0)
-  const noteAt = (s: number, f: number) => (tuning.semitones[5 - s] + f) % 12
-  const dotX   = (f: number) => f === 0 ? NX - 22 : NX + (f - 0.5) * FW
-  const dotY   = (s: number) => TY + s * SH
+  // Frets where barring gives the current root (low string = rootIdx)
+  const barreFrets = Array.from({ length: NF + 1 }, (_, f) => f)
+    .filter(f => (tuning.semitones[0] + f) % 12 === rootIdx)
 
+  const noteAt  = (s: number, f: number) => (tuning.semitones[5 - s] + f) % 12
+  const dotX    = (f: number) => f === 0 ? NX - 22 : NX + (f - 0.5) * FW
+  const dotY    = (s: number) => TY + s * SH
   const dotFill = (note: number) => {
     if (note === rootIdx) return "#f59e0b"
     if (activeNotes.has(note)) return "#a855f7"
@@ -789,14 +810,63 @@ function FretboardTab() {
   const dotText = (note: number) =>
     showIntervals ? INTERVAL_LABELS[(note - rootIdx + 12) % 12] : CHROM[note]
 
+  const applyPreset = (p: Preset) => {
+    setTuningName(p.tuning)
+    setMode(p.mode)
+    setRootIdx(p.root)
+    if (p.mode === "chords") setChordType(p.type)
+    else setScaleType(p.type)
+  }
+
+  const capoKey = (f: number) => CHROM[(tuning.openKey + f) % 12]
+
   return (
     <div>
       <h2 className="text-2xl font-bold text-white mb-2">Fretboard Explorer</h2>
-      <p className="text-purple-200 text-sm mb-6">
-        See chord tones and scale notes across the full fretboard in any open tuning. Toggle between note names and interval numbers.
+      <p className="text-purple-200 text-sm mb-4">
+        See chord tones and scale notes across the full fretboard in any open tuning.
       </p>
 
-      {/* Controls row 1 */}
+      {/* ── How to Use ─────────────────────────────────────────── */}
+      <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl mb-5 overflow-hidden">
+        <button
+          onClick={() => setShowHowTo(v => !v)}
+          className="w-full flex items-center justify-between px-4 py-3 text-left"
+        >
+          <span className="text-blue-300 font-semibold text-sm">🧭 How to Use This Tool</span>
+          <span className="text-blue-400 text-xs">{showHowTo ? "▲ Hide" : "▼ Show"}</span>
+        </button>
+        {showHowTo && (
+          <div className="px-4 pb-4 text-sm text-blue-200 space-y-2">
+            <ol className="list-decimal list-inside space-y-1.5">
+              <li><strong className="text-white">Pick a tuning</strong> — the string labels on the left and the Open Chord Identifier update instantly.</li>
+              <li><strong className="text-white">Choose Chords or Scales</strong> — Chords shows the tones of a specific chord; Scales shows all notes of a scale across the neck.</li>
+              <li><strong className="text-white">Set a root note</strong> — amber dots = root, purple dots = other chord/scale tones.</li>
+              <li><strong className="text-white">Toggle Intervals</strong> — switches dot labels from note names (G, B, D) to interval numbers (R, 3, 5). Useful for understanding the shape universally.</li>
+              <li><strong className="text-white">Use Quick Presets</strong> for the most common starting points, or explore manually.</li>
+              <li><strong className="text-white">Barre & Capo Guide</strong> — click any fret cell to jump to that root. Amber fret numbers on the diagram mark where a barre gives you the current root.</li>
+            </ol>
+            <p className="text-blue-300 mt-2 border-t border-blue-500/20 pt-2">
+              <strong className="text-white">Key insight:</strong> in open tunings a straight one-finger barre across all strings always gives you a chord of the same quality as the open strings. Barre fret 5 in Open G = C Major. Barre fret 7 = D Major. No other fingering needed.
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* ── Quick Presets ──────────────────────────────────────── */}
+      <div className="mb-5">
+        <p className="text-purple-400 text-xs mb-2">Quick Presets</p>
+        <div className="flex flex-wrap gap-1.5">
+          {PRESETS.map((p, i) => (
+            <button key={i} onClick={() => applyPreset(p)}
+              className="px-3 py-1 rounded-lg text-xs font-semibold bg-white/10 text-purple-300 hover:bg-amber-500 hover:text-black transition-all">
+              {p.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Controls ───────────────────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
         <div>
           <p className="text-purple-400 text-xs mb-1.5">Tuning</p>
@@ -833,7 +903,6 @@ function FretboardTab() {
         </div>
       </div>
 
-      {/* Root note */}
       <div className="mb-4">
         <p className="text-purple-400 text-xs mb-1.5">Root Note</p>
         <div className="flex flex-wrap gap-1.5">
@@ -846,7 +915,6 @@ function FretboardTab() {
         </div>
       </div>
 
-      {/* Chord / Scale type */}
       <div className="mb-5">
         <p className="text-purple-400 text-xs mb-1.5">{mode === "chords" ? "Chord Type" : "Scale Type"}</p>
         <div className="flex flex-wrap gap-1.5">
@@ -862,14 +930,37 @@ function FretboardTab() {
         </div>
       </div>
 
-      {/* Heading */}
+      {/* ── Open Chord Identifier ─────────────────────────────── */}
+      <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-5">
+        <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">Open Strings — {tuningName}</p>
+        <p className="text-white font-bold text-lg mb-2">
+          {tuning.openChord}
+          <span className="text-amber-300 text-sm font-normal ml-2">— strum open, no fretting needed</span>
+        </p>
+        <div className="flex gap-2 flex-wrap mb-2">
+          {tuning.labels.map((note, i) => (
+            <span key={i} className="px-2 py-0.5 bg-amber-500/20 text-amber-200 rounded text-xs font-mono">{note}</span>
+          ))}
+          <span className="text-amber-500 text-xs self-center">(low E → high e)</span>
+        </div>
+        <p className="text-amber-300 text-xs">
+          One-finger barre at any fret = <strong className="text-white">{tuning.barreQuality} chord</strong> in that key — slide up the neck to change keys instantly.
+        </p>
+      </div>
+
+      {/* ── Fretboard heading ─────────────────────────────────── */}
       <div className="text-center mb-3">
         <span className="text-white font-bold text-xl">{CHROM[rootIdx]} {mode === "chords" ? chordType : scaleType}</span>
         <span className="text-purple-400 text-sm ml-2">in {tuningName}</span>
+        {barreFrets.length > 0 && mode === "chords" && (
+          <span className="ml-2 text-amber-400 text-xs">
+            — barre {barreFrets.map(f => f === 0 ? "open" : `fret ${f}`).join(" or ")}
+          </span>
+        )}
       </div>
 
-      {/* SVG Fretboard */}
-      <div className="overflow-x-auto bg-black/40 rounded-xl p-3 mb-4">
+      {/* ── SVG Fretboard ─────────────────────────────────────── */}
+      <div className="overflow-x-auto bg-black/40 rounded-xl p-3 mb-2">
         <svg width={SVG_W} height={SVG_H} xmlns="http://www.w3.org/2000/svg">
           {/* Fret lines */}
           {Array.from({ length: NF + 1 }, (_, f) => (
@@ -880,17 +971,14 @@ function FretboardTab() {
               strokeWidth={f === 0 ? 3 : 1}
             />
           ))}
-
           {/* String lines (thicker towards bottom = lower strings) */}
           {Array.from({ length: 6 }, (_, s) => (
             <line key={`str-${s}`}
               x1={NX - 25} y1={TY + s * SH}
               x2={NX + NF * FW + 15} y2={TY + s * SH}
-              stroke="#6b7280"
-              strokeWidth={0.75 + s * 0.35}
+              stroke="#6b7280" strokeWidth={0.75 + s * 0.35}
             />
           ))}
-
           {/* Single position markers: 3, 5, 7, 9 */}
           {[3, 5, 7, 9].map(f => (
             <circle key={`pm-${f}`}
@@ -898,7 +986,6 @@ function FretboardTab() {
               r={3.5} fill="#374151"
             />
           ))}
-
           {/* Double position marker: fret 12 */}
           {[1.5, 3.5].map((offset, i) => (
             <circle key={`pm12-${i}`}
@@ -906,23 +993,30 @@ function FretboardTab() {
               r={3.5} fill="#374151"
             />
           ))}
-
-          {/* String labels (open string note names in this tuning) */}
+          {/* String labels */}
           {Array.from({ length: 6 }, (_, s) => (
             <text key={`sl-${s}`}
               x={NX - 28} y={TY + s * SH + 4}
               textAnchor="end" fontSize="10" fill="#a78bfa" fontFamily="monospace"
             >{tuning.labels[5 - s]}</text>
           ))}
-
-          {/* Fret numbers */}
-          {Array.from({ length: NF }, (_, f) => (
-            <text key={`fn-${f}`}
-              x={NX + (f + 0.5) * FW} y={TY + 5 * SH + 20}
-              textAnchor="middle" fontSize="9" fill="#6b7280"
-            >{f + 1}</text>
-          ))}
-
+          {/* Fret numbers — amber if it's a barre position for current root */}
+          {Array.from({ length: NF }, (_, f) => {
+            const isBarre = barreFrets.includes(f + 1)
+            return (
+              <text key={`fn-${f}`}
+                x={NX + (f + 0.5) * FW} y={TY + 5 * SH + 20}
+                textAnchor="middle" fontSize="9"
+                fill={isBarre ? "#f59e0b" : "#6b7280"}
+                fontWeight={isBarre ? "bold" : "normal"}
+              >{f + 1}</text>
+            )
+          })}
+          {/* Open fret "0" label if it's a barre position */}
+          {barreFrets.includes(0) && (
+            <text x={NX - 22} y={TY + 5 * SH + 20}
+              textAnchor="middle" fontSize="9" fill="#f59e0b" fontWeight="bold">0</text>
+          )}
           {/* Note dots */}
           {Array.from({ length: 6 }, (_, s) =>
             Array.from({ length: NF + 1 }, (_, f) => {
@@ -935,8 +1029,7 @@ function FretboardTab() {
               return (
                 <g key={`d-${s}-${f}`}>
                   <circle cx={cx} cy={cy} r={9} fill={fill} opacity={0.92} />
-                  <text
-                    x={cx} y={cy + 4}
+                  <text x={cx} y={cy + 4}
                     textAnchor="middle"
                     fontSize={label.length > 2 ? "6" : "8"}
                     fill={fill === "#f59e0b" ? "#000" : "#fff"}
@@ -950,7 +1043,7 @@ function FretboardTab() {
       </div>
 
       {/* Legend */}
-      <div className="flex gap-6 justify-center mb-6">
+      <div className="flex flex-wrap gap-4 justify-center mb-5">
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 rounded-full bg-amber-500" />
           <span className="text-purple-300 text-xs">Root ({CHROM[rootIdx]})</span>
@@ -959,9 +1052,76 @@ function FretboardTab() {
           <div className="w-4 h-4 rounded-full bg-purple-500" />
           <span className="text-purple-300 text-xs">{mode === "chords" ? "Chord" : "Scale"} tones</span>
         </div>
+        {mode === "chords" && (
+          <div className="flex items-center gap-2">
+            <span className="text-amber-500 font-bold text-sm leading-none">5</span>
+            <span className="text-purple-300 text-xs">Amber fret number = barre position for {CHROM[rootIdx]}</span>
+          </div>
+        )}
       </div>
 
-      {/* Notes summary */}
+      {/* ── Barre & Capo Guide ────────────────────────────────── */}
+      <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
+        <h4 className="text-white font-semibold mb-1">Barre & Capo Guide — {tuningName}</h4>
+        <p className="text-purple-400 text-xs mb-3">
+          A straight barre or a capo at any fret gives you a <strong className="text-purple-200">{tuning.barreQuality}</strong> chord. Click a cell to set that root.
+        </p>
+        <div className="grid grid-cols-4 sm:grid-cols-7 gap-1.5">
+          {Array.from({ length: NF + 1 }, (_, f) => {
+            const chordRoot = CHROM[(tuning.semitones[0] + f) % 12]
+            const isCurrentRoot = (tuning.semitones[0] + f) % 12 === rootIdx
+            return (
+              <div key={f}
+                onClick={() => setRootIdx((tuning.semitones[0] + f) % 12)}
+                className={`rounded-lg p-2 text-center cursor-pointer transition-all hover:bg-white/20 ${
+                  isCurrentRoot
+                    ? "bg-amber-500/30 border border-amber-500/60"
+                    : "bg-white/5 border border-white/10"
+                }`}>
+                <div className={`text-xs font-bold ${isCurrentRoot ? "text-amber-400" : "text-purple-400"}`}>
+                  {f === 0 ? "Open" : `Fret ${f}`}
+                </div>
+                <div className={`text-sm font-bold ${isCurrentRoot ? "text-white" : "text-purple-200"}`}>
+                  {chordRoot}
+                </div>
+                <div className="text-purple-500 text-xs">{tuning.barreQuality}</div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* ── Capo Key Calculator ───────────────────────────────── */}
+      <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
+        <h4 className="text-white font-semibold mb-1">Capo Key Calculator</h4>
+        <p className="text-purple-400 text-xs mb-3">
+          Playing {tuning.openChord} shapes — what key are you actually in with a capo?
+        </p>
+        <div className="flex items-center gap-2 mb-3 flex-wrap">
+          <span className="text-purple-300 text-sm">Capo fret:</span>
+          {Array.from({ length: 8 }, (_, i) => (
+            <button key={i} onClick={() => setCapoFret(i)}
+              className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${
+                capoFret === i ? "bg-purple-600 text-white" : "bg-white/10 text-purple-300 hover:bg-white/20"
+              }`}>{i}</button>
+          ))}
+        </div>
+        {capoFret === 0 ? (
+          <p className="text-green-300 text-sm">No capo — you&apos;re in the key of <strong>{CHROM[tuning.openKey]}</strong></p>
+        ) : (
+          <div className="bg-purple-500/20 border border-purple-500/40 rounded-lg p-3">
+            <p className="text-white font-bold text-base">
+              Capo {capoFret} in {tuningName} = Key of <span className="text-amber-400">{capoKey(capoFret)}</span>
+            </p>
+            <p className="text-purple-300 text-xs mt-1">
+              Your open shapes work the same — the guitar is now tuned to {capoKey(capoFret)} {tuning.barreQuality}.
+              What was the {CHROM[tuning.openKey]} shape is now {capoKey(capoFret)}.
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* ── Note Breakdown ───────────────────────────────────── */}
       <div className="bg-white/5 border border-white/10 rounded-xl p-4">
         <h4 className="text-white font-semibold mb-3">
           {CHROM[rootIdx]} {mode === "chords" ? chordType : scaleType} — note breakdown

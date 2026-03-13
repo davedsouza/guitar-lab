@@ -173,6 +173,14 @@ const MODULES: Module[] = [
     cta: "Explore Diatonic Harmony →",
     tags: ["diatonic", "chords", "scales", "harmony", "key", "major", "minor", "chord scale", "theory", "I IV V", "modes", "soloing"],
   },
+  {
+    href: "/backing-chords",
+    icon: "🎛️",
+    title: "Backing Chords for Scales",
+    description: "Playing pentatonic, Dorian, Mixolydian, or Phrygian? Find the chord progressions that activate each scale's character.",
+    cta: "Find Your Backing →",
+    tags: ["backing chords", "modes", "pentatonic", "dorian", "mixolydian", "phrygian", "lydian", "aeolian", "vamp", "progressions", "chord scale", "soloing"],
+  },
 ]
 
 export default function Home() {

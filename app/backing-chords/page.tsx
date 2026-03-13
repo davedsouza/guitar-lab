@@ -2,6 +2,8 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
+import ChordDiagram from "@/components/ChordDiagram"
+import { CHORD_VOICINGS } from "@/lib/chordShapes"
 
 type Tab = "how-it-works" | "pentatonic" | "dorian" | "mixolydian" | "phrygian" | "lydian-aeolian" | "practice"
 
@@ -82,6 +84,241 @@ function ModeHeader({
       <p className="text-slate-300 text-sm font-mono mb-2">{scale}</p>
       <p className="text-purple-200 text-sm mb-2"><span className="text-white font-semibold">Sound: </span>{character}</p>
       <p className="text-amber-300 text-sm"><span className="text-white font-semibold">The activating chord: </span>{activatingChord}</p>
+    </div>
+  )
+}
+
+// ─── Key Explorer shared component ───────────────────────────────────────────
+const CHROMATIC = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] as const
+
+function noteAt(rootIdx: number, semitones: number): string {
+  return CHROMATIC[(rootIdx + semitones) % 12]
+}
+
+type ExplorerMode = "pentatonic-minor" | "pentatonic-major" | "dorian" | "mixolydian" | "phrygian" | "lydian" | "aeolian"
+
+interface ChordEntry { name: string; root: string; quality: string; role: string }
+
+function getGroups(mode: ExplorerMode, ri: number): Record<string, ChordEntry[]> {
+  const n = (s: number) => noteAt(ri, s)
+  if (mode === "pentatonic-minor") return {
+    "Rock / Minor": [
+      { name: `${n(0)}m`,  root: n(0),  quality: "Minor",        role: "i — home" },
+      { name: n(10),        root: n(10), quality: "Major",        role: "♭VII — lift & drive" },
+      { name: n(9),         root: n(9),  quality: "Major",        role: "♭VI — melancholy" },
+      { name: n(3),         root: n(3),  quality: "Major",        role: "♭III — brightness" },
+      { name: `${n(5)}m`,   root: n(5),  quality: "Minor",        role: "iv — dark pull" },
+    ],
+    "Blues / Dominant": [
+      { name: `${n(0)}7`,   root: n(0),  quality: "Dominant 7th", role: "I7 — home (12-bar)" },
+      { name: `${n(5)}7`,   root: n(5),  quality: "Dominant 7th", role: "IV7 — 12-bar IV" },
+      { name: `${n(7)}7`,   root: n(7),  quality: "Dominant 7th", role: "V7 — tension" },
+    ],
+  }
+  if (mode === "pentatonic-major") return {
+    "Country / Pop": [
+      { name: n(0),          root: n(0),  quality: "Major",  role: "I — bright home" },
+      { name: n(5),          root: n(5),  quality: "Major",  role: "IV — lift" },
+      { name: n(7),          root: n(7),  quality: "Major",  role: "V — tension" },
+      { name: `${n(9)}m`,    root: n(9),  quality: "Minor",  role: "vi — relative minor" },
+    ],
+    "Rock": [
+      { name: n(0),          root: n(0),  quality: "Major",  role: "I — punchy home" },
+      { name: n(5),          root: n(5),  quality: "Major",  role: "IV — classic rock" },
+      { name: n(7),          root: n(7),  quality: "Major",  role: "V — driving" },
+      { name: n(10),         root: n(10), quality: "Major",  role: "♭VII — blues edge" },
+    ],
+  }
+  if (mode === "dorian") return {
+    "Dorian Vamps": [
+      { name: `${n(0)}m`,    root: n(0),  quality: "Minor",  role: "i — home" },
+      { name: n(5),          root: n(5),  quality: "Major",  role: "IV — activates Dorian ✦" },
+      { name: n(10),         root: n(10), quality: "Major",  role: "♭VII — movement" },
+    ],
+    "Extended": [
+      { name: `${n(0)}m`,    root: n(0),  quality: "Minor",  role: "i" },
+      { name: n(10),         root: n(10), quality: "Major",  role: "♭VII" },
+      { name: n(5),          root: n(5),  quality: "Major",  role: "IV ✦" },
+      { name: n(3),          root: n(3),  quality: "Major",  role: "♭III" },
+    ],
+  }
+  if (mode === "mixolydian") return {
+    "Mixolydian Vamps": [
+      { name: n(0),          root: n(0),  quality: "Major",        role: "I — home" },
+      { name: n(10),         root: n(10), quality: "Major",        role: "♭VII — activates Mixolydian ✦" },
+      { name: n(5),          root: n(5),  quality: "Major",        role: "IV — classic rock" },
+    ],
+    "Blues-Rock": [
+      { name: `${n(0)}7`,    root: n(0),  quality: "Dominant 7th", role: "I7 — dominant home" },
+      { name: n(10),         root: n(10), quality: "Major",        role: "♭VII ✦" },
+      { name: n(5),          root: n(5),  quality: "Major",        role: "IV" },
+    ],
+  }
+  if (mode === "phrygian") return {
+    "Phrygian Vamps": [
+      { name: `${n(0)}m`,    root: n(0),  quality: "Minor",  role: "i — home" },
+      { name: n(1),          root: n(1),  quality: "Major",  role: "♭II — activates Phrygian ✦" },
+      { name: n(10),         root: n(10), quality: "Major",  role: "♭VII" },
+      { name: n(3),          root: n(3),  quality: "Major",  role: "♭III" },
+    ],
+    "Andalusian Cadence": [
+      { name: `${n(9)}m`,    root: n(9),  quality: "Minor",  role: "iv (start)" },
+      { name: n(8),          root: n(8),  quality: "Major",  role: "♭VI" },
+      { name: n(1),          root: n(1),  quality: "Major",  role: "♭II ✦" },
+      { name: n(0),          root: n(0),  quality: "Major",  role: "I (resolve)" },
+    ],
+  }
+  if (mode === "lydian") return {
+    "Lydian Vamps": [
+      { name: n(0),          root: n(0),  quality: "Major",  role: "I — home" },
+      { name: n(2),          root: n(2),  quality: "Major",  role: "II — activates Lydian ✦" },
+      { name: `${n(9)}m`,    root: n(9),  quality: "Minor",  role: "vi — depth" },
+      { name: n(7),          root: n(7),  quality: "Major",  role: "V" },
+    ],
+  }
+  // aeolian
+  return {
+    "Aeolian Vamps": [
+      { name: `${n(0)}m`,    root: n(0),  quality: "Minor",  role: "i — home" },
+      { name: n(10),         root: n(10), quality: "Major",  role: "♭VII — searching" },
+      { name: n(9),          root: n(9),  quality: "Major",  role: "♭VI — sadness ✦" },
+      { name: n(3),          root: n(3),  quality: "Major",  role: "♭III — lift" },
+      { name: `${n(5)}m`,    root: n(5),  quality: "Minor",  role: "iv — darker pull" },
+    ],
+  }
+}
+
+function KeyChordExplorer({ mode, title = "Try It In Your Key" }: { mode: ExplorerMode; title?: string }) {
+  const [key, setKey] = useState("A")
+  const [selected, setSelected] = useState<ChordEntry | null>(null)
+  const [voicingIdx, setVoicingIdx] = useState(0)
+
+  const ri = CHROMATIC.indexOf(key as typeof CHROMATIC[number])
+  const groups = getGroups(mode, ri)
+  const voicings = selected ? CHORD_VOICINGS[selected.root]?.[selected.quality] : null
+  const voicing = voicings?.[voicingIdx] ?? null
+
+  function pick(chord: ChordEntry) {
+    if (selected?.name === chord.name && selected?.quality === chord.quality) {
+      setSelected(null)
+    } else {
+      setSelected(chord)
+      setVoicingIdx(0)
+    }
+  }
+
+  return (
+    <div className="mt-8 border-t border-white/10 pt-6">
+      <p className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-4">{title}</p>
+
+      {/* Key selector */}
+      <div className="flex flex-wrap gap-1.5 mb-5">
+        {CHROMATIC.map(k => (
+          <button
+            key={k}
+            onClick={() => { setKey(k); setSelected(null) }}
+            className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all min-w-[36px] text-center ${
+              key === k ? "bg-amber-500 text-black" : "bg-white/10 text-purple-300 hover:bg-white/20"
+            }`}
+          >
+            {k}
+          </button>
+        ))}
+      </div>
+
+      {/* Chord groups */}
+      {Object.entries(groups).map(([groupName, chords]) => (
+        <div key={groupName} className="mb-4">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">{groupName}</p>
+          <div className="flex flex-wrap gap-2">
+            {chords.map(chord => {
+              const isSelected = selected?.name === chord.name && selected?.quality === chord.quality
+              return (
+                <button
+                  key={chord.name + chord.quality}
+                  onClick={() => pick(chord)}
+                  className={`px-3 py-2 rounded-xl border text-left transition-all ${
+                    isSelected
+                      ? "bg-purple-600 border-purple-400"
+                      : "bg-white/10 border-white/20 hover:bg-white/20"
+                  }`}
+                >
+                  <p className="text-white font-bold text-sm">{chord.name}</p>
+                  <p className={`text-xs mt-0.5 ${isSelected ? "text-purple-200" : "text-purple-400"}`}>{chord.role}</p>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      ))}
+
+      {/* Chord diagram */}
+      {selected && (
+        <div className="bg-white/10 border border-purple-500/40 rounded-2xl p-5 mt-3">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <p className="text-white font-bold text-lg">{selected.name}</p>
+              <p className="text-purple-300 text-xs">{selected.quality} · {selected.role}</p>
+            </div>
+            <button onClick={() => setSelected(null)} className="text-purple-400 hover:text-white text-xl">✕</button>
+          </div>
+
+          {voicings && voicings.length > 0 ? (
+            <>
+              {voicings.length > 1 && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {voicings.map((v, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setVoicingIdx(i)}
+                      className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-all ${
+                        voicingIdx === i
+                          ? "bg-purple-600 border-purple-400 text-white"
+                          : "bg-white/10 border-white/20 text-purple-300 hover:bg-white/20"
+                      }`}
+                    >
+                      {v.position}
+                      <span className={`ml-1.5 px-1.5 py-0.5 rounded ${
+                        v.difficulty === "beginner" ? "bg-green-500/30 text-green-300" : "bg-amber-500/30 text-amber-300"
+                      }`}>
+                        {v.difficulty}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+              <div className="flex gap-6 items-start flex-wrap">
+                <ChordDiagram chordName={selected.name} fingers={voicing!.fingers} size="large" />
+                <div className="flex-1 min-w-[140px]">
+                  <p className="text-white font-semibold text-sm mb-1">{voicing!.position}</p>
+                  <span className={`text-xs px-2 py-0.5 rounded-full inline-block mb-4 border ${
+                    voicing!.difficulty === "beginner"
+                      ? "bg-green-500/20 text-green-300 border-green-500/30"
+                      : "bg-amber-500/20 text-amber-300 border-amber-500/30"
+                  }`}>
+                    {voicing!.difficulty}
+                  </span>
+                  <div className="space-y-1">
+                    {(['E','A','D','G','B','e'] as const).map((s, i) => {
+                      const f = voicing!.fingers[i]
+                      return (
+                        <div key={s} className="flex items-center gap-2 text-xs">
+                          <span className="w-4 text-purple-400 font-mono">{s}</span>
+                          <span className={f === 'x' ? 'text-red-400' : f === 0 ? 'text-green-400' : 'text-white'}>
+                            {f === 'x' ? '✕ muted' : f === 0 ? '○ open' : `fret ${f}`}
+                          </span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <p className="text-purple-400 text-sm">No shape available for this chord.</p>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -277,6 +514,8 @@ Same 9 notes. Three completely different emotional worlds.`}
           Use the <strong className="text-white">relative major pentatonic</strong> trick: A minor pentatonic = C major pentatonic (same 5 notes). So when a song is in C major, you can also reach for A minor pentatonic and it fits perfectly.
         </Callout>
       </Card>
+
+      <KeyChordExplorer mode="pentatonic-minor" title="Minor Pentatonic — Pick Your Key" />
     </div>
   )
 }
@@ -366,6 +605,8 @@ E|-----------------------------|`}
         <p className="font-semibold mb-1">Dorian Vamp Exercise:</p>
         Loop Am – D (2 bars each, 80 BPM). Solo using A minor pentatonic first. Now add the F# (fret 7, B string). Hear how it snaps into Dorian when that note plays over the D chord? That single note is the difference.
       </Callout>
+
+      <KeyChordExplorer mode="dorian" title="Dorian — Pick Your Key" />
     </div>
   )
 }
@@ -455,6 +696,8 @@ Sounds like classic rock, NOT like plain G major`}
         <p className="font-semibold mb-1">Mixolydian Vamp Exercise:</p>
         Loop G – F (2 bars each). Solo using G major pentatonic. Now add the F note (♭7) to your lines — it&apos;s on fret 1 of the high e string, fret 3 of the D string. Hear how it transforms from happy-major to bluesy-rock the moment that F appears.
       </Callout>
+
+      <KeyChordExplorer mode="mixolydian" title="Mixolydian — Pick Your Key" />
     </div>
   )
 }
@@ -542,6 +785,8 @@ The E major chord (not Em) at the end creates a V in Phrygian — strong Flamenc
         <p className="font-semibold mb-1">Phrygian Vamp Exercise:</p>
         Loop Em – F (2 bars each, slow tempo — 60 BPM). Solo using E minor pentatonic first. Now deliberately play the F note (open first string, fret 1) — the ♭2. Hear how that single note creates instant Spanish tension? That&apos;s Phrygian in action.
       </Callout>
+
+      <KeyChordExplorer mode="phrygian" title="Phrygian — Pick Your Key" />
     </div>
   )
 }
@@ -658,6 +903,9 @@ function LydianAeolianTab() {
         <p className="font-semibold mb-1">Aeolian vs Dorian Comparison:</p>
         Loop Am – Dm (Aeolian feel). Solo in A natural minor. Then switch the Dm to a D major. Same loop, one chord changed. Now play A Dorian (add the F#). Hear how the whole colour of the solo shifts — same root, completely different emotional character.
       </Callout>
+
+      <KeyChordExplorer mode="lydian"  title="Lydian — Pick Your Key" />
+      <KeyChordExplorer mode="aeolian" title="Aeolian — Pick Your Key" />
     </div>
   )
 }

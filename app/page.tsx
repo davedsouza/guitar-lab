@@ -165,6 +165,14 @@ const MODULES: Module[] = [
     cta: "Learn the Riffs →",
     tags: ["riffs", "rock", "blues", "folk", "classic riffs", "smoke on the water", "iron man", "sunshine of your love", "wish you were here", "technique"],
   },
+  {
+    href: "/diatonic-chords",
+    icon: "🔢",
+    title: "Diatonic Chords",
+    description: "Discover the 7 chords that live inside every scale. Understand which chords belong to a key and which scales to use over any chord.",
+    cta: "Explore Diatonic Harmony →",
+    tags: ["diatonic", "chords", "scales", "harmony", "key", "major", "minor", "chord scale", "theory", "I IV V", "modes", "soloing"],
+  },
 ]
 
 export default function Home() {

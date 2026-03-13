@@ -2,8 +2,10 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import ChordDiagram from "@/components/ChordDiagram"
+import { CHORD_VOICINGS } from "@/lib/chordShapes"
 
-type Tab = "positions" | "connecting" | "licks" | "bending" | "practice"
+type Tab = "positions" | "connecting" | "licks" | "bending" | "practice" | "key-explorer"
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "positions", label: "5 Positions" },
@@ -11,6 +13,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "licks", label: "Classic Licks" },
   { id: "bending", label: "Bending & Vibrato" },
   { id: "practice", label: "Practice Plan" },
+  { id: "key-explorer", label: "🎯 Key Explorer" },
 ]
 
 function Callout({ type, children }: { type: "tip" | "warning" | "insight" | "exercise"; children: React.ReactNode }) {
@@ -533,6 +536,253 @@ function PracticeTab() {
   )
 }
 
+// ─── Key Explorer ─────────────────────────────────────────────────────────────
+const CHROMATIC = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+
+const KEY_LABELS: Record<string, string> = {
+  'C': 'C', 'C#': 'C# / Db', 'D': 'D', 'D#': 'D# / Eb', 'E': 'E',
+  'F': 'F', 'F#': 'F# / Gb', 'G': 'G', 'G#': 'G# / Ab', 'A': 'A',
+  'A#': 'A# / Bb', 'B': 'B',
+}
+
+function noteAt(rootIdx: number, semitones: number): string {
+  return CHROMATIC[(rootIdx + semitones) % 12]
+}
+
+interface ChordEntry { name: string; root: string; quality: string; role: string }
+
+function getChordGroups(rootIdx: number, scaleType: "minor" | "major"): Record<string, ChordEntry[]> {
+  if (scaleType === "minor") {
+    return {
+      "Rock / Minor": [
+        { name: `${noteAt(rootIdx, 0)}m`,  root: noteAt(rootIdx, 0),  quality: "Minor",        role: "i — home chord" },
+        { name: noteAt(rootIdx, 10),        root: noteAt(rootIdx, 10), quality: "Major",        role: "♭VII — lift and drive" },
+        { name: noteAt(rootIdx, 9),         root: noteAt(rootIdx, 9),  quality: "Major",        role: "♭VI — melancholy" },
+        { name: noteAt(rootIdx, 3),         root: noteAt(rootIdx, 3),  quality: "Major",        role: "♭III — brightness" },
+        { name: `${noteAt(rootIdx, 5)}m`,   root: noteAt(rootIdx, 5),  quality: "Minor",        role: "iv — darker pull" },
+      ],
+      "Blues / Dominant": [
+        { name: `${noteAt(rootIdx, 0)}7`,   root: noteAt(rootIdx, 0),  quality: "Dominant 7th", role: "I7 — home (12-bar)" },
+        { name: `${noteAt(rootIdx, 5)}7`,   root: noteAt(rootIdx, 5),  quality: "Dominant 7th", role: "IV7 — 12-bar IV" },
+        { name: `${noteAt(rootIdx, 7)}7`,   root: noteAt(rootIdx, 7),  quality: "Dominant 7th", role: "V7 — tension" },
+      ],
+    }
+  }
+  return {
+    "Country / Pop": [
+      { name: noteAt(rootIdx, 0),           root: noteAt(rootIdx, 0),  quality: "Major",        role: "I — bright home" },
+      { name: noteAt(rootIdx, 5),           root: noteAt(rootIdx, 5),  quality: "Major",        role: "IV — lift" },
+      { name: noteAt(rootIdx, 7),           root: noteAt(rootIdx, 7),  quality: "Major",        role: "V — tension & drive" },
+      { name: `${noteAt(rootIdx, 9)}m`,     root: noteAt(rootIdx, 9),  quality: "Minor",        role: "vi — relative minor" },
+    ],
+    "Rock / Blues-Major": [
+      { name: noteAt(rootIdx, 0),           root: noteAt(rootIdx, 0),  quality: "Major",        role: "I — punchy home" },
+      { name: noteAt(rootIdx, 5),           root: noteAt(rootIdx, 5),  quality: "Major",        role: "IV — classic rock" },
+      { name: noteAt(rootIdx, 7),           root: noteAt(rootIdx, 7),  quality: "Major",        role: "V — driving" },
+      { name: `${noteAt(rootIdx, 10)}`  ,   root: noteAt(rootIdx, 10), quality: "Major",        role: "♭VII — adds blues edge" },
+    ],
+  }
+}
+
+function getPentNotes(rootIdx: number, scaleType: "minor" | "major"): { note: string; interval: string }[] {
+  const intervals = scaleType === "minor"
+    ? [{ s: 0, i: "Root" }, { s: 3, i: "♭3" }, { s: 5, i: "4" }, { s: 7, i: "5" }, { s: 10, i: "♭7" }]
+    : [{ s: 0, i: "Root" }, { s: 2, i: "2"  }, { s: 4, i: "3" }, { s: 7, i: "5" }, { s: 9,  i: "6"  }]
+  return intervals.map(({ s, i }) => ({ note: noteAt(rootIdx, s), interval: i }))
+}
+
+function KeyExplorerTab() {
+  const [selectedKey, setSelectedKey] = useState("A")
+  const [scaleType, setScaleType] = useState<"minor" | "major">("minor")
+  const [selectedChord, setSelectedChord] = useState<ChordEntry | null>(null)
+  const [voicingIdx, setVoicingIdx] = useState(0)
+
+  const rootIdx = CHROMATIC.indexOf(selectedKey)
+  const pentNotes = getPentNotes(rootIdx, scaleType)
+  const chordGroups = getChordGroups(rootIdx, scaleType)
+  const scaleName = `${KEY_LABELS[selectedKey]} ${scaleType === "minor" ? "Minor" : "Major"} Pentatonic`
+
+  const voicings = selectedChord ? CHORD_VOICINGS[selectedChord.root]?.[selectedChord.quality] : null
+  const currentVoicing = voicings?.[voicingIdx] ?? null
+
+  function selectChord(chord: ChordEntry) {
+    if (selectedChord?.name === chord.name && selectedChord?.quality === chord.quality) {
+      setSelectedChord(null)
+    } else {
+      setSelectedChord(chord)
+      setVoicingIdx(0)
+    }
+  }
+
+  return (
+    <div>
+      <h2 className="text-2xl font-bold text-white mb-2">Key Explorer</h2>
+      <p className="text-purple-200 mb-6">
+        Select your key and scale type — see the scale notes and every backing chord that works.
+        Tap any chord to view its shape on the fretboard.
+      </p>
+
+      {/* Scale type toggle */}
+      <div className="flex gap-2 mb-5">
+        {(["minor", "major"] as const).map(t => (
+          <button
+            key={t}
+            onClick={() => { setScaleType(t); setSelectedChord(null) }}
+            className={`px-5 py-2 rounded-xl text-sm font-bold transition-all ${
+              scaleType === t ? "bg-purple-600 text-white" : "bg-white/10 text-purple-300 hover:bg-white/20"
+            }`}
+          >
+            {t === "minor" ? "Minor Pentatonic" : "Major Pentatonic"}
+          </button>
+        ))}
+      </div>
+
+      {/* Key selector */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        {CHROMATIC.map(k => (
+          <button
+            key={k}
+            onClick={() => { setSelectedKey(k); setSelectedChord(null) }}
+            className={`px-3 py-2 rounded-xl text-sm font-bold transition-all min-w-[52px] text-center ${
+              selectedKey === k
+                ? "bg-amber-500 text-black"
+                : "bg-white/10 text-purple-300 hover:bg-white/20"
+            }`}
+          >
+            {k}
+          </button>
+        ))}
+      </div>
+
+      {/* Scale notes */}
+      <div className="bg-white/10 border border-white/20 rounded-xl p-4 mb-6">
+        <p className="text-amber-400 font-bold text-sm mb-3">{scaleName}</p>
+        <div className="flex gap-2 flex-wrap">
+          {pentNotes.map((n, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold text-base border-2 ${
+                i === 0 ? "bg-amber-500 border-amber-400 text-black" : "bg-purple-600/40 border-purple-500/50 text-white"
+              }`}>
+                {n.note}
+              </div>
+              <div className="text-purple-400 text-xs mt-1">{n.interval}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Chord groups */}
+      {Object.entries(chordGroups).map(([groupName, chords]) => (
+        <div key={groupName} className="mb-6">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">{groupName}</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {chords.map((chord) => {
+              const isSelected = selectedChord?.name === chord.name && selectedChord?.quality === chord.quality
+              return (
+                <button
+                  key={chord.name + chord.quality}
+                  onClick={() => selectChord(chord)}
+                  className={`p-3 rounded-xl border text-left transition-all ${
+                    isSelected
+                      ? "bg-purple-600 border-purple-400 text-white"
+                      : "bg-white/10 border-white/20 text-white hover:bg-white/20"
+                  }`}
+                >
+                  <p className="font-bold text-base">{chord.name}</p>
+                  <p className={`text-xs mt-0.5 ${isSelected ? "text-purple-200" : "text-purple-400"}`}>{chord.role}</p>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      ))}
+
+      {/* Chord diagram panel */}
+      {selectedChord && (
+        <div className="bg-white/10 border border-purple-500/50 rounded-2xl p-5 mt-2">
+          <div className="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h3 className="text-white font-bold text-xl">{selectedChord.name}</h3>
+              <p className="text-purple-300 text-sm">{selectedChord.quality} · {selectedChord.role}</p>
+            </div>
+            <button
+              onClick={() => setSelectedChord(null)}
+              className="text-purple-400 hover:text-white text-xl leading-none flex-shrink-0"
+            >
+              ✕
+            </button>
+          </div>
+
+          {voicings && voicings.length > 0 ? (
+            <>
+              {/* Voicing selector */}
+              {voicings.length > 1 && (
+                <div className="flex gap-2 mb-5 flex-wrap">
+                  {voicings.map((v, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setVoicingIdx(i)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
+                        voicingIdx === i
+                          ? "bg-purple-600 border-purple-400 text-white"
+                          : "bg-white/10 border-white/20 text-purple-300 hover:bg-white/20"
+                      }`}
+                    >
+                      {v.position}
+                      <span className={`ml-1.5 px-1.5 py-0.5 rounded text-xs ${
+                        v.difficulty === 'beginner' ? 'bg-green-500/30 text-green-300' : 'bg-amber-500/30 text-amber-300'
+                      }`}>
+                        {v.difficulty}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Diagram + info */}
+              <div className="flex gap-6 items-start flex-wrap">
+                <ChordDiagram
+                  chordName={selectedChord.name}
+                  fingers={currentVoicing!.fingers}
+                  size="large"
+                />
+                <div className="flex-1 min-w-[160px]">
+                  <p className="text-white font-semibold mb-1">{currentVoicing!.position}</p>
+                  <p className={`text-xs px-2 py-0.5 rounded-full inline-block mb-4 ${
+                    currentVoicing!.difficulty === 'beginner'
+                      ? 'bg-green-500/20 text-green-300 border border-green-500/30'
+                      : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                  }`}>
+                    {currentVoicing!.difficulty}
+                  </p>
+                  <div className="space-y-1 text-xs text-purple-300">
+                    <p className="font-semibold text-purple-200 mb-2">String guide (low → high):</p>
+                    {(['E','A','D','G','B','e'] as const).map((s, i) => {
+                      const f = currentVoicing!.fingers[i]
+                      return (
+                        <div key={s} className="flex items-center gap-2">
+                          <span className="w-4 text-purple-400 font-mono">{s}</span>
+                          <span className={`font-mono ${
+                            f === 'x' ? 'text-red-400' : f === 0 ? 'text-green-400' : 'text-white'
+                          }`}>
+                            {f === 'x' ? '✕ muted' : f === 0 ? '○ open' : `fret ${f}`}
+                          </span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <p className="text-purple-400 text-sm">No shape found for this chord.</p>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function PentatonicPage() {
   const [activeTab, setActiveTab] = useState<Tab>("positions")
 
@@ -567,11 +817,12 @@ export default function PentatonicPage() {
 
         {/* Content */}
         <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10">
-          {activeTab === "positions" && <PositionsTab />}
-          {activeTab === "connecting" && <ConnectingTab />}
-          {activeTab === "licks" && <LicksTab />}
-          {activeTab === "bending" && <BendingTab />}
-          {activeTab === "practice" && <PracticeTab />}
+          {activeTab === "positions"    && <PositionsTab />}
+          {activeTab === "connecting"   && <ConnectingTab />}
+          {activeTab === "licks"        && <LicksTab />}
+          {activeTab === "bending"      && <BendingTab />}
+          {activeTab === "practice"     && <PracticeTab />}
+          {activeTab === "key-explorer" && <KeyExplorerTab />}
         </div>
       </div>
     </div>

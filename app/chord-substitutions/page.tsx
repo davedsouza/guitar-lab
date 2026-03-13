@@ -562,7 +562,7 @@ export default function ChordSubstitutions() {
           <Link href="/" className="text-purple-300 hover:text-purple-200 mb-4 inline-block">
             ← Back to Home
           </Link>
-          <h1 className="text-4xl font-bold text-white mb-2">Chord Substitutions</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Chord Substitutions</h1>
           <p className="text-purple-200">Transform progressions with advanced substitution techniques</p>
         </div>
 

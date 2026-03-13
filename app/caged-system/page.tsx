@@ -85,7 +85,7 @@ export default function CAGEDSystem() {
           <Link href="/" className="text-purple-300 hover:text-purple-200 mb-4 inline-block">
             ← Back to Home
           </Link>
-          <h1 className="text-4xl font-bold text-white mb-2">CAGED System</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">CAGED System</h1>
           <p className="text-purple-200">Master the fretboard by connecting 5 chord shapes</p>
         </div>
 
@@ -157,7 +157,7 @@ export default function CAGEDSystem() {
             {/* Key Selector */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <h2 className="text-xl font-bold text-white mb-4">Select Key</h2>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {NOTES.map((note, index) => (
                   <button
                     key={index}
@@ -385,7 +385,7 @@ export default function CAGEDSystem() {
                   {/* Legend */}
                   <div className="mt-4 bg-white/10 rounded-xl p-4">
                     <h3 className="text-white font-semibold mb-3 text-sm">Shape Colors</h3>
-                    <div className="grid grid-cols-5 gap-2 text-xs">
+                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 text-xs">
                       {CAGED_ORDER.map((shapeName) => {
                         const shapeColors: Record<string, string> = {
                           C: "bg-red-600",

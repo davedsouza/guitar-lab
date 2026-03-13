@@ -411,7 +411,7 @@ export default function BluesPage() {
           <Link href="/" className="text-purple-300 hover:text-purple-200 mb-4 inline-block text-sm">
             ← Back to Home
           </Link>
-          <h1 className="text-4xl font-bold text-white mb-2">12-Bar Blues</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">12-Bar Blues</h1>
           <p className="text-purple-200">The foundation of blues, rock & roll, and modern music</p>
         </div>
 
@@ -480,7 +480,7 @@ export default function BluesPage() {
               <p className="text-purple-200 text-sm mb-4">
                 Every 12-bar blues uses the same three chords relative to the key, labelled by Roman numeral. In the key of A:
               </p>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {[
                   { degree: "I", name: "Tonic", chord: "A7", color: "bg-purple-600", desc: "Home base. The chord you always return to. Sounds 'at rest'." },
                   { degree: "IV", name: "Subdominant", chord: "D7", color: "bg-blue-600", desc: "Creates movement away from home. Builds anticipation." },
@@ -565,7 +565,7 @@ export default function BluesPage() {
 
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <h2 className="text-xl font-bold text-white mb-5">12-Bar Blues in {currentKey.key} — {quickChange ? "Quick Change" : "Standard"}</h2>
-              <div className="grid grid-cols-4 gap-3 mb-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-2">
                 {bars.map((degree, i) => {
                   const chord = getChordForDegree(degree)
                   const isSelected = selectedBar === i

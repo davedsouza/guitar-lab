@@ -273,7 +273,7 @@ export default function RhythmTrainer() {
           <Link href="/" className="text-purple-300 hover:text-purple-200 mb-4 inline-block">
             ← Back to Home
           </Link>
-          <h1 className="text-4xl font-bold text-white mb-2">Rhythm Trainer</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Rhythm Trainer</h1>
           <p className="text-purple-200">Master strumming patterns and timing with visual and audio guides</p>
         </div>
 

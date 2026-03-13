@@ -47,7 +47,7 @@ export default function ChordBuilder() {
           <Link href="/" className="text-purple-300 hover:text-purple-200 mb-4 inline-block">
             ← Back to Home
           </Link>
-          <h1 className="text-4xl font-bold text-white mb-2">Chord Builder</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Chord Builder</h1>
           <p className="text-purple-200">Learn how chords are constructed from intervals</p>
         </div>
 
@@ -58,7 +58,7 @@ export default function ChordBuilder() {
             {/* Root Note Selector */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <h2 className="text-xl font-bold text-white mb-4">1. Select Root Note</h2>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {NOTES.map((note, index) => (
                   <button
                     key={index}
@@ -141,7 +141,7 @@ export default function ChordBuilder() {
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
               <h2 className="text-xl font-bold text-white mb-6">Your Chord</h2>
               <div className="text-center mb-8">
-                <div className="text-5xl font-bold text-white mb-2">{chordName}</div>
+                <div className="text-3xl sm:text-5xl font-bold text-white mb-2">{chordName}</div>
                 <div className="text-purple-300 text-lg">
                   {CHORD_TYPES[selectedChordType].description}
                 </div>

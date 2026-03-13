@@ -522,7 +522,7 @@ export default function RiffsPage() {
         </div>
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Classic Riffs</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Classic Riffs</h1>
           <p className="text-purple-200">Learn the iconic riffs that define rock, blues, and folk guitar — with TAB, theory, and technique tips.</p>
         </div>
 

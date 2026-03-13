@@ -38,7 +38,7 @@ export default function Scales() {
           <Link href="/" className="text-purple-300 hover:text-purple-200 mb-4 inline-block">
             ← Back to Home
           </Link>
-          <h1 className="text-4xl font-bold text-white mb-2">Guitar Scales</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Guitar Scales</h1>
           <p className="text-purple-200">Master scales across the entire fretboard</p>
         </div>
 
@@ -83,7 +83,7 @@ export default function Scales() {
             {/* Root Note Selector */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <h2 className="text-xl font-bold text-white mb-4">1. Select Root Note</h2>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {NOTES.map((note, index) => (
                   <button
                     key={index}

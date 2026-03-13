@@ -156,7 +156,7 @@ export default function BeginnerModule() {
                   <span className="font-bold">E</span>ars
                 </div>
               </div>
-              <div className="grid grid-cols-6 gap-2">
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                 {STRING_INFO.map((s, i) => (
                   <div key={i} className="bg-white/10 rounded-xl p-3 text-center">
                     <div className="text-3xl font-bold text-white">{s.note}</div>
@@ -542,7 +542,7 @@ export default function BeginnerModule() {
               <div className="grid lg:grid-cols-2 gap-6">
                 <div className="bg-white/10 rounded-xl p-6">
                   <h3 className="text-white font-bold mb-4">Standard Tuning</h3>
-                  <div className="grid grid-cols-6 gap-2">
+                  <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                     {TUNING_INFO.standardTuning.map((note, i) => (
                       <div key={i} className="bg-purple-600 rounded-lg p-3 text-center">
                         <div className="text-white text-2xl font-bold">{note}</div>
@@ -740,7 +740,7 @@ export default function BeginnerModule() {
           <Link href="/" className="text-purple-300 hover:text-purple-200 mb-4 inline-block">
             ← Back to Home
           </Link>
-          <h1 className="text-4xl font-bold text-white mb-2">Beginner Module</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Beginner Module</h1>
           <p className="text-purple-200">Master the fundamentals of guitar playing</p>
         </div>
 

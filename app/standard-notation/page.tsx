@@ -490,7 +490,7 @@ function KeySigsTab() {
         <p className="text-purple-200 text-sm mb-3">
           Moving clockwise adds one sharp each time. Moving counter-clockwise adds one flat. C major (no sharps or flats) sits at the top.
         </p>
-        <div className="grid grid-cols-4 gap-2 text-center text-xs">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
           {[
             { key: "C", sig: "no ♯/♭", col: "bg-white/10" },
             { key: "G", sig: "1♯",     col: "bg-amber-500/20" },
@@ -819,7 +819,7 @@ function NoteTrainerTab() {
       </div>
 
       {/* Score bar */}
-      <div className="grid grid-cols-4 gap-2 mb-6 text-center text-xs">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6 text-center text-xs">
         {[
           { label: "Correct", val: score.correct, color: "text-green-400" },
           { label: "Total",   val: score.total,   color: "text-white" },
@@ -936,7 +936,7 @@ export default function StandardNotationPage() {
         </div>
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Standard Notation</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Standard Notation</h1>
           <p className="text-purple-200">Read music the way every other instrument does. Unlock sheet music, lead sheets, and a new way of thinking.</p>
         </div>
 

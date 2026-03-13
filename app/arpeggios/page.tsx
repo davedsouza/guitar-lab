@@ -244,7 +244,7 @@ export default function Arpeggios() {
           <Link href="/" className="text-purple-300 hover:text-purple-200 mb-4 inline-block">
             ← Back to Home
           </Link>
-          <h1 className="text-4xl font-bold text-white mb-2">Arpeggios</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Arpeggios</h1>
           <p className="text-purple-200">Master playing chords note-by-note across the fretboard</p>
         </div>
 
@@ -340,7 +340,7 @@ export default function Arpeggios() {
             {/* Root Note Selector */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <h2 className="text-xl font-bold text-white mb-4">1. Select Root Note</h2>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {NOTES.map((note, index) => (
                   <button
                     key={index}
@@ -607,7 +607,7 @@ export default function Arpeggios() {
               {/* Direction Selector */}
               <div className="mb-4">
                 <label className="text-purple-200 text-sm font-semibold mb-2 block">Direction</label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   <button
                     onClick={() => setPlayDirection("ascending")}
                     className={`py-2 px-3 rounded-lg text-sm font-semibold transition-all ${

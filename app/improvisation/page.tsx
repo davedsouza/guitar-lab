@@ -110,7 +110,7 @@ function PhrasesTab() {
 
       <Card title="The 4-Note Phrase — Your Starting Point">
         <p className="text-purple-200 text-sm mb-3">Start with just 4 notes. This forces you to make every note matter. Here's a simple framework:</p>
-        <div className="grid grid-cols-4 gap-2 mb-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
           {["Note 1\nTension", "Note 2\nMovement", "Note 3\nPeak", "Note 4\nResolution"].map((n, i) => (
             <div key={i} className="bg-purple-600/20 border border-purple-500/30 rounded-lg p-2 text-center">
               <p className="text-purple-300 text-xs whitespace-pre-line">{n}</p>
@@ -542,7 +542,7 @@ export default function ImprovisationPage() {
         </div>
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Improvisation</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Improvisation</h1>
           <p className="text-purple-200">Learn to improvise with purpose — phrases, motifs, space, and dynamics that make your solos memorable.</p>
         </div>
 

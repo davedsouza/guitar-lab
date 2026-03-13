@@ -757,7 +757,7 @@ export default function DiatonicChordsPage() {
         </div>
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Diatonic Chords</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Diatonic Chords</h1>
           <p className="text-purple-200">Discover the 7 chords that live inside every scale — and learn which scales to solo with over any chord.</p>
         </div>
 

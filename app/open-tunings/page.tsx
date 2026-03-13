@@ -1155,7 +1155,7 @@ export default function OpenTuningsPage() {
           <Link href="/" className="text-purple-300 hover:text-white text-sm">← Back to modules</Link>
         </div>
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Open Tunings</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Open Tunings</h1>
           <p className="text-purple-200">Retune your guitar to unlock sounds, chord voicings, and slide techniques impossible in standard tuning.</p>
         </div>
         <div className="flex flex-wrap gap-2 mb-8">

@@ -732,7 +732,7 @@ export default function TechniquesPage() {
         </Link>
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Guitar Techniques</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Guitar Techniques</h1>
           <p className="text-purple-200 text-lg leading-relaxed">
             The expressive tools that make notes sing. Bends, vibrato, slides,
             legato, and muting — the difference between playing notes and making music.

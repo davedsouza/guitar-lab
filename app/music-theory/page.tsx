@@ -90,7 +90,7 @@ export default function MusicTheory() {
           <Link href="/" className="text-purple-300 hover:text-purple-200 mb-4 inline-block">
             ← Back to Home
           </Link>
-          <h1 className="text-4xl font-bold text-white mb-2">Music Theory for Guitar</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Music Theory for Guitar</h1>
           <p className="text-purple-200">Build a strong foundation with interactive learning</p>
         </div>
 
@@ -220,7 +220,7 @@ export default function MusicTheory() {
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
                   <div className="bg-white/10 rounded-xl p-4">
                     <h3 className="text-white font-semibold mb-3">Root Note:</h3>
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       {NOTES.map((note, index) => (
                         <button
                           key={index}
@@ -242,7 +242,7 @@ export default function MusicTheory() {
 
                   <div className="bg-white/10 rounded-xl p-4">
                     <h3 className="text-white font-semibold mb-3">Target Note:</h3>
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       {NOTES.map((note, index) => (
                         <button
                           key={index}

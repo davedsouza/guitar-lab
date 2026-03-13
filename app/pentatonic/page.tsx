@@ -794,7 +794,7 @@ export default function PentatonicPage() {
         </div>
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Pentatonic Mastery</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Pentatonic Mastery</h1>
           <p className="text-purple-200">Master all 5 positions of the minor pentatonic, connect them across the neck, and play with licks, bends, and vibrato.</p>
         </div>
 

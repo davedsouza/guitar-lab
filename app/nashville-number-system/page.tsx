@@ -167,7 +167,7 @@ export default function NashvilleNumberSystem() {
           <Link href="/" className="text-purple-300 hover:text-purple-200 mb-4 inline-block">
             ← Back to Home
           </Link>
-          <h1 className="text-4xl font-bold text-white mb-2">Nashville Number System</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Nashville Number System</h1>
           <p className="text-purple-200">Master the universal language of chord progressions</p>
         </div>
 
@@ -263,7 +263,7 @@ export default function NashvilleNumberSystem() {
             {/* Key Selector */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <h2 className="text-xl font-bold text-white mb-4">Select Key</h2>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {KEYS.map((key, index) => (
                   <button
                     key={index}
@@ -395,7 +395,7 @@ export default function NashvilleNumberSystem() {
                 <div className="space-y-4">
                   <div className="text-purple-200 text-sm mb-3">Click numbers to build your progression:</div>
 
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {scaleChords.map((chord, index) => (
                       <button
                         key={index}

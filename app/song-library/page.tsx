@@ -300,7 +300,7 @@ export default function SongLibrary() {
           <Link href="/" className="text-purple-300 hover:text-purple-200 mb-4 inline-block">
             ← Back to Home
           </Link>
-          <h1 className="text-4xl font-bold text-white mb-2">Song Library</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Song Library</h1>
           <p className="text-purple-200">Real songs with chord diagrams, Nashville numbers, and theory insights. Transpose to any key instantly.</p>
         </div>
 

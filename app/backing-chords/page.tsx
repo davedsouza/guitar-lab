@@ -1379,7 +1379,7 @@ export default function BackingChordsPage() {
         </div>
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Backing Chords for Scales</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Backing Chords for Scales</h1>
           <p className="text-purple-200">Playing a scale or mode? Learn which chord progressions bring out its character — and why.</p>
         </div>
 

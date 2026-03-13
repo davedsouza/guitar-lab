@@ -248,6 +248,65 @@ export default function Arpeggios() {
           <p className="text-purple-200">Master playing chords note-by-note across the fretboard</p>
         </div>
 
+        {/* Intro */}
+        <div className="space-y-4 mb-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-3">What is an Arpeggio?</h2>
+            <p className="text-purple-200 text-sm leading-relaxed mb-4">
+              An arpeggio is simply a chord played one note at a time instead of all at once. A C Major chord has three notes — C, E, and G. Play them together and you get a chord. Play them one after another and you have an arpeggio. Same notes, completely different feel.
+            </p>
+            <div className="bg-white/10 rounded-xl p-4 border-l-4 border-amber-400">
+              <p className="text-amber-200 text-sm leading-relaxed">
+                <span className="font-semibold text-amber-300">Think of an orchestra.</span> A chord is every instrument playing at once — a wall of sound. An arpeggio is each instrument entering one by one, letting you hear every voice separately before they blend together.
+              </p>
+            </div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-4">Why Arpeggios Matter</h2>
+            <div className="grid sm:grid-cols-2 gap-3 mb-5">
+              {[
+                { icon: "🎶", title: "Melody and harmony at once", body: "Arpeggios let you imply the full chord while still moving melodically — one guitar sounds like two." },
+                { icon: "🎸", title: "Used in every genre", body: "From Metallica's Nothing Else Matters to classical guitar to pop ballads — arpeggios are the backbone of expressive playing." },
+                { icon: "🧩", title: "Bridges chords and scales", body: "Arpeggios are the missing link between chord playing and lead playing. They follow chord tones, so every note sounds intentional." },
+                { icon: "✨", title: "Instant sophistication", body: "Swap a strum for an arpeggio on one chord and the whole song lifts. It's one of the quickest ways to sound more musical." },
+              ].map((item) => (
+                <div key={item.title} className="bg-white/5 rounded-xl p-4 flex gap-3">
+                  <span className="text-2xl shrink-0">{item.icon}</span>
+                  <div>
+                    <div className="text-white font-semibold text-sm mb-1">{item.title}</div>
+                    <p className="text-purple-300 text-xs leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="bg-white/5 rounded-xl p-4">
+              <div className="text-purple-300 text-xs font-semibold uppercase tracking-wider mb-3">C Major — two ways to play it</div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <div className="text-purple-400 text-xs mb-2">As a chord (all at once)</div>
+                  <div className="flex gap-1 items-end">
+                    {["C", "E", "G"].map((n) => (
+                      <div key={n} className="bg-purple-600 rounded-lg px-3 py-4 text-center flex-1">
+                        <div className="text-white font-bold text-sm">{n}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-purple-400 text-xs mb-2">As an arpeggio (one at a time)</div>
+                  <div className="flex gap-1 items-end">
+                    {["C", "E", "G", "E", "C"].map((n, i) => (
+                      <div key={i} className="bg-amber-600 rounded-lg px-2 text-center flex-1" style={{ paddingTop: `${(i % 3) * 4 + 8}px`, paddingBottom: `${(i % 3) * 4 + 8}px` }}>
+                        <div className="text-white font-bold text-xs">{n}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Panel */}

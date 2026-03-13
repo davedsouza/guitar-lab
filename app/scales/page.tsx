@@ -42,6 +42,40 @@ export default function Scales() {
           <p className="text-purple-200">Master scales across the entire fretboard</p>
         </div>
 
+        {/* Intro */}
+        <div className="space-y-4 mb-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-3">What is a Scale?</h2>
+            <p className="text-purple-200 text-sm leading-relaxed mb-4">
+              A scale is a set of notes that belong together in a key. Play any of them over a chord progression in that key and they'll sound right. The major scale is the foundation — every other scale, chord, and interval is described in relation to it.
+            </p>
+            <div className="bg-white/10 rounded-xl p-4 border-l-4 border-amber-400">
+              <p className="text-amber-200 text-sm leading-relaxed">
+                <span className="font-semibold text-amber-300">Think of scales like the alphabet.</span> You don't recite the alphabet when you write — but without knowing it, nothing makes sense. Scales are the same. You don't play them up and down in songs, but without them, you're guessing every time you pick a note.
+              </p>
+            </div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-4">Why Scales Are Worth Learning</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                { icon: "🎯", title: "Never hit a wrong note again", body: "Scales tell you exactly which notes will sound good over any chord progression. No more guessing." },
+                { icon: "🎸", title: "Not just for soloists", body: "Knowing your scales improves chord choices, transitions, melody writing, and ear training — even if you never play a single solo." },
+                { icon: "🗺️", title: "Makes the fretboard a map", body: "The same scale pattern repeats across the neck. Once you see the shapes, you can navigate anywhere confidently." },
+                { icon: "🧠", title: "Foundation for everything else", body: "Modes, arpeggios, chord theory, improvisation — all of it is built on top of scale knowledge. Start here and it all connects." },
+              ].map((item) => (
+                <div key={item.title} className="bg-white/5 rounded-xl p-4 flex gap-3">
+                  <span className="text-2xl shrink-0">{item.icon}</span>
+                  <div>
+                    <div className="text-white font-semibold text-sm mb-1">{item.title}</div>
+                    <p className="text-purple-300 text-xs leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Panel - Controls */}
@@ -54,7 +88,7 @@ export default function Scales() {
                   <button
                     key={index}
                     onClick={() => setSelectedRoot(index)}
-                    className={`py-3 px-4 rounded-lg font-semibold transition-all ${
+                    className={`py-3 px-2 sm:px-4 text-sm sm:text-base rounded-lg font-semibold transition-all active:scale-95 ${
                       selectedRoot === index
                         ? "bg-purple-600 text-white scale-105"
                         : "bg-white/20 text-purple-200 hover:bg-white/30"

@@ -89,6 +89,40 @@ export default function CAGEDSystem() {
           <p className="text-purple-200">Master the fretboard by connecting 5 chord shapes</p>
         </div>
 
+        {/* Intro */}
+        <div className="space-y-4 mb-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-3">What is the CAGED System?</h2>
+            <p className="text-purple-200 text-sm leading-relaxed mb-4">
+              CAGED stands for the five open chord shapes every guitarist already knows: C, A, G, E, and D. These five shapes tile the entire fretboard end to end. Every chord you'll ever play — in any key, at any position — fits inside one of these five shapes.
+            </p>
+            <div className="bg-white/10 rounded-xl p-4 border-l-4 border-amber-400">
+              <p className="text-amber-200 text-sm leading-relaxed">
+                <span className="font-semibold text-amber-300">Think of it like a city grid.</span> Without it, you memorise individual routes. With it, you understand the whole layout and can navigate anywhere. CAGED turns a fretboard full of random dots into a system you can see and use.
+              </p>
+            </div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-4">Why the CAGED System Changes Everything</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                { icon: "🗺️", title: "The whole neck becomes a map", body: "You stop memorising random shapes and start seeing connected patterns. Every position links to the next." },
+                { icon: "🎸", title: "Not just for chords", body: "Scales, arpeggios, and solos all follow the same five shapes. Learn CAGED once and it unlocks every other concept." },
+                { icon: "🔍", title: "Find any chord anywhere", body: "Need a G chord at the 10th fret? CAGED shows you exactly where it is and how to finger it without thinking." },
+                { icon: "🚀", title: "The shortcut most players miss", body: "Many guitarists play for years without learning this. Those who do make a step change in how fluidly they play across the neck." },
+              ].map((item) => (
+                <div key={item.title} className="bg-white/5 rounded-xl p-4 flex gap-3">
+                  <span className="text-2xl shrink-0">{item.icon}</span>
+                  <div>
+                    <div className="text-white font-semibold text-sm mb-1">{item.title}</div>
+                    <p className="text-purple-300 text-xs leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Panel - Theory & Explanation */}

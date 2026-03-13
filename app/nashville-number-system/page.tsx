@@ -171,6 +171,69 @@ export default function NashvilleNumberSystem() {
           <p className="text-purple-200">Master the universal language of chord progressions</p>
         </div>
 
+        {/* Intro */}
+        <div className="space-y-4 mb-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-3">What is the Nashville Number System?</h2>
+            <p className="text-purple-200 text-sm leading-relaxed mb-4">
+              Instead of writing chord names like C, F, and G, you replace each chord with a number based on its position in the key. The I chord is always home. The IV and V are the most common moves away from it. The numbers stay the same — only the key changes.
+            </p>
+            <div className="bg-white/10 rounded-xl p-4 border-l-4 border-amber-400">
+              <p className="text-amber-200 text-sm leading-relaxed">
+                <span className="font-semibold text-amber-300">Think of it like directions.</span> Instead of saying "turn onto Oak Street then Maple Avenue", you say "second left, then first right." The directions work in any city — the Nashville Number System works in any key.
+              </p>
+            </div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-4">Why Every Guitarist Should Know This</h2>
+            <div className="grid sm:grid-cols-2 gap-3 mb-5">
+              {[
+                { icon: "🎙️", title: "Used on every professional session", body: "Nashville session musicians communicate entire songs in seconds using just numbers. It's the industry standard." },
+                { icon: "🔑", title: "Instant transposition", body: "A singer needs the song a step higher? No problem. The numbers stay the same — you just start in a new key." },
+                { icon: "👂", title: "Trains your ear", body: "You start hearing chord relationships, not just chord names. The 5 always wants to resolve to the 1 — you'll feel it." },
+                { icon: "🤝", title: "Jam with anyone", body: "Call out numbers in any session and every musician follows. No sheet music, no charts, no wasted time." },
+              ].map((item) => (
+                <div key={item.title} className="bg-white/5 rounded-xl p-4 flex gap-3">
+                  <span className="text-2xl shrink-0">{item.icon}</span>
+                  <div>
+                    <div className="text-white font-semibold text-sm mb-1">{item.title}</div>
+                    <p className="text-purple-300 text-xs leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="bg-white/5 rounded-xl p-4">
+              <div className="text-purple-300 text-xs font-semibold uppercase tracking-wider mb-3">Same progression, any key instantly</div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <div className="text-purple-400 text-xs mb-2">Written as numbers</div>
+                  <div className="flex gap-2">
+                    {["1", "4", "5", "6m"].map((n) => (
+                      <div key={n} className="bg-amber-600 rounded-lg px-3 py-2 text-center">
+                        <div className="text-white font-bold">{n}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div>
+                    <span className="text-purple-400 text-xs">In C: </span>
+                    <span className="text-white text-sm font-mono">C — F — G — Am</span>
+                  </div>
+                  <div>
+                    <span className="text-purple-400 text-xs">In G: </span>
+                    <span className="text-white text-sm font-mono">G — C — D — Em</span>
+                  </div>
+                  <div>
+                    <span className="text-purple-400 text-xs">In D: </span>
+                    <span className="text-white text-sm font-mono">D — G — A — Bm</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Panel - Theory & Controls */}
@@ -205,7 +268,7 @@ export default function NashvilleNumberSystem() {
                   <button
                     key={index}
                     onClick={() => setSelectedKey(index)}
-                    className={`py-3 px-4 rounded-lg font-semibold transition-all ${
+                    className={`py-3 px-2 sm:px-4 text-sm sm:text-base rounded-lg font-semibold transition-all active:scale-95 ${
                       selectedKey === index
                         ? "bg-purple-600 text-white scale-105"
                         : "bg-white/20 text-purple-200 hover:bg-white/30"
@@ -459,7 +522,7 @@ export default function NashvilleNumberSystem() {
                   <div
                     key={index}
                     onClick={() => setCustomNumbers(example.numbers.join(" "))}
-                    className="bg-white/10 rounded-lg p-4 hover:bg-white/20 cursor-pointer transition-all"
+                    className="bg-white/10 rounded-lg p-4 hover:bg-white/20 active:bg-white/20 cursor-pointer transition-all"
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="font-bold text-white">{example.name}</div>

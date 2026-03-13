@@ -277,6 +277,40 @@ export default function RhythmTrainer() {
           <p className="text-purple-200">Master strumming patterns and timing with visual and audio guides</p>
         </div>
 
+        {/* Intro */}
+        <div className="space-y-4 mb-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-3">Why Rhythm is the Most Important Skill on Guitar</h2>
+            <p className="text-purple-200 text-sm leading-relaxed mb-4">
+              Rhythm is the foundation everything else sits on. A guitarist with solid timing and basic chords sounds more musical than one with advanced theory and shaky timing. It's the single thing that separates players who sound like beginners from those who sound like they belong in a band.
+            </p>
+            <div className="bg-red-500/10 rounded-xl p-4 border-l-4 border-red-400">
+              <p className="text-red-200 text-sm leading-relaxed">
+                <span className="font-semibold text-red-300">The hard truth.</span> Every professional musician says the same thing: bad timing is the one flaw that makes you sound like a beginner regardless of how advanced your other skills are. This is the skill most self-taught guitarists neglect — and the one that makes the biggest difference fastest.
+              </p>
+            </div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-4">What You're Actually Training Here</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                { icon: "⏱️", title: "Internal clock", body: "The goal isn't just to follow a metronome — it's to internalise the pulse so it becomes automatic, even when you stop thinking about it." },
+                { icon: "🥁", title: "Groove, not just speed", body: "This isn't about playing faster. It's about locking in so that every note you play feels intentional and sits perfectly in time." },
+                { icon: "🎵", title: "Strumming patterns as vocabulary", body: "Each pattern is a rhythmic phrase. The more you know, the more expressive choices you have in any song." },
+                { icon: "🤝", title: "Playing with others", body: "Tight rhythm is what makes you enjoyable to play with. It's the foundation of every band, session, and jam." },
+              ].map((item) => (
+                <div key={item.title} className="bg-white/5 rounded-xl p-4 flex gap-3">
+                  <span className="text-2xl shrink-0">{item.icon}</span>
+                  <div>
+                    <div className="text-white font-semibold text-sm mb-1">{item.title}</div>
+                    <p className="text-purple-300 text-xs leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Panel - Theory & Pattern Selection */}

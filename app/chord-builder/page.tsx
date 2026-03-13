@@ -63,7 +63,7 @@ export default function ChordBuilder() {
                   <button
                     key={index}
                     onClick={() => setSelectedRoot(index)}
-                    className={`py-3 px-4 rounded-lg font-semibold transition-all ${
+                    className={`py-3 px-2 sm:px-4 text-sm sm:text-base rounded-lg font-semibold transition-all active:scale-95 ${
                       selectedRoot === index
                         ? "bg-purple-600 text-white scale-105"
                         : "bg-white/20 text-purple-200 hover:bg-white/30"

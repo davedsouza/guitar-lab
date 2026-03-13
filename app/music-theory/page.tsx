@@ -94,6 +94,40 @@ export default function MusicTheory() {
           <p className="text-purple-200">Build a strong foundation with interactive learning</p>
         </div>
 
+        {/* Intro */}
+        <div className="space-y-4 mb-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-3">What is Music Theory — and Do You Need It?</h2>
+            <p className="text-purple-200 text-sm leading-relaxed mb-4">
+              Music theory is the study of why music works. Why certain chords sound tense and others feel resolved. Why some notes clash over a chord and others sing. How songs are structured so that they feel satisfying. You can play guitar without it — but with it, you stop guessing and start understanding.
+            </p>
+            <div className="bg-white/10 rounded-xl p-4 border-l-4 border-amber-400">
+              <p className="text-amber-200 text-sm leading-relaxed">
+                <span className="font-semibold text-amber-300">This is not about reading music or passing exams.</span> It's about understanding the language you're already speaking so you can say exactly what you mean. Learning theory after playing by ear is like learning grammar after speaking a language — suddenly everything clicks into place.
+              </p>
+            </div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-4">What Theory Actually Unlocks</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                { icon: "💡", title: "Turn accidents into intentions", body: "That note that sounded great by accident? Theory tells you why — and lets you recreate it deliberately every time." },
+                { icon: "🗣️", title: "Communicate with other musicians", body: "Knowing intervals, chord names, and key relationships means you can follow and lead any musical conversation." },
+                { icon: "🔓", title: "Unlock every other module", body: "Scales, progressions, arpeggios, chord substitutions — all of it makes more sense once you understand the underlying theory." },
+                { icon: "👂", title: "Train your ear faster", body: "Theory gives your ear a framework. Instead of hearing random sounds, you start recognising intervals, chord qualities, and patterns." },
+              ].map((item) => (
+                <div key={item.title} className="bg-white/5 rounded-xl p-4 flex gap-3">
+                  <span className="text-2xl shrink-0">{item.icon}</span>
+                  <div>
+                    <div className="text-white font-semibold text-sm mb-1">{item.title}</div>
+                    <p className="text-purple-300 text-xs leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Main Content */}
         <div className="space-y-8">
           {/* Fretboard Notes Section */}

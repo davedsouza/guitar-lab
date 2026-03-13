@@ -266,6 +266,40 @@ export default function FingerstylePatterns() {
           <p className="text-purple-200">Master the art of fingerpicking with classic patterns and techniques</p>
         </div>
 
+        {/* Intro */}
+        <div className="space-y-4 mb-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-3">What is Fingerstyle Guitar?</h2>
+            <p className="text-purple-200 text-sm leading-relaxed mb-4">
+              Fingerstyle means using your individual fingers — thumb, index, middle, and ring — to pluck strings separately instead of strumming with a pick. This lets you play the bass line, the chord, and the melody at the same time. One guitar, three voices.
+            </p>
+            <div className="bg-white/10 rounded-xl p-4 border-l-4 border-amber-400">
+              <p className="text-amber-200 text-sm leading-relaxed">
+                <span className="font-semibold text-amber-300">Strumming is a roller brush. Fingerstyle is a paintbrush.</span> Both paint the same canvas — but fingerstyle gives you precision, detail, and expression that strumming simply can't. It's a completely different skill, and that's exactly why it's worth learning.
+              </p>
+            </div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-4">Why Fingerstyle Opens Up a New World</h2>
+            <div className="grid sm:grid-cols-2 gap-3 mb-4">
+              {[
+                { icon: "🎼", title: "Play melody and bass at once", body: "Your thumb handles the bass notes while your fingers carry the melody — making one guitar sound like a full arrangement." },
+                { icon: "🎵", title: "Richer, more intimate sound", body: "Fingertips (or nails) on strings produces a warmer, more expressive tone than a pick — especially on acoustic guitar." },
+                { icon: "🌍", title: "Foundation of multiple genres", body: "Classical, folk, flamenco, country, and modern acoustic pop all rely on fingerstyle. It's not niche — it's foundational." },
+                { icon: "💪", title: "It feels foreign at first — that's normal", body: "Every fingerstyle player went through an awkward stage. It's a separate motor skill from strumming. Take it slowly and it will click." },
+              ].map((item) => (
+                <div key={item.title} className="bg-white/5 rounded-xl p-4 flex gap-3">
+                  <span className="text-2xl shrink-0">{item.icon}</span>
+                  <div>
+                    <div className="text-white font-semibold text-sm mb-1">{item.title}</div>
+                    <p className="text-purple-300 text-xs leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Panel - Theory & Pattern Selection */}

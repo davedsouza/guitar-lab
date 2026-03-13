@@ -114,6 +114,40 @@ export default function Progressions() {
           <p className="text-purple-200">Master the progressions used in thousands of songs</p>
         </div>
 
+        {/* Intro */}
+        <div className="space-y-4 mb-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-3">What is a Chord Progression?</h2>
+            <p className="text-purple-200 text-sm leading-relaxed mb-4">
+              A chord progression is a sequence of chords that repeats to form the harmonic backbone of a song. Most songs are built on just 3–4 chords cycling in a pattern. The chords create tension and release — moving away from home and back again — which is what gives music its emotional shape.
+            </p>
+            <div className="bg-white/10 rounded-xl p-4 border-l-4 border-amber-400">
+              <p className="text-amber-200 text-sm leading-relaxed">
+                <span className="font-semibold text-amber-300">One progression, hundreds of songs.</span> The I–V–vi–IV progression underpins Let It Be, Don't Stop Believin', Someone Like You, and thousands more. The chords are the same — the melody, tempo, and feel make them sound different.
+              </p>
+            </div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 className="text-xl font-bold text-white mb-4">Why Progressions Are Worth Studying</h2>
+            <div className="grid sm:grid-cols-2 gap-3 mb-4">
+              {[
+                { icon: "⚡", title: "Learn songs in minutes", body: "Once you recognise a progression by ear, you can pick up any song that uses it without looking up the chords." },
+                { icon: "😢", title: "Understand why music feels the way it does", body: "Minor progressions feel sad, major feel bright, certain sequences create tension. You'll start hearing it intentionally." },
+                { icon: "✍️", title: "Write your own songs", body: "Most songwriters start with a progression they love. Understanding why it works gives you a foundation to build on." },
+                { icon: "🔄", title: "Same key, opposite emotion", body: "The same I–V–vi–IV in minor key feels completely different. Structure stays, emotion flips." },
+              ].map((item) => (
+                <div key={item.title} className="bg-white/5 rounded-xl p-4 flex gap-3">
+                  <span className="text-2xl shrink-0">{item.icon}</span>
+                  <div>
+                    <div className="text-white font-semibold text-sm mb-1">{item.title}</div>
+                    <p className="text-purple-300 text-xs leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Panel - Controls */}
@@ -126,7 +160,7 @@ export default function Progressions() {
                   <button
                     key={index}
                     onClick={() => setSelectedKey(index)}
-                    className={`py-3 px-4 rounded-lg font-semibold transition-all ${
+                    className={`py-3 px-2 sm:px-4 text-sm sm:text-base rounded-lg font-semibold transition-all active:scale-95 ${
                       selectedKey === index
                         ? "bg-purple-600 text-white scale-105"
                         : "bg-white/20 text-purple-200 hover:bg-white/30"

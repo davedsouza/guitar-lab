@@ -181,6 +181,30 @@ const MODULES: Module[] = [
     cta: "Find Your Backing →",
     tags: ["backing chords", "modes", "pentatonic", "dorian", "mixolydian", "phrygian", "lydian", "aeolian", "vamp", "progressions", "chord scale", "soloing"],
   },
+  {
+    href: "/open-tunings",
+    icon: "🪕",
+    title: "Open Tunings",
+    description: "Retune to Open G, Open D, DADGAD, and Open E. Unlock slide guitar, drone sounds, and chord voicings impossible in standard tuning.",
+    cta: "Explore Open Tunings →",
+    tags: ["open tuning", "open g", "open d", "dadgad", "open e", "slide guitar", "keith richards", "joni mitchell", "duane allman", "bottleneck", "delta blues", "celtic", "drone"],
+  },
+  {
+    href: "/funk-guitar",
+    icon: "🎛️",
+    title: "Funk Guitar",
+    description: "Master the chicken scratch, 16th note grooves, dominant 9th voicings, and the wah pedal. Rhythm, pocket, and space — the way James Brown and Nile Rodgers do it.",
+    cta: "Get in the Pocket →",
+    tags: ["funk", "rhythm", "chicken scratch", "dead notes", "muting", "16th notes", "groove", "wah", "nile rodgers", "james brown", "prince", "dominant 9th", "staccato"],
+  },
+  {
+    href: "/standard-notation",
+    icon: "🎼",
+    title: "Standard Notation",
+    description: "Read music the way every other instrument does. Learn the staff, note values, key signatures, and train note recognition with the interactive Note Trainer.",
+    cta: "Learn to Read Music →",
+    tags: ["standard notation", "sheet music", "treble clef", "note reading", "rhythm", "key signatures", "time signatures", "sight reading", "note trainer", "staff", "theory"],
+  },
 ]
 
 export default function Home() {

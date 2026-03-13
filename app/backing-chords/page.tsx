@@ -5,15 +5,18 @@ import Link from "next/link"
 import ChordDiagram from "@/components/ChordDiagram"
 import { CHORD_VOICINGS } from "@/lib/chordShapes"
 
-type Tab = "how-it-works" | "pentatonic" | "dorian" | "mixolydian" | "phrygian" | "lydian-aeolian" | "practice"
+type Tab = "how-it-works" | "pentatonic" | "major" | "blues" | "dorian" | "mixolydian" | "phrygian" | "lydian-aeolian" | "locrian" | "practice"
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "how-it-works",   label: "How It Works" },
   { id: "pentatonic",     label: "Pentatonic" },
+  { id: "major",          label: "Major" },
+  { id: "blues",          label: "Blues" },
   { id: "dorian",         label: "Dorian" },
   { id: "mixolydian",     label: "Mixolydian" },
   { id: "phrygian",       label: "Phrygian" },
   { id: "lydian-aeolian", label: "Lydian & Aeolian" },
+  { id: "locrian",        label: "Locrian" },
   { id: "practice",       label: "Practice" },
 ]
 
@@ -95,9 +98,22 @@ function noteAt(rootIdx: number, semitones: number): string {
   return CHROMATIC[(rootIdx + semitones) % 12]
 }
 
-type ExplorerMode = "pentatonic-minor" | "pentatonic-major" | "dorian" | "mixolydian" | "phrygian" | "lydian" | "aeolian"
+type ExplorerMode = "pentatonic-minor" | "pentatonic-major" | "dorian" | "mixolydian" | "phrygian" | "lydian" | "aeolian" | "major" | "blues" | "locrian"
 
 interface ChordEntry { name: string; root: string; quality: string; role: string }
+
+const MODE_INTERVALS: Record<ExplorerMode, { semitones: number[]; labels: string[]; characteristic?: number }> = {
+  "pentatonic-minor": { semitones: [0, 3, 5, 7, 10],    labels: ["Root", "♭3", "4",  "5",  "♭7"] },
+  "pentatonic-major": { semitones: [0, 2, 4, 7, 9],     labels: ["Root", "2",  "3",  "5",  "6"] },
+  "dorian":           { semitones: [0, 2, 3, 5, 7, 9, 10],  labels: ["1", "2", "♭3", "4",  "5",  "6",  "♭7"], characteristic: 5 },
+  "mixolydian":       { semitones: [0, 2, 4, 5, 7, 9, 10],  labels: ["1", "2", "3",  "4",  "5",  "6",  "♭7"], characteristic: 6 },
+  "phrygian":         { semitones: [0, 1, 3, 5, 7, 8, 10],  labels: ["1", "♭2","♭3", "4",  "5",  "♭6", "♭7"], characteristic: 1 },
+  "lydian":           { semitones: [0, 2, 4, 6, 7, 9, 11],  labels: ["1", "2", "3",  "#4", "5",  "6",  "7"],  characteristic: 3 },
+  "aeolian":          { semitones: [0, 2, 3, 5, 7, 8, 10],  labels: ["1", "2", "♭3", "4",  "5",  "♭6", "♭7"], characteristic: 5 },
+  "major":            { semitones: [0, 2, 4, 5, 7, 9, 11],  labels: ["1", "2", "3",  "4",  "5",  "6",  "7"] },
+  "blues":            { semitones: [0, 3, 5, 6, 7, 10],     labels: ["Root", "♭3", "4", "♭5", "5", "♭7"], characteristic: 3 },
+  "locrian":          { semitones: [0, 1, 3, 5, 6, 8, 10],  labels: ["1", "♭2", "♭3", "4", "♭5", "♭6", "♭7"], characteristic: 4 },
+}
 
 function getGroups(mode: ExplorerMode, ri: number): Record<string, ChordEntry[]> {
   const n = (s: number) => noteAt(ri, s)
@@ -177,13 +193,52 @@ function getGroups(mode: ExplorerMode, ri: number): Record<string, ChordEntry[]>
     ],
   }
   // aeolian
-  return {
+  if (mode === "aeolian") return {
     "Aeolian Vamps": [
       { name: `${n(0)}m`,    root: n(0),  quality: "Minor",  role: "i — home" },
       { name: n(10),         root: n(10), quality: "Major",  role: "♭VII — searching" },
       { name: n(9),          root: n(9),  quality: "Major",  role: "♭VI — sadness ✦" },
       { name: n(3),          root: n(3),  quality: "Major",  role: "♭III — lift" },
       { name: `${n(5)}m`,    root: n(5),  quality: "Minor",  role: "iv — darker pull" },
+    ],
+  }
+  if (mode === "major") return {
+    "Major Key Core": [
+      { name: n(0),          root: n(0),  quality: "Major",      role: "I — home" },
+      { name: n(5),          root: n(5),  quality: "Major",      role: "IV — lift" },
+      { name: n(7),          root: n(7),  quality: "Major",      role: "V — tension" },
+      { name: `${n(9)}m`,    root: n(9),  quality: "Minor",      role: "vi — relative minor" },
+    ],
+    "Full Diatonic": [
+      { name: n(0),            root: n(0),  quality: "Major",      role: "I" },
+      { name: `${n(2)}m`,      root: n(2),  quality: "Minor",      role: "ii" },
+      { name: `${n(4)}m`,      root: n(4),  quality: "Minor",      role: "iii" },
+      { name: n(5),            root: n(5),  quality: "Major",      role: "IV" },
+      { name: n(7),            root: n(7),  quality: "Major",      role: "V" },
+      { name: `${n(9)}m`,      root: n(9),  quality: "Minor",      role: "vi" },
+      { name: `${n(11)}dim`,   root: n(11), quality: "Diminished", role: "vii°" },
+    ],
+  }
+  if (mode === "blues") return {
+    "12-Bar Blues": [
+      { name: `${n(0)}7`, root: n(0), quality: "Dominant 7th", role: "I7 — home" },
+      { name: `${n(5)}7`, root: n(5), quality: "Dominant 7th", role: "IV7 — lift" },
+      { name: `${n(7)}7`, root: n(7), quality: "Dominant 7th", role: "V7 — tension" },
+    ],
+    "Rock / Blues": [
+      { name: n(0),  root: n(0),  quality: "Major", role: "I — root" },
+      { name: n(5),  root: n(5),  quality: "Major", role: "IV — lift" },
+      { name: n(7),  root: n(7),  quality: "Major", role: "V — drive" },
+      { name: n(10), root: n(10), quality: "Major", role: "♭VII — rock edge" },
+    ],
+  }
+  // locrian
+  return {
+    "Locrian Vamps": [
+      { name: `${n(0)}dim`, root: n(0),  quality: "Diminished", role: "i° — tense home" },
+      { name: n(1),          root: n(1),  quality: "Major",      role: "♭II — escape ✦" },
+      { name: n(10),         root: n(10), quality: "Major",      role: "♭VII" },
+      { name: n(3),          root: n(3),  quality: "Major",      role: "♭III" },
     ],
   }
 }
@@ -225,6 +280,43 @@ function KeyChordExplorer({ mode, title = "Try It In Your Key" }: { mode: Explor
           </button>
         ))}
       </div>
+
+      {/* Scale notes */}
+      {(() => {
+        const { semitones, labels, characteristic } = MODE_INTERVALS[mode]
+        return (
+          <div className="mb-5">
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Scale Notes</p>
+            <div className="flex flex-wrap gap-2">
+              {semitones.map((s, i) => {
+                const note = noteAt(ri, s)
+                const isRoot = i === 0
+                const isChar = characteristic !== undefined && i === characteristic
+                return (
+                  <div key={i} className="text-center">
+                    <div className={`px-3 py-1.5 rounded-lg text-sm font-bold ${
+                      isRoot  ? "bg-amber-500 text-black" :
+                      isChar  ? "bg-purple-500 text-white" :
+                                "bg-white/15 text-white"
+                    }`}>
+                      {note}
+                    </div>
+                    <p className={`text-xs mt-0.5 ${isRoot ? "text-amber-400" : isChar ? "text-purple-400" : "text-slate-500"}`}>
+                      {labels[i]}
+                    </p>
+                  </div>
+                )
+              })}
+            </div>
+            {characteristic !== undefined && (
+              <p className="text-xs text-purple-400 mt-2">
+                <span className="bg-purple-500 text-white rounded px-1.5 py-0.5 text-xs font-bold mr-1">{noteAt(ri, semitones[characteristic])}</span>
+                is the characteristic note — the note that defines this mode's sound
+              </p>
+            )}
+          </div>
+        )
+      })()}
 
       {/* Chord groups */}
       {Object.entries(groups).map(([groupName, chords]) => (
@@ -911,6 +1003,221 @@ function LydianAeolianTab() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+function MajorTab() {
+  return (
+    <div>
+      <div className="bg-white/10 border-l-4 border-yellow-400 rounded-xl p-5 mb-6">
+        <h2 className="text-2xl font-bold text-white mb-1">Major Scale (Ionian)</h2>
+        <p className="text-slate-300 text-sm font-mono mb-2">1 – 2 – 3 – 4 – 5 – 6 – 7</p>
+        <p className="text-purple-200 text-sm mb-2"><span className="text-white font-semibold">Sound: </span>Bright, happy, resolved. The foundation of Western music.</p>
+        <p className="text-amber-300 text-sm"><span className="text-white font-semibold">Natural home: </span>Any major key progression — I, IV, V, vi</p>
+      </div>
+
+      <Card title="Why the Major Scale Is Different">
+        <p className="text-purple-200 text-sm mb-3">
+          The major scale isn&apos;t a &quot;mode&quot; with a single characteristic note to activate — it <em>is</em> the reference. All 7 diatonic chords work under it.
+          Your job is to choose which chords to emphasise for the mood you want.
+        </p>
+        <div className="grid sm:grid-cols-2 gap-3 text-sm">
+          {[
+            { prog: "I – IV – V",       feel: "Classic rock, country — timeless & triumphant" },
+            { prog: "I – V – vi – IV",  feel: "Pop mega-hit — every major hit ever written" },
+            { prog: "I – vi – IV – V",  feel: "50s doo-wop, romantic ballads" },
+            { prog: "I – ii – IV – V",  feel: "Jazz-pop, smooth & sophisticated" },
+          ].map(r => (
+            <div key={r.prog} className="bg-white/5 rounded-xl p-3 border border-white/10">
+              <p className="text-green-300 font-mono font-bold text-xs mb-1">{r.prog}</p>
+              <p className="text-purple-300 text-xs">{r.feel}</p>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      <Card title="Best Backing Progressions for Major Scale (key of C)">
+        <div className="space-y-3">
+          <ChordProg chords={["C", "F", "G"]} label="I – IV – V — the backbone of rock and country" />
+          <ChordProg chords={["C", "G", "Am", "F"]} label="I – V – vi – IV — four-chord hit machine" />
+          <ChordProg chords={["C", "Am", "F", "G"]} label="I – vi – IV – V — classic doo-wop / pop" />
+          <ChordProg chords={["C", "Dm", "F", "G"]} label="I – ii – IV – V — jazz-flavoured pop" />
+          <ChordProg chords={["C", "F", "C", "G"]} label="Simple major vamp — pure major scale freedom" />
+        </div>
+      </Card>
+
+      <Callout type="tip">
+        The major scale works equally well over all 7 diatonic chords. The difference is what you <strong className="text-white">emphasise</strong>: land on the 3rd over the I chord for brightness, the 7th for a dreamy maj7 colour, the 5th for stability.
+      </Callout>
+
+      <Card title="Major Scale vs Relative Minor">
+        <p className="text-purple-200 text-sm mb-3">
+          The major scale and its relative minor share all the same notes. C major = A minor (Aeolian) — same 7 notes, different root.
+          The backing chords determine which one your ear hears:
+        </p>
+        <div className="space-y-2">
+          <ChordProg chords={["C", "G", "Am", "F"]} label="→ Sounds major (C is home)" />
+          <ChordProg chords={["Am", "F", "C", "G"]} label="→ Sounds minor (Am is home — same chords!)" />
+        </div>
+        <p className="text-purple-300 text-xs mt-3">Same chords. Same scale. The first chord sets the tonal centre.</p>
+      </Card>
+
+      <KeyChordExplorer mode="major" title="Major Scale — Pick Your Key" />
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+function BluesTab() {
+  return (
+    <div>
+      <div className="bg-white/10 border-l-4 border-blue-400 rounded-xl p-5 mb-6">
+        <h2 className="text-2xl font-bold text-white mb-1">Blues Scale</h2>
+        <p className="text-slate-300 text-sm font-mono mb-2">Root – ♭3 – 4 – ♭5 – 5 – ♭7</p>
+        <p className="text-purple-200 text-sm mb-2"><span className="text-white font-semibold">Sound: </span>Raw, gritty, expressive, emotional. The DNA of rock and blues.</p>
+        <p className="text-amber-300 text-sm"><span className="text-white font-semibold">The blue note: </span>The ♭5 (tritone) — the single note that gives blues its characteristic tension</p>
+      </div>
+
+      <Card title="What Makes the Blues Scale">
+        <p className="text-purple-200 text-sm mb-3">
+          The blues scale is the minor pentatonic with one extra note added: the ♭5, also called the &quot;blue note&quot; or tritone.
+          That single addition transforms pentatonic from versatile to raw and soulful.
+        </p>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {["Root", "♭3", "4", ["♭5 ★", true], "5", "♭7"].map((n, i) => (
+            <div key={i} className="text-center">
+              <div className={`px-3 py-1.5 rounded-lg text-sm font-bold ${Array.isArray(n) ? "bg-blue-500 text-white" : "bg-white/15 text-white"}`}>
+                {Array.isArray(n) ? n[0] : n}
+              </div>
+              {Array.isArray(n) && <p className="text-blue-400 text-xs mt-0.5">blue note</p>}
+            </div>
+          ))}
+        </div>
+        <p className="text-purple-300 text-xs">
+          The ♭5 sits exactly between the 4 and 5 — a tritone above the root. It creates maximum harmonic tension, which is why it sounds so expressive when bent or used as a passing note.
+        </p>
+      </Card>
+
+      <Card title="The Blues Scale's Natural Home: Dominant 7th Chords">
+        <p className="text-purple-200 text-sm mb-4">
+          The blues scale was built for 12-bar blues — a three-chord progression using dominant 7th chords.
+          The ♭3 in your scale &quot;fights&quot; the major 3rd in the chord, creating intentional tension that resolves beautifully.
+        </p>
+        <div className="space-y-3">
+          <ChordProg chords={["A7", "D7", "A7", "A7"]} label="12-bar bars 1–4 (I7)" />
+          <ChordProg chords={["D7", "D7", "A7", "A7"]} label="12-bar bars 5–8 (IV7 → I7)" />
+          <ChordProg chords={["E7", "D7", "A7", "E7"]} label="12-bar bars 9–12 (V7 → IV7 → I7 → turnaround)" />
+        </div>
+      </Card>
+
+      <Card title="Blues Scale Over Non-Blues Progressions">
+        <div className="space-y-3">
+          <div>
+            <ChordProg chords={["A", "D", "E"]} label="Rock I–IV–V — blues scale adds grit to major chords" />
+            <p className="text-purple-300 text-xs mt-1">The ♭3 against a major chord is deliberate tension — classic rock attitude (AC/DC, Chuck Berry)</p>
+          </div>
+          <div>
+            <ChordProg chords={["Am", "F", "C", "G"]} label="Minor backing — blues scale = more aggressive than plain pentatonic" />
+            <p className="text-purple-300 text-xs mt-1">The ♭5 adds an extra punch over minor progressions</p>
+          </div>
+          <div>
+            <ChordProg chords={["A", "G", "D", "A"]} label="Southern rock vamp — blues scale with major chords" />
+            <p className="text-purple-300 text-xs mt-1">Lynyrd Skynyrd, ZZ Top territory. Bend the ♭5 up to the 5th for maximum expression.</p>
+          </div>
+        </div>
+      </Card>
+
+      <Callout type="tip">
+        Don&apos;t overuse the ♭5 — it&apos;s a <strong className="text-white">passing note</strong>, not a destination. Play it quickly between the 4 and 5, or bend it upward. Landing on it and holding creates an ugly clash. Use it for tension, resolve on the 5th or ♭3.
+      </Callout>
+
+      <TabBlock label="Blues scale lick — ♭5 as passing note (A blues)">
+{`e|--------------------------|
+B|--------------------------|
+G|--7b9--7--5--------------|
+D|----------7--6--5---------|   ♭5 = fret 6 on D string
+A|------------------7--5---|
+E|--------------------------|
+
+The fret 6 (♭5) passes between fret 5 (4th) and fret 7 (5th).
+Bend fret 6 up to fret 7 for maximum blues expression.`}
+      </TabBlock>
+
+      <KeyChordExplorer mode="blues" title="Blues Scale — Pick Your Key" />
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+function LocriañTab() {
+  return (
+    <div>
+      <div className="bg-white/10 border-l-4 border-red-500 rounded-xl p-5 mb-6">
+        <h2 className="text-2xl font-bold text-white mb-1">Locrian</h2>
+        <p className="text-slate-300 text-sm font-mono mb-2">1 – ♭2 – ♭3 – 4 – ♭5 – ♭6 – ♭7</p>
+        <p className="text-purple-200 text-sm mb-2"><span className="text-white font-semibold">Sound: </span>Extremely dark, unstable, tense. The most dissonant of all modes.</p>
+        <p className="text-amber-300 text-sm"><span className="text-white font-semibold">Defining feature: </span>The ♭5 makes the home chord a diminished triad — there is no stable resting point</p>
+      </div>
+
+      <Callout type="warning">
+        Locrian is the most theoretically important but practically rare mode. The diminished home chord (i°) has no root fifth — it never truly resolves. Most musicians use it in short bursts for dark colour, not as a full tonal centre.
+      </Callout>
+
+      <Card title="Why Locrian Is So Tense">
+        <p className="text-purple-200 text-sm mb-3">
+          Every other mode has a perfect 5th above the root (7 semitones), which creates a stable home chord.
+          Locrian has a ♭5 (6 semitones) — a tritone — making the i chord diminished. There&apos;s no stability anywhere.
+        </p>
+        <div className="space-y-2 text-sm">
+          {[
+            { mode: "Phrygian", home: "Em (minor — stable)", reason: "Has perfect 5th" },
+            { mode: "Aeolian",  home: "Am (minor — stable)", reason: "Has perfect 5th" },
+            { mode: "Locrian",  home: "B° (diminished — unstable!)", reason: "Has tritone ♭5" },
+          ].map(r => (
+            <div key={r.mode} className="flex items-center gap-3 border-b border-white/10 pb-2">
+              <span className="text-white font-semibold w-24">{r.mode}</span>
+              <span className="text-purple-300 text-xs flex-1">{r.home}</span>
+              <span className="text-amber-400 text-xs">{r.reason}</span>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      <Card title="The ♭II Chord — Locrian's Only Escape">
+        <p className="text-purple-200 text-sm mb-4">
+          The one chord that gives Locrian any sense of movement is the ♭II major — one half-step above the root.
+          It contains the ♭2 (the other characteristic note) and feels like a momentary release from the tension.
+        </p>
+        <ChordProg chords={["Bdim", "C"]} label="B Locrian — i° → ♭II (the defining Locrian movement)" />
+        <p className="text-purple-300 text-xs mb-3">C major is the ♭II of B. The move from Bdim to C is the Locrian signature.</p>
+        <ChordProg chords={["Bdim", "C", "Am", "C"]} label="Expanded Locrian vamp" />
+      </Card>
+
+      <Card title="Where Locrian Actually Gets Used">
+        <div className="space-y-2 text-sm">
+          {[
+            { context: "Metal & Djent", use: "Half-time riffs built around the tritone — the ♭5 interval creates maximum heaviness", example: "Meshuggah, Periphery" },
+            { context: "Film scoring", use: "Short Locrian passages signal dread, horror, or imminent danger", example: "Hans Zimmer tension cues" },
+            { context: "Jazz (brief)", use: "The 7th degree of any major key is Locrian — used over half-diminished chords (ø7)", example: "ii°7 in minor key ii-V-i" },
+            { context: "Passing colour", use: "Single-bar Locrian runs before resolving to a more stable mode", example: "Prog rock, Dream Theater" },
+          ].map(r => (
+            <div key={r.context} className="border-b border-white/10 pb-3">
+              <p className="text-white font-semibold">{r.context}</p>
+              <p className="text-purple-300 text-xs mt-0.5">{r.use}</p>
+              <p className="text-amber-400 text-xs mt-0.5">e.g. {r.example}</p>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      <Callout type="exercise">
+        <p className="font-semibold mb-1">Locrian Tension Exercise:</p>
+        Loop Bdim → C (2 bars each, slow — 55 BPM). Solo using B Locrian. Land heavily on the F# (♭5) over Bdim to maximise the tritone tension. When you hit C, resolve to E or G (the 3rd or 5th of C major). Feel how the tension needs that resolution.
+      </Callout>
+
+      <KeyChordExplorer mode="locrian" title="Locrian — Pick Your Key" />
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 function PracticeTab() {
   const [openIdx, setOpenIdx] = useState<number | null>(null)
 
@@ -1035,12 +1342,15 @@ function PracticeTab() {
             </thead>
             <tbody className="divide-y divide-white/10">
               {[
-                { scale: "Minor Pentatonic", act: "—  (works everywhere)", vamp: "Am or A7", full: "Am–G–F–G or A7–D7–E7" },
-                { scale: "Dorian",           act: "IV major (D over Am)", vamp: "Am – D", full: "Am – G – D – Am" },
-                { scale: "Mixolydian",       act: "♭VII major (F over G)", vamp: "G – F", full: "G – F – C – G" },
-                { scale: "Phrygian",         act: "♭II major (F over Em)", vamp: "Em – F", full: "Am – G – F – E" },
-                { scale: "Lydian",           act: "II major (G over F)",   vamp: "Fmaj7 – G", full: "Fmaj7 – G – Am – G" },
-                { scale: "Aeolian",          act: "♭VI major (F over Am)", vamp: "Am – F", full: "Am – F – C – G" },
+                { scale: "Minor Pentatonic", act: "— (works everywhere)",   vamp: "Am or A7",   full: "Am–G–F–G or A7–D7–E7" },
+                { scale: "Major Scale",      act: "I, IV, V all work",       vamp: "C – G",      full: "C – G – Am – F" },
+                { scale: "Blues Scale",      act: "Dominant 7 (A7, D7, E7)", vamp: "A7",         full: "A7 – D7 – E7 (12-bar)" },
+                { scale: "Dorian",           act: "IV major (D over Am)",    vamp: "Am – D",     full: "Am – G – D – Am" },
+                { scale: "Mixolydian",       act: "♭VII major (F over G)",   vamp: "G – F",      full: "G – F – C – G" },
+                { scale: "Phrygian",         act: "♭II major (F over Em)",   vamp: "Em – F",     full: "Am – G – F – E" },
+                { scale: "Lydian",           act: "II major (G over F)",     vamp: "Fmaj7 – G",  full: "Fmaj7 – G – Am – G" },
+                { scale: "Aeolian",          act: "♭VI major (F over Am)",   vamp: "Am – F",     full: "Am – F – C – G" },
+                { scale: "Locrian",          act: "♭II major (C over Bdim)", vamp: "Bdim – C",   full: "Bdim – C – Am – C" },
               ].map(r => (
                 <tr key={r.scale}>
                   <td className="py-2 text-white font-semibold">{r.scale}</td>
@@ -1094,10 +1404,13 @@ export default function BackingChordsPage() {
         <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10">
           {activeTab === "how-it-works"   && <HowItWorksTab />}
           {activeTab === "pentatonic"     && <PentatonicTab />}
+          {activeTab === "major"          && <MajorTab />}
+          {activeTab === "blues"          && <BluesTab />}
           {activeTab === "dorian"         && <DorianTab />}
           {activeTab === "mixolydian"     && <MixolydianTab />}
           {activeTab === "phrygian"       && <PhrygianTab />}
           {activeTab === "lydian-aeolian" && <LydianAeolianTab />}
+          {activeTab === "locrian"        && <LocriañTab />}
           {activeTab === "practice"       && <PracticeTab />}
         </div>
       </div>

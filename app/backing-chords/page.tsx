@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 
 type Tab = "how-it-works" | "pentatonic" | "dorian" | "mixolydian" | "phrygian" | "lydian-aeolian" | "practice"
@@ -58,15 +58,12 @@ function ChordProg({ chords, label }: { chords: string[]; label?: string }) {
       {label && <p className="text-purple-400 text-xs mb-2">{label}</p>}
       <div className="flex items-center gap-2 flex-wrap">
         {chords.map((c, i) => (
-          <>
-            <span
-              key={i}
-              className="bg-purple-600/30 border border-purple-500/40 text-white font-bold rounded-lg px-3 py-1.5 text-sm"
-            >
+          <React.Fragment key={i}>
+            <span className="bg-purple-600/30 border border-purple-500/40 text-white font-bold rounded-lg px-3 py-1.5 text-sm">
               {c}
             </span>
-            {i < chords.length - 1 && <span key={`arr-${i}`} className="text-purple-500 text-xs">→</span>}
-          </>
+            {i < chords.length - 1 && <span className="text-purple-500 text-xs">→</span>}
+          </React.Fragment>
         ))}
       </div>
     </div>

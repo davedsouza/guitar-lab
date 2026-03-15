@@ -34,13 +34,13 @@ export default function ChordDiagram({ chordName, fingers, frets, size = 'medium
   const numFrets = calculatedFrets.length - 1
 
   const sizeClasses = {
-    small: { width: 100, height: 120, stringGap: 16, fretGap: 20 },
-    medium: { width: 140, height: 170, stringGap: 22, fretGap: 28 },
-    large: { width: 180, height: 220, stringGap: 28, fretGap: 36 }
+    small:  { width: 125, height: 145, stringGap: 16, fretGap: 20 },
+    medium: { width: 165, height: 180, stringGap: 22, fretGap: 28 },
+    large:  { width: 205, height: 220, stringGap: 28, fretGap: 36 }
   }
 
   const dims = sizeClasses[size]
-  const startX = 20
+  const startX = 25
   const startY = 40
 
   return (

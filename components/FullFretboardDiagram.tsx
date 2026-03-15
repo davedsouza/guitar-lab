@@ -1,10 +1,15 @@
 import { getScaleIntervals } from "@/lib/scalePatterns"
 
+type FretDegreeRole = 'target' | 'color' | 'passing' | 'tension'
+
 interface FullFretboardDiagramProps {
   scaleName: string
   rootNoteIndex: number
   scaleType: string
   showNoteNames?: boolean
+  degreeRoles?: { role: FretDegreeRole }[]
+  highlightedDegrees?: number[]
+  onNoteClick?: (degreeIndex: number) => void
 }
 
 const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
@@ -14,7 +19,10 @@ export default function FullFretboardDiagram({
   scaleName,
   rootNoteIndex,
   scaleType,
-  showNoteNames = false
+  showNoteNames = false,
+  degreeRoles,
+  highlightedDegrees,
+  onNoteClick,
 }: FullFretboardDiagramProps) {
   const strings = 6
   const numFrets = 12 // Show frets 0-12
@@ -138,15 +146,40 @@ export default function FullFretboardDiagram({
               const x = startX + (fret === 0 ? 0 : (fret - 0.5) * fretWidth)
               const y = startY + stringIndex * stringGap
 
-              // Color based on interval: root is orange, others vary in purple shades
+              const ROLE_COLORS: Record<FretDegreeRole, string> = {
+                target: "#f59e0b", color: "#a855f7", passing: "#3b82f6", tension: "#ef4444",
+              }
               const getColor = () => {
+                if (degreeRoles && intervalIndex >= 0) {
+                  const role = degreeRoles[intervalIndex]?.role
+                  if (role) return ROLE_COLORS[role]
+                }
                 if (isRoot) return "#f59e0b"
                 const colors = ["#a855f7", "#9333ea", "#7c3aed", "#6d28d9", "#5b21b6"]
                 return colors[intervalIndex % colors.length]
               }
 
+              const seqActive = highlightedDegrees && highlightedDegrees.length > 0
+              const isHighlighted = !seqActive || highlightedDegrees!.includes(intervalIndex)
+              const noteOpacity = isHighlighted ? 0.95 : 0.12
+
               return (
-                <g key={`note-${stringIndex}-${fret}`}>
+                <g
+                  key={`note-${stringIndex}-${fret}`}
+                  onClick={() => onNoteClick?.(intervalIndex)}
+                  style={{ cursor: onNoteClick ? 'pointer' : 'default' }}
+                >
+                  {seqActive && isHighlighted && (
+                    <circle
+                      cx={x}
+                      cy={y}
+                      r={isRoot ? 19 : 17}
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="2"
+                      opacity="0.55"
+                    />
+                  )}
                   <circle
                     cx={x}
                     cy={y}
@@ -154,9 +187,9 @@ export default function FullFretboardDiagram({
                     fill={getColor()}
                     stroke="white"
                     strokeWidth="2.5"
-                    opacity="0.95"
+                    opacity={noteOpacity}
                   />
-                  {showNoteNames ? (
+                  {showNoteNames && isHighlighted ? (
                     <text
                       x={x}
                       y={y + 1}
@@ -169,7 +202,7 @@ export default function FullFretboardDiagram({
                       {noteName.replace("#", "♯")}
                     </text>
                   ) : (
-                    isRoot && (
+                    isRoot && isHighlighted && (
                       <text
                         x={x}
                         y={y + 1}
@@ -216,14 +249,37 @@ export default function FullFretboardDiagram({
 
       {/* Legend */}
       <div className="mt-4 flex flex-wrap gap-4 justify-center text-sm">
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-full bg-amber-500 border-2 border-white"></div>
-          <span className="text-purple-200">Root Note ({NOTES[rootNoteIndex]})</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-full bg-purple-600 border-2 border-white"></div>
-          <span className="text-purple-200">Scale Notes</span>
-        </div>
+        {degreeRoles ? (
+          <>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded-full bg-amber-500 border-2 border-white" />
+              <span className="text-amber-200">Landing tone</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded-full bg-purple-600 border-2 border-white" />
+              <span className="text-purple-200">Colour tone</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded-full bg-blue-600 border-2 border-white" />
+              <span className="text-blue-200">Passing tone</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded-full bg-red-600 border-2 border-white" />
+              <span className="text-red-200">Tension tone</span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-full bg-amber-500 border-2 border-white" />
+              <span className="text-purple-200">Root Note ({NOTES[rootNoteIndex]})</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-full bg-purple-600 border-2 border-white" />
+              <span className="text-purple-200">Scale Notes</span>
+            </div>
+          </>
+        )}
       </div>
 
       <div className="mt-2 text-purple-300 text-xs text-center">

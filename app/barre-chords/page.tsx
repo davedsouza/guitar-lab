@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
+import ChordDiagram from "@/components/ChordDiagram"
 
 // ─── Callout component ───────────────────────────────────────────────────────
 type CalloutType = "tip" | "warning" | "insight" | "exercise"
@@ -336,6 +337,9 @@ export default function BarreChordsPage() {
                 <p className="text-purple-200 text-xs mb-3">
                   Finger guide: 1 = index (barre), 2 = middle, 3 = ring, 4 = pinky
                 </p>
+                <div className="flex justify-center mb-3">
+                  <ChordDiagram chordName="F" fingers={[1, 3, 3, 2, 1, 1]} size="medium" />
+                </div>
                 <Tab>{`  e |---1---|  (index — barre)
   B |---1---|  (index — barre)
   G |---2---|  (middle finger, fret 2)
@@ -379,6 +383,10 @@ export default function BarreChordsPage() {
 
               <Card>
                 <h3 className="text-white font-semibold mb-2">Open E vs. barre F</h3>
+                <div className="flex gap-6 flex-wrap justify-center mb-3">
+                  <ChordDiagram chordName="Open E" fingers={[0, 2, 2, 1, 0, 0]} size="medium" />
+                  <ChordDiagram chordName="F (barre)" fingers={[1, 3, 3, 2, 1, 1]} size="medium" />
+                </div>
                 <Tab>{`  Open E major        F major (barre fret 1)
   e |--0--|            e |--1--|
   B |--0--|            B |--1--|
@@ -416,6 +424,10 @@ export default function BarreChordsPage() {
 
               <Card>
                 <h3 className="text-white font-semibold mb-3">E major shape vs E minor shape</h3>
+                <div className="flex gap-6 flex-wrap justify-center mb-3">
+                  <ChordDiagram chordName="F major" fingers={[1, 3, 3, 2, 1, 1]} size="medium" />
+                  <ChordDiagram chordName="Fm minor" fingers={[1, 3, 3, 1, 1, 1]} size="medium" />
+                </div>
                 <Tab>{`  E major shape         E minor shape
   e |--1--|             e |--1--|
   B |--1--|             B |--1--|
@@ -437,6 +449,10 @@ export default function BarreChordsPage() {
 
               <Card>
                 <h3 className="text-white font-semibold mb-3">Fm and Bm — TAB examples</h3>
+                <div className="flex gap-6 flex-wrap justify-center mb-3">
+                  <ChordDiagram chordName="Fm" fingers={[1, 3, 3, 1, 1, 1]} size="medium" />
+                  <ChordDiagram chordName="Bm" fingers={[7, 9, 9, 7, 7, 7]} size="medium" />
+                </div>
                 <Tab>{`  Fm (fret 1)                  Bm (fret 7)
   e |--1--|                    e |--7--|
   B |--1--|                    B |--7--|
@@ -496,6 +512,9 @@ export default function BarreChordsPage() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-purple-300 text-xs font-semibold mb-2">Option A — Ring finger barre (strings 2–4)</p>
+                    <div className="flex justify-center mb-2">
+                      <ChordDiagram chordName="Bb (opt A)" fingers={['x', 1, 3, 3, 3, 1]} size="small" />
+                    </div>
                     <Tab>{`  e |--1--|  (index barre)
   B |--3--|  (ring barre)
   G |--3--|  (ring barre)
@@ -506,6 +525,9 @@ export default function BarreChordsPage() {
                   </div>
                   <div>
                     <p className="text-purple-300 text-xs font-semibold mb-2">Option B — Three separate fingers</p>
+                    <div className="flex justify-center mb-2">
+                      <ChordDiagram chordName="Bb (opt B)" fingers={['x', 1, 2, 3, 4, 1]} size="small" />
+                    </div>
                     <Tab>{`  e |--1--|  (index barre)
   B |--4--|  (pinky)
   G |--3--|  (ring)
@@ -553,6 +575,10 @@ export default function BarreChordsPage() {
 
               <Card>
                 <h3 className="text-white font-semibold mb-2">Open A vs. barre B comparison</h3>
+                <div className="flex gap-6 flex-wrap justify-center mb-3">
+                  <ChordDiagram chordName="Open A" fingers={['x', 0, 2, 2, 2, 0]} size="medium" />
+                  <ChordDiagram chordName="B (barre)" fingers={['x', 2, 4, 4, 4, 2]} size="medium" />
+                </div>
                 <Tab>{`  Open A major          B major (A-shape, fret 2)
   e |--0--|             e |--2--|
   B |--2--|             B |--4--|
@@ -584,6 +610,9 @@ export default function BarreChordsPage() {
 
               <Card>
                 <h3 className="text-white font-semibold mb-3">Finger placement — Bm (fret 2)</h3>
+                <div className="flex justify-center mb-3">
+                  <ChordDiagram chordName="Bm (A-shape)" fingers={['x', 2, 4, 4, 3, 2]} size="medium" />
+                </div>
                 <Tab>{`  e |--2--|  (index barre)
   B |--3--|  (middle finger)
   G |--4--|  (ring finger)
@@ -628,6 +657,10 @@ export default function BarreChordsPage() {
 
               <Card>
                 <h3 className="text-white font-semibold mb-3">Am open vs. Dm A-shape barre comparison</h3>
+                <div className="flex gap-6 flex-wrap justify-center mb-3">
+                  <ChordDiagram chordName="Open Am" fingers={['x', 0, 2, 2, 1, 0]} size="medium" />
+                  <ChordDiagram chordName="Dm (barre)" fingers={['x', 5, 7, 7, 6, 5]} size="medium" />
+                </div>
                 <Tab>{`  Open Am                Dm (A-shape barre, fret 5)
   e |--0--|             e |--5--|
   B |--1--|             B |--6--|

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
+import ChordDiagram from "@/components/ChordDiagram"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -174,7 +175,12 @@ function TabTriadInversions() {
         inversion sounds.
       </p>
 
-      <h3 className="text-white font-bold mb-3">C Major — Strings 1-2-3 (e B G)</h3>
+      <h3 className="text-white font-bold mb-3">C Major — All Three Inversions</h3>
+      <div className="flex flex-wrap gap-4 justify-center mb-4">
+        <ChordDiagram chordName="C" fingers={['x',3,2,0,1,0]} size="small" />
+        <ChordDiagram chordName="C/E" fingers={[0,3,2,0,1,0]} size="small" />
+        <ChordDiagram chordName="C/G" fingers={[3,3,2,0,1,0]} size="small" />
+      </div>
       <TabBlock label="Root position — C on bottom (G string)">
 {`e  |---0---|   (E)
 B  |---1---|   (C)
@@ -215,7 +221,12 @@ Shape: G string open, B string fret 1, e string fret 3`}
         the same principle to strings 2-3-4 and 3-4-5 for a darker tone.
       </Callout>
 
-      <h3 className="text-white font-bold mb-3 mt-6">G Major — All Three Inversions (strings 1-2-3)</h3>
+      <h3 className="text-white font-bold mb-3 mt-6">G Major — All Three Inversions</h3>
+      <div className="flex flex-wrap gap-4 justify-center mb-4">
+        <ChordDiagram chordName="G" fingers={[3,2,0,0,0,3]} size="small" />
+        <ChordDiagram chordName="G/B" fingers={['x',2,0,0,0,3]} size="small" />
+        <ChordDiagram chordName="G/D" fingers={['x','x',0,0,0,3]} size="small" />
+      </div>
       <TabBlock label="G major triads — root, 1st, 2nd inversion">
 {`Root position:
 e  |---3---|   (G)
@@ -240,7 +251,12 @@ B  |---3---|   (G... )
 G  |---2---|   (D)  ← D in bass`}
       </TabBlock>
 
-      <h3 className="text-white font-bold mb-3 mt-2">A minor — All Three Inversions (strings 1-2-3)</h3>
+      <h3 className="text-white font-bold mb-3 mt-2">A minor — All Three Inversions</h3>
+      <div className="flex flex-wrap gap-4 justify-center mb-4">
+        <ChordDiagram chordName="Am" fingers={['x',0,2,2,1,0]} size="small" />
+        <ChordDiagram chordName="Am/C" fingers={['x',3,2,2,1,0]} size="small" />
+        <ChordDiagram chordName="Am/E" fingers={[0,0,2,2,1,0]} size="small" />
+      </div>
       <TabBlock label="Am triads — root, 1st, 2nd inversion">
 {`Root position (A in bass — use string 4 as bass reference):
 e  |---0---|   (E = 5th)
@@ -286,6 +302,12 @@ function TabSeventhChordInversions() {
       </p>
 
       <h3 className="text-white font-bold mb-3">Cmaj7 — All Four Inversions</h3>
+      <div className="flex flex-wrap gap-4 justify-center mb-4">
+        <ChordDiagram chordName="Cmaj7" fingers={['x',3,2,0,0,0]} size="small" />
+        <ChordDiagram chordName="Cmaj7/E" fingers={[0,3,2,0,0,0]} size="small" />
+        <ChordDiagram chordName="Cmaj7/G" fingers={[3,3,2,0,0,0]} size="small" />
+        <ChordDiagram chordName="Cmaj7/B" fingers={['x',2,2,0,0,0]} size="small" />
+      </div>
       <TabBlock label="Cmaj7: root, 1st, 2nd, 3rd inversion">
 {`Root position (C in bass) — Cmaj7:
 e  |---0---|   (E)
@@ -321,6 +343,12 @@ E  |---x---|`}
       </TabBlock>
 
       <h3 className="text-white font-bold mb-3 mt-2">G7 — Dominant 7th Inversions</h3>
+      <div className="flex flex-wrap gap-4 justify-center mb-4">
+        <ChordDiagram chordName="G7" fingers={[3,2,0,0,0,1]} size="small" />
+        <ChordDiagram chordName="G7/B" fingers={['x',2,0,0,0,1]} size="small" />
+        <ChordDiagram chordName="G7/D" fingers={['x','x',0,0,0,1]} size="small" />
+        <ChordDiagram chordName="G7/F" fingers={[1,2,0,0,0,1]} size="small" />
+      </div>
       <TabBlock label="G7: root, 1st, 2nd, 3rd inversion">
 {`Root position — G7:
 e  |---1---|   (F = b7th)
@@ -592,6 +620,11 @@ D  |---2---| (E = 5th... or A string fret 0 = A root)`}
       </Card>
 
       <h3 className="text-white font-bold mb-3">ii–V–I Using Drop 2 (Dm7–G7–Cmaj7)</h3>
+      <div className="flex flex-wrap gap-4 justify-center mb-4">
+        <ChordDiagram chordName="Dm7" fingers={['x','x',0,2,1,1]} size="small" />
+        <ChordDiagram chordName="G7" fingers={['x','x',0,0,0,1]} size="small" />
+        <ChordDiagram chordName="Cmaj7" fingers={['x',3,2,0,0,0]} size="small" />
+      </div>
       <TabBlock label="ii-V-I with Drop 2 voicings — move up the neck">
 {`Dm7 Drop 2        G7 Drop 2         Cmaj7 Drop 2
 (strings 1-2-3-4) (strings 1-2-3-4) (strings 1-2-3-4)
@@ -627,6 +660,12 @@ function TabPracticalApplications() {
       </p>
 
       <h3 className="text-white font-bold mb-3">I–IV–V with Moving Bass (G → G/B → C)</h3>
+      <div className="flex flex-wrap gap-4 justify-center mb-4">
+        <ChordDiagram chordName="G" fingers={[3,2,0,0,0,3]} size="small" />
+        <ChordDiagram chordName="G/B" fingers={['x',2,0,0,0,3]} size="small" />
+        <ChordDiagram chordName="C" fingers={['x',3,2,0,1,0]} size="small" />
+        <ChordDiagram chordName="D/F#" fingers={[2,0,0,2,3,2]} size="small" />
+      </div>
       <TabBlock label="Smooth bassline using 1st inversion of G">
 {`G major         G/B (1st inv)    C major
 e  |---3---|    e  |---3---|     e  |---0---|
@@ -654,6 +693,13 @@ Ascending bass line: G – B – C – F# (wide but memorable)`}
       </TabBlock>
 
       <h3 className="text-white font-bold mb-3 mt-2">Descending Bassline (Beatles / Folk Style)</h3>
+      <div className="flex flex-wrap gap-4 justify-center mb-4">
+        <ChordDiagram chordName="C" fingers={['x',3,2,0,1,0]} size="small" />
+        <ChordDiagram chordName="C/B" fingers={['x',2,2,0,1,0]} size="small" />
+        <ChordDiagram chordName="Am" fingers={['x',0,2,2,1,0]} size="small" />
+        <ChordDiagram chordName="Am/G" fingers={[3,0,2,2,1,0]} size="small" />
+        <ChordDiagram chordName="F" fingers={[1,3,3,2,1,1]} size="small" />
+      </div>
       <TabBlock label="C → C/B → Am → Am/G → F — stepwise descent">
 {`C              C/B              Am              Am/G            F
 e  |---0---|   e  |---0---|    e  |---0---|    e  |---0---|    e  |---1---|

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
+import ChordDiagram from "@/components/ChordDiagram"
 
 type Tab = "mindset" | "muting" | "16th-grooves" | "patterns" | "voicings" | "wah-tone" | "practice"
 
@@ -453,6 +454,11 @@ function VoicingsTab() {
         <p className="text-purple-200 text-sm mb-4">
           The dominant 9th chord is the quintessential funk voicing. Rich, slightly tense, never fully at rest — perfect for groove-based music.
         </p>
+        <div className="flex gap-4 flex-wrap justify-center mb-3">
+          <ChordDiagram chordName="E9" fingers={['x', 7, 7, 7, 7, 7]} size="small" />
+          <ChordDiagram chordName="A9" fingers={['x', 5, 5, 6, 5, 5]} size="small" />
+          <ChordDiagram chordName="B9" fingers={['x', 7, 7, 8, 7, 7]} size="small" />
+        </div>
         <TabBlock label="E9 and A9 — the two most important funk chords">
 {`E9 (fret 7):          A9 (fret 5):          B9 (fret 7, A shape):
 e|--7--|                e|--5--|                e|--7--|
@@ -472,6 +478,11 @@ The root is on the A string (5th).`}
         <p className="text-purple-200 text-sm mb-3">
           The cleanest funk sound uses only the top 4 strings. These voicings chop crisp without mud.
         </p>
+        <div className="flex gap-4 flex-wrap justify-center mb-3">
+          <ChordDiagram chordName="E7#9" fingers={['x', 'x', 7, 6, 5, 6]} size="small" />
+          <ChordDiagram chordName="Dom7" fingers={['x', 'x', 5, 4, 5, 5]} size="small" />
+          <ChordDiagram chordName="Min7" fingers={['x', 'x', 5, 5, 4, 5]} size="small" />
+        </div>
         <TabBlock label="High-string funk voicings (strings 1–4 only)">
 {`E7#9 ("Hendrix chord") top 4:   Dominant 7th top 4:   Minor 7th top 4:
 e|--6--|                          e|--5--|                e|--5--|

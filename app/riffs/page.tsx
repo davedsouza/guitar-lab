@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 
-type Tab = "what-makes-a-riff" | "rock" | "blues" | "pop-folk" | "technique"
+type Tab = "what-makes-a-riff" | "rock" | "blues" | "pop-folk" | "technique" | "signature-licks"
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "what-makes-a-riff", label: "What Makes a Riff?" },
@@ -11,6 +11,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "blues", label: "Blues Riffs" },
   { id: "pop-folk", label: "Pop & Folk Riffs" },
   { id: "technique", label: "Learning Technique" },
+  { id: "signature-licks", label: "✦ Signature Licks" },
 ]
 
 function Callout({ type, children }: { type: "tip" | "warning" | "insight" | "exercise"; children: React.ReactNode }) {
@@ -511,6 +512,325 @@ Both versions are valuable — learn to switch mid-riff`}
   )
 }
 
+type StyleFilter = "all" | "blues" | "rock" | "jazz" | "modern"
+
+const GUITARISTS: {
+  name: string
+  years: string
+  style: StyleFilter
+  styleLabel: string
+  tag: string
+  signature: string
+  lick: string
+  lesson: string
+  tone: string
+}[] = [
+  {
+    name: "BB King",
+    years: "1925 – 2015",
+    style: "blues",
+    styleLabel: "Blues",
+    tag: "King of the Blues",
+    signature: "Every note was a human voice. BB never strummed chords — he made one note say more than most guitarists say in a solo. His 'BB Box' is a tiny cluster of pentatonic notes played with full vibrato on every landing.",
+    lick: `e|--5b7~~---5---5b7~~-5---------|
+B|-----------8-----------8-5----|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Key: A blues · 5th position
+b7~~ = bend to pitch, then vibrate heavily
+Land on 5 (A), bend to 7 (C), vibrate
+NEVER rush — let each note breathe 2–4 beats`,
+    lesson: "BB's genius was restraint. Play the bend, hold it, vibrate. Silence between notes is intentional. He said: 'I try to make one note cry.' Copy that — not his speed.",
+    tone: "Neck pickup · Medium gain · Slightly scooped mids · His guitar 'Lucille' was a semi-hollow ES-355",
+  },
+  {
+    name: "Jimi Hendrix",
+    years: "1942 – 1970",
+    style: "blues",
+    styleLabel: "Blues / Rock",
+    tag: "The Electric Messiah",
+    signature: "Hendrix treated the guitar as an orchestra — chords, bass lines, and lead all at once. His double-stop bends and thumb-over-the-neck chord shapes revolutionised what was possible.",
+    lick: `e|--12-12-12b14-12-------12----|
+B|--12-12-12----15-12-12---15--|
+G|-----------------------------|
+D|-----------------------------|
+A|-----------------------------|
+E|-----------------------------|
+
+Key: E blues · 12th position
+Two strings bent simultaneously (double-stop bend)
+Fret both e and B at 12, bend both up together
+The dissonant pull-off to 15 (B) is the Hendrix signature`,
+    lesson: "The double-stop bend: barre e and B strings at the 12th fret with one finger, then push both strings upward together. This is the most-copied Hendrix move in rock history.",
+    tone: "Marshall stack on edge of breakup · Univibe + Fuzz Face (Octavia) · Strat into huge amp — turn it up",
+  },
+  {
+    name: "Eric Clapton",
+    years: "1945 – present",
+    style: "blues",
+    styleLabel: "Blues Rock",
+    tag: "Slowhand",
+    signature: "Clapton's Cream-era playing was ferocious — pentatonic runs delivered with absolute precision and a perfect slow-hand attack. His vibrato is controlled and vocal, always in service of the melody.",
+    lick: `e|--17-17-17b19-17-15-17-15----|
+B|---------------------------17-|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Key: A blues · 17th position (high octave)
+Run from b19 bend down to 15, resolve on 17 (A)
+The b19 is the ♭7 (G) bent up to the root (A)
+Play with an even, deliberate attack — no rushing`,
+    lesson: "Clapton's secret is his right-hand control. He picks every note cleanly with an angled pick. Before speed, focus on each note ringing clearly — 'Slowhand' wasn't slow; he was deliberate.",
+    tone: "Gibson SG or Les Paul through a Marshall Bluesbreaker · Medium-high gain · Bridge pickup",
+  },
+  {
+    name: "Stevie Ray Vaughan",
+    years: "1954 – 1990",
+    style: "blues",
+    styleLabel: "Texas Blues",
+    tag: "Texas Hurricane",
+    signature: "SRV played .013 gauge strings tuned down a half-step — the heaviness of his attack was physical. He combined Albert King's bent notes, Hendrix's chord shapes, and Freddie King's speed into one volcanic style.",
+    lick: `e|--15b17-15-13-15-13-12-13----|
+B|-----------------------------15|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Key: G blues · 15th position
+b17 = full-step bend from 15 up to 17
+Descend fast: 13-12, then resolve to 15 (B string)
+SRV attacked this with his full arm — not just fingers`,
+    lesson: "SRV's vibrato came from his whole arm rotating — not just his wrist. Put your thumb on the back of the neck, grab the string, and rotate your forearm like turning a doorknob. That's the SRV vibrato.",
+    tone: "Strat with .013s tuned Eb · Dumble amp + Tubescreamer · Neck pickup · Everything cranked",
+  },
+  {
+    name: "David Gilmour",
+    years: "1946 – present",
+    style: "rock",
+    styleLabel: "Progressive Rock",
+    tag: "The Feel Master",
+    signature: "Gilmour is the master of less-is-more. A single bent note with perfect vibrato, held in perfect silence, says more than any shred run. His tone — a Stratocaster through a Hiwatt — is one of the most imitated in history.",
+    lick: `e|-------------------------------|
+B|--15b17~~-15-12-15-12----------|
+G|--------------------14-12------|
+D|--------------------------14---|
+A|-------------------------------|
+E|-------------------------------|
+
+Key: D major / B minor · 12th–15th position
+b17~~ = bend to pitch then hold with wide, slow vibrato
+Descend through the minor pentatonic D→C→B
+The SPACE between notes is what makes this Gilmour`,
+    lesson: "Gilmour's vibrato is wide and slow — a whole tone at about 4Hz. Use your whole hand to achieve it. Listen to 'Comfortably Numb' solo 2 and count: he bends, holds, and vibrates for 4 full beats before moving.",
+    tone: "Strat (red '0001') · Hiwatt DR103 · Big Muff fuzz + Boss CE-2 chorus + Binson Echorec · Single-coil neck pickup",
+  },
+  {
+    name: "Carlos Santana",
+    years: "1947 – present",
+    style: "rock",
+    styleLabel: "Latin Rock",
+    tag: "The Sustain King",
+    signature: "Santana found the intersection of rock guitar and Afro-Cuban rhythm. His tone sustains infinitely — he holds notes until they bloom. His phrasing breathes in 8-bar phrases, always singing, never shredding.",
+    lick: `e|--12~~~~~~~~~~-10-12-10--------|
+B|---------------------------13--|
+G|-------------------------------|
+D|-------------------------------|
+A|-------------------------------|
+E|-------------------------------|
+
+Key: A minor · 12th position
+12~~ = play note and let sustain with continuous vibrato
+The 10-12-10 descent is the 'question'
+Landing on 13 (B string, Bb) is the suspended resolution`,
+    lesson: "Santana's tone requires the guitar to 'sing' — use the neck pickup, dial in light overdrive, and dig in with the pick for more contact. The sustain on each note should feel like a held vocal note.",
+    tone: "PRS Custom 22 (or vintage Gibson SG) · Mesa Boogie Mark I · Heavy overdrive · Neck pickup · Volume at 10",
+  },
+  {
+    name: "Duane Allman",
+    years: "1946 – 1971",
+    style: "blues",
+    styleLabel: "Southern Rock / Slide",
+    tag: "Skydog",
+    signature: "Duane Allman was the greatest slide guitarist in rock history. He played a glass Coricidin bottle on his ring finger in standard tuning — his slides were melodic and vocal, not just ornamental.",
+    lick: `e|--/12\--10-/12\--10-----------|
+B|--/12\--10-/12\--10-----------|
+G|--/12~~-----------------9----|
+D|-----------------------------|
+A|-----------------------------|
+E|-----------------------------|
+
+Key: G major · Open strings + 12th fret slide
+/ = slide up into note  \\ = slide off downward
+~~ = vibrate the slide after landing
+Both e and B at 12 = G and D (perfect 5th)`,
+    lesson: "Slide vibrato: after landing on the note with the slide, rotate your wrist side-to-side (not forward-back). Keep the slide parallel to the fret. Mute strings behind the slide with your picking-hand fingers.",
+    tone: "1957 Les Paul Goldtop · Coricidin glass slide · Marshall or Fender amp · Medium-low gain for note definition",
+  },
+  {
+    name: "Gary Moore",
+    years: "1952 – 2011",
+    style: "rock",
+    styleLabel: "Blues Rock",
+    tag: "The Irish Blues Tornado",
+    signature: "Gary Moore combined the fire of rock with the soulfulness of blues at a ferocity nobody else matched. His bends were aggressive — often a full step and a half — and his vibrato was violent and fast.",
+    lick: `e|--15b17b19~~-15-17-15-13--15--|
+B|------------------------------|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Key: A blues · 15th position
+b17b19 = bend in two stages: first to 17, then push further to 19
+This is a 1.5-step bend — requires strong fingers
+~~ = vibrate aggressively at the top of the bend
+End on 15 (A) for resolution`,
+    lesson: "Gary Moore's aggressive bending comes from his left thumb over the neck for extra leverage. Wrap your thumb over the low E side of the neck and push upward with your whole hand. The bend should feel slightly violent.",
+    tone: "1959 Les Paul Standard (Peter Green's guitar) · Marshall JCM800 cranked · Medium pick attack · Bridge pickup",
+  },
+  {
+    name: "John Mayer",
+    years: "1977 – present",
+    style: "modern",
+    styleLabel: "Modern Blues",
+    tag: "The New Slowhand",
+    signature: "Mayer absorbed Hendrix, SRV, and BB King and synthesised them into something unmistakably his own. His thumb-over-the-neck technique adds bass notes under lead lines, creating a one-man-band effect.",
+    lick: `e|--3b5~~-3-----------------------|
+B|---------5-3-5-3--------------|
+G|------------------4-2---------|
+D|--0-0-0-----0-0-0-----4-2-0--|
+A|------------------------------|
+E|------------------------------|
+
+Key: G blues · Open position
+Thumb: bass notes on D string (frets 0, 4)
+Fingers: lead line on B and e strings
+b5~~ = bend and vibrate (the hook)
+This creates simultaneous bass + lead — the Mayer 'trick'`,
+    lesson: "Mayer's thumb-over technique: wrap your left thumb over the low side of the neck so it can fret the low E or A string independently. This frees your other fingers for lead while the thumb plays rhythm bass.",
+    tone: "Fender Stratocaster · John Mayer Silver Sky · Two-Rock Custom Reverb · Light overdrive · In-between pickup positions",
+  },
+  {
+    name: "Django Reinhardt",
+    years: "1910 – 1953",
+    style: "jazz",
+    styleLabel: "Gypsy Jazz",
+    tag: "The Genius with Two Fingers",
+    signature: "Django lost the use of his ring and pinky fingers in a caravan fire — yet became the most technically dazzling guitarist of his era. He invented Gypsy Jazz: blazing single-note runs, chromatic encircling, and a propulsive right-hand 'la pompe' rhythm.",
+    lick: `e|--10-8-10-8-7-5-7-5-----------|
+B|---------------------------5---|
+G|-------------------------------|
+D|-------------------------------|
+A|-------------------------------|
+E|-------------------------------|
+
+Key: G major · Jazz context · 5th–10th position
+Play entirely with index and middle finger only
+(ring + pinky unavailable — this is what Django used)
+Fast, even 16th notes — imagine bebop phrasing`,
+    lesson: "Try this lick using ONLY your index and middle fingers. It will feel impossible — that's Django's daily reality. His index finger would barre across multiple strings and the middle finger did all single-note work.",
+    tone: "Selmer Maccaferri archtop guitar (the 'jazz guitar' shape) · No amp — pure acoustic · Thumb pick · No vibrato — speed and clarity",
+  },
+]
+
+function SignatureLicksTab() {
+  const [filter, setFilter] = useState<StyleFilter>("all")
+
+  const FILTERS: { id: StyleFilter; label: string }[] = [
+    { id: "all", label: "All Guitarists" },
+    { id: "blues", label: "Blues" },
+    { id: "rock", label: "Rock" },
+    { id: "jazz", label: "Jazz" },
+    { id: "modern", label: "Modern" },
+  ]
+
+  const visible = filter === "all" ? GUITARISTS : GUITARISTS.filter(g => g.style === filter)
+
+  return (
+    <div>
+      <h2 className="text-2xl font-bold text-white mb-2">Signature Licks</h2>
+      <p className="text-purple-200 mb-6">
+        The licks that define the greatest guitarists in history — with tab, technique breakdown, and tone settings. Learn them to absorb vocabulary. Then forget them, and let them come out as your own.
+      </p>
+
+      {/* Style filter */}
+      <div className="flex flex-wrap gap-2 mb-8">
+        {FILTERS.map(f => (
+          <button
+            key={f.id}
+            onClick={() => setFilter(f.id)}
+            className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
+              filter === f.id
+                ? "bg-purple-600 text-white"
+                : "bg-white/10 text-purple-300 hover:bg-white/20"
+            }`}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="space-y-8">
+        {visible.map(g => (
+          <div key={g.name} className="rounded-2xl border border-white/15 bg-white/5 overflow-hidden">
+            {/* Header */}
+            <div className="bg-white/10 px-6 py-4 flex items-start justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-3 flex-wrap">
+                  <h3 className="text-xl font-bold text-white">{g.name}</h3>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-300">
+                    {g.styleLabel}
+                  </span>
+                </div>
+                <p className="text-amber-300 text-sm font-medium mt-0.5">{g.tag}</p>
+              </div>
+              <span className="text-purple-300/60 text-sm shrink-0">{g.years}</span>
+            </div>
+
+            <div className="px-6 py-5 space-y-5">
+              {/* Signature sound */}
+              <p className="text-purple-200 text-sm leading-relaxed">{g.signature}</p>
+
+              {/* Tab */}
+              <div>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Signature Lick</p>
+                <pre className="font-mono text-green-300 bg-black/40 rounded-xl p-4 text-sm overflow-x-auto whitespace-pre leading-relaxed">
+                  {g.lick}
+                </pre>
+              </div>
+
+              {/* Lesson */}
+              <div className="border-l-4 border-amber-500 bg-amber-500/10 rounded-r-xl p-4">
+                <p className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">🎸 How to Sound Like Them</p>
+                <p className="text-sm text-amber-200 leading-relaxed">{g.lesson}</p>
+              </div>
+
+              {/* Tone */}
+              <div className="border-l-4 border-blue-400 bg-blue-400/10 rounded-r-xl p-4">
+                <p className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-1">🔊 Tone Settings</p>
+                <p className="text-sm text-blue-200 leading-relaxed">{g.tone}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-8 border-l-4 border-purple-500 bg-purple-500/10 rounded-r-xl p-4">
+        <p className="text-xs font-bold uppercase tracking-wider text-purple-300 mb-1">🔑 Key Insight</p>
+        <p className="text-sm text-purple-200 leading-relaxed">
+          Don&apos;t just copy licks — steal the <em>idea</em> behind them. BB King&apos;s idea: one bent note, held with full vibrato. Gilmour&apos;s idea: space between notes. SRV&apos;s idea: attack with the whole arm. Once you understand the idea, you can express it with your own notes.
+        </p>
+      </div>
+    </div>
+  )
+}
+
 export default function RiffsPage() {
   const [activeTab, setActiveTab] = useState<Tab>("what-makes-a-riff")
 
@@ -550,6 +870,7 @@ export default function RiffsPage() {
           {activeTab === "blues" && <BluesTab />}
           {activeTab === "pop-folk" && <PopFolkTab />}
           {activeTab === "technique" && <TechniqueTab />}
+          {activeTab === "signature-licks" && <SignatureLicksTab />}
         </div>
       </div>
     </div>

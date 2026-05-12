@@ -514,6 +514,12 @@ Both versions are valuable — learn to switch mid-riff`}
 
 type StyleFilter = "all" | "blues" | "rock" | "jazz" | "modern"
 
+interface LickData {
+  label: string
+  context: string
+  tab: string
+}
+
 const GUITARISTS: {
   name: string
   years: string
@@ -521,7 +527,7 @@ const GUITARISTS: {
   styleLabel: string
   tag: string
   signature: string
-  lick: string
+  licks: LickData[]
   lesson: string
   tone: string
 }[] = [
@@ -532,17 +538,82 @@ const GUITARISTS: {
     styleLabel: "Blues",
     tag: "King of the Blues",
     signature: "Every note was a human voice. BB never strummed chords — he made one note say more than most guitarists say in a solo. His 'BB Box' is a tiny cluster of pentatonic notes played with full vibrato on every landing.",
-    lick: `e|--5b7~~---5---5b7~~-5---------|
+    licks: [
+      {
+        label: "The BB Box Bend",
+        context: "A blues · 5th position · His most-copied single lick",
+        tab: `e|--5b7~~---5---5b7~~-5---------|
 B|-----------8-----------8-5----|
 G|------------------------------|
 D|------------------------------|
 A|------------------------------|
 E|------------------------------|
 
-Key: A blues · 5th position
-b7~~ = bend to pitch, then vibrate heavily
-Land on 5 (A), bend to 7 (C), vibrate
-NEVER rush — let each note breathe 2–4 beats`,
+b7~~ = bend to 7th fret pitch, then vibrate heavily
+Land on 5 (A), bend to 7 (C), hold and sing the note
+NEVER rush — let each note breathe for 2–4 beats`,
+      },
+      {
+        label: "The Bee Sting Grace Note",
+        context: "A blues · 5th position · His quick-attack signature move",
+        tab: `e|--h7-5b7~~---h7-5b7~~---------|
+B|------------------------------8-5|
+G|---------------------------------|
+D|---------------------------------|
+A|---------------------------------|
+E|---------------------------------|
+
+h7 = lightning-fast hammer-on from 5 to 7 (barely audible)
+Immediately grab that 7 and bend it, then vibrate
+The grace note is the 'attack' — the bend is the statement
+BB could make this sound like a sob`,
+      },
+      {
+        label: "The Thrill is Gone Descent",
+        context: "B minor · 7th position · His most melancholic phrase",
+        tab: `e|--7b9~~---7-5-7-5-------------|
+B|------------------8-7-5-------|
+G|------------------------7-5---|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Key: B minor — 7th position (same shape as A box, moved up 2 frets)
+Descend through the minor pentatonic after the opening bend
+The bend at the top is the 'cry' — everything after is resolution
+Play at half the tempo you think is right`,
+      },
+      {
+        label: "The Double-String Call & Response",
+        context: "A blues · 5th position · Two voices, one guitar",
+        tab: `e|--5-5-8-5---5-5-8-5-----------|
+B|--------8-8---------8-5-5-----|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Play e and B strings in sequence, not together
+The 8 on B against the 5 on e = a minor 3rd interval
+'Call' (e string phrase) answered by 'response' (B string)
+BB created two characters in a conversation`,
+      },
+      {
+        label: "The Slow Ballad Resolution",
+        context: "A blues · 5th position · The lick that ends everything",
+        tab: `e|--8-5---5-8-5---5-------------|
+B|------8---------8-5-8-5-------|
+G|---------------------------7--|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Alternate between frets 8 and 5 on the e string with full presence
+The G string resolution (fret 7) is where the phrase 'lands'
+Play this over the IV chord resolving to the I
+Every note should feel inevitable`,
+      },
+    ],
     lesson: "BB's genius was restraint. Play the bend, hold it, vibrate. Silence between notes is intentional. He said: 'I try to make one note cry.' Copy that — not his speed.",
     tone: "Neck pickup · Medium gain · Slightly scooped mids · His guitar 'Lucille' was a semi-hollow ES-355",
   },
@@ -553,17 +624,83 @@ NEVER rush — let each note breathe 2–4 beats`,
     styleLabel: "Blues / Rock",
     tag: "The Electric Messiah",
     signature: "Hendrix treated the guitar as an orchestra — chords, bass lines, and lead all at once. His double-stop bends and thumb-over-the-neck chord shapes revolutionised what was possible.",
-    lick: `e|--12-12-12b14-12-------12----|
+    licks: [
+      {
+        label: "The Double-Stop Bend",
+        context: "E blues · 12th position · The most-copied Hendrix move",
+        tab: `e|--12-12-12b14-12-------12----|
 B|--12-12-12----15-12-12---15--|
 G|-----------------------------|
 D|-----------------------------|
 A|-----------------------------|
 E|-----------------------------|
 
-Key: E blues · 12th position
-Two strings bent simultaneously (double-stop bend)
-Fret both e and B at 12, bend both up together
-The dissonant pull-off to 15 (B) is the Hendrix signature`,
+Barre both e and B at the 12th fret with one finger
+Push both strings upward simultaneously — the unison bend
+Pull off to 15 on B string: that dissonance is pure Hendrix
+Feel it like a scream that resolves into a smile`,
+      },
+      {
+        label: "The Voodoo Chile Strut",
+        context: "E blues · Open position · The swagger lick",
+        tab: `e|--0-3-0-----------------------|
+B|-------3-1-3-1-0-1-0---------|
+G|---------------------2-0-----|
+D|-------------------------2---|
+A|-----------------------------|
+E|--0--------------------------|
+
+Open low E anchors the whole phrase — let it ring
+The melody on B string descends like a conversation
+Fret 3 on e (G) is the ♭3 — the blues note
+Play loose, lazy — this riff swings, it doesn't march`,
+      },
+      {
+        label: "The Little Wing Chord-Melody",
+        context: "E minor · 7th–12th position · Chords and lead as one voice",
+        tab: `e|--12------12------12---------|
+B|----10-8----10-7----8-7-5----|
+G|--9-------7-------4----------|
+D|--7-------5-------2----------|
+A|-----------------------------|
+E|-----------------------------|
+
+The e string stays as a pedal while lower strings shift
+Each group of 4 notes IS a chord — Em, D, Am
+Hendrix played rhythm and lead simultaneously — this is the technique
+Let every note ring into the next`,
+      },
+      {
+        label: "The Purple Haze Chromatic Run",
+        context: "E blues · 12th position · Half-step tension and release",
+        tab: `e|--12-11-10-9-8-9-10-11-12----|
+B|-----------------------------|
+G|-----------------------------|
+D|-----------------------------|
+A|-----------------------------|
+E|-----------------------------|
+
+Chromatic descent from 12 to 8 — every fret, no skips
+Then reverse and climb back — symmetrical and eerie
+Use strict alternate picking: down-up-down-up throughout
+The chromatic movement creates tension that the Fuzz Face makes visceral`,
+      },
+      {
+        label: "The Thumb Bass + Lead",
+        context: "G blues · Open position · The one-man-band trick",
+        tab: `e|--3b5~~-3-1-3-1-0------------|
+B|--3b5~~-3-1-3-1-0------------|
+G|-----------------------------|
+D|--0-0-----0-0-----0-0--------|
+A|-----------------------------|
+E|-----------------------------|
+
+Left thumb wraps over neck and frets D string open (bass note)
+Index and middle finger play bends on e and B simultaneously
+Bass line (D string, thumb) and lead (e+B, fingers) play together
+This is the Hendrix 'orchestra' — one person, two parts`,
+      },
+    ],
     lesson: "The double-stop bend: barre e and B strings at the 12th fret with one finger, then push both strings upward together. This is the most-copied Hendrix move in rock history.",
     tone: "Marshall stack on edge of breakup · Univibe + Fuzz Face (Octavia) · Strat into huge amp — turn it up",
   },
@@ -574,17 +711,83 @@ The dissonant pull-off to 15 (B) is the Hendrix signature`,
     styleLabel: "Blues Rock",
     tag: "Slowhand",
     signature: "Clapton's Cream-era playing was ferocious — pentatonic runs delivered with absolute precision and a perfect slow-hand attack. His vibrato is controlled and vocal, always in service of the melody.",
-    lick: `e|--17-17-17b19-17-15-17-15----|
+    licks: [
+      {
+        label: "The Cream High Run",
+        context: "A blues · 17th position · Clapton's ferocious upper-register phrase",
+        tab: `e|--17-17-17b19-17-15-17-15----|
 B|---------------------------17-|
 G|------------------------------|
 D|------------------------------|
 A|------------------------------|
 E|------------------------------|
 
-Key: A blues · 17th position (high octave)
-Run from b19 bend down to 15, resolve on 17 (A)
-The b19 is the ♭7 (G) bent up to the root (A)
-Play with an even, deliberate attack — no rushing`,
+b19 = bend the ♭7 (G) up one whole step to the root (A)
+Descend to 15, resolve on 17 — deliberate landing, not rushed
+Each note picked cleanly — Clapton's right hand was surgical
+This is from the 'Crossroads' live solo — full aggression`,
+      },
+      {
+        label: "The Beano Slow Bend",
+        context: "A blues · 7th position · The Bluesbreaker album sound",
+        tab: `e|--7b9~~---7-5-7-5-------------|
+B|------------------8-7-5-------|
+G|------------------------7-5---|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Key: A blues — 7th position (the 'Beano' album position)
+b9~~ = bend the ♭3 (C) up to the root (D) and vibrate
+Descend through the pentatonic with total control
+The Gibson SG through the Bluesbreaker at breakup — this is the tone`,
+      },
+      {
+        label: "The Crossroads Open Turnaround",
+        context: "A blues · Open position · The Robert Johnson-to-Clapton chain",
+        tab: `e|--0-3-0---0-3-0---------------|
+B|-------3-3---3-2-0------------|
+G|----------------------2-0-----|
+D|----------------------------2-|
+A|------------------------------|
+E|------------------------------|
+
+Open position A blues — Clapton absorbed this from Robert Johnson
+The descending line on B string resolves down to the D string
+Feel the 12-bar blues context — this is the 12th bar turning around
+Play slightly behind the beat — not rushing, never rushing`,
+      },
+      {
+        label: "The Layla Intro Fragment",
+        context: "Dm · 5th–8th position · The phrase that changed everything",
+        tab: `e|------5-5-3-3---------3-5----|
+B|--5-8-------6-5---5-5---------|
+G|------------------5-----------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Dm – C – Bb disguised as a single melodic line
+The descending major chord roots: D→C→Bb = classical movement
+Duane Allman on slide + Clapton on rhythm — this tab is Clapton's part
+The 'conversation' between two guitars became one iconic phrase`,
+      },
+      {
+        label: "The Wonderful Tonight Melodic Phrase",
+        context: "G major · Open position · Clapton the melodist",
+        tab: `e|--3-3-3-2-0-2-0--------------|
+B|--3-3-3-3-3-3-3-3-3-1-0-1-3--|
+G|--0--------------------------|
+D|--0--------------------------|
+A|--2--------------------------|
+E|--3--------------------------|
+
+G chord shape with melody on the top strings
+This is Clapton at his most vocal — pure melody, no blues scale
+The open strings ring underneath the melody line
+Clean tone, neck pickup — let the guitar breathe`,
+      },
+    ],
     lesson: "Clapton's secret is his right-hand control. He picks every note cleanly with an angled pick. Before speed, focus on each note ringing clearly — 'Slowhand' wasn't slow; he was deliberate.",
     tone: "Gibson SG or Les Paul through a Marshall Bluesbreaker · Medium-high gain · Bridge pickup",
   },
@@ -595,17 +798,83 @@ Play with an even, deliberate attack — no rushing`,
     styleLabel: "Texas Blues",
     tag: "Texas Hurricane",
     signature: "SRV played .013 gauge strings tuned down a half-step — the heaviness of his attack was physical. He combined Albert King's bent notes, Hendrix's chord shapes, and Freddie King's speed into one volcanic style.",
-    lick: `e|--15b17-15-13-15-13-12-13----|
+    licks: [
+      {
+        label: "The Texas Run",
+        context: "G blues · 15th position · His signature blistering descent",
+        tab: `e|--15b17-15-13-15-13-12-13----|
 B|-----------------------------15|
 G|------------------------------|
 D|------------------------------|
 A|------------------------------|
 E|------------------------------|
 
-Key: G blues · 15th position
-b17 = full-step bend from 15 up to 17
-Descend fast: 13-12, then resolve to 15 (B string)
-SRV attacked this with his full arm — not just fingers`,
+b17 = full whole-step bend — requires massive left-hand strength
+Descend fast through 13-12, resolve on 15 (B string)
+SRV attacked every note with his full arm weight
+Feel the urgency — like something is chasing you`,
+      },
+      {
+        label: "The Pride & Joy Shuffle Lick",
+        context: "E blues · Open position · Texas shuffle feel",
+        tab: `e|--0---0---0---0---------------|
+B|--5-5-4-4-5-5-4-4-------------|
+G|--4-4-4-4-4-4-4-4-------------|
+D|--6-6-5-5-6-6-5-5-------------|
+A|--0---0---0---0---------------|
+E|--0---0---0---0---------------|
+
+Shuffle rhythm: long-short, long-short (swing the 8th notes)
+The double-stop on B+G alternates between 5-4 (A-Ab) over E
+Palm mute the A and low E strings for the chunky Texas feel
+This IS the Pride and Joy groove — feel it in your whole body`,
+      },
+      {
+        label: "The Lenny Slow Bend",
+        context: "E major · 12th position · SRV at his most tender",
+        tab: `e|--12-12b14~~-12-9-12-9--------|
+B|------------------------------12|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+From 'Lenny' — the ballad he wrote for his wife
+b14~~ = gentle full-step bend with wide, loving vibrato
+No aggression — this is SRV whispering instead of screaming
+Let the note sustain until it naturally fades`,
+      },
+      {
+        label: "The Triple-Stop Chord Bend",
+        context: "A blues · 10th position · Three strings, one massive push",
+        tab: `e|--10b12-10--10b12-10----------|
+B|--10b12-10--10b12-10----------|
+G|--10b12-10--10b12-10----------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Fret all three strings (e, B, G) at 10th fret
+Push all three strings upward simultaneously
+This requires serious left-hand strength — SRV's .013s made it harder
+The three-string bend creates a massive chord swell`,
+      },
+      {
+        label: "The Albert King-Style Stretcher",
+        context: "A blues · 17th position · SRV's Albert King tribute",
+        tab: `e|--17b20~~-17-15-17-15---------|
+B|------------------------17-15-|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+b20 = a full 1.5-step bend — Albert King's trademark
+SRV studied Albert King obsessively and owned this bend
+The 17 on the e string is the root (A) — bend up to C# (major 3rd)
+Aggressive vibrato at the top — don't let the note die quietly`,
+      },
+    ],
     lesson: "SRV's vibrato came from his whole arm rotating — not just his wrist. Put your thumb on the back of the neck, grab the string, and rotate your forearm like turning a doorknob. That's the SRV vibrato.",
     tone: "Strat with .013s tuned Eb · Dumble amp + Tubescreamer · Neck pickup · Everything cranked",
   },
@@ -616,17 +885,83 @@ SRV attacked this with his full arm — not just fingers`,
     styleLabel: "Progressive Rock",
     tag: "The Feel Master",
     signature: "Gilmour is the master of less-is-more. A single bent note with perfect vibrato, held in perfect silence, says more than any shred run. His tone — a Stratocaster through a Hiwatt — is one of the most imitated in history.",
-    lick: `e|-------------------------------|
+    licks: [
+      {
+        label: "The Comfortably Numb Phrase",
+        context: "B minor · 12th–15th position · The bend that broke a million hearts",
+        tab: `e|-------------------------------|
 B|--15b17~~-15-12-15-12----------|
 G|--------------------14-12------|
 D|--------------------------14---|
 A|-------------------------------|
 E|-------------------------------|
 
-Key: D major / B minor · 12th–15th position
-b17~~ = bend to pitch then hold with wide, slow vibrato
-Descend through the minor pentatonic D→C→B
-The SPACE between notes is what makes this Gilmour`,
+b17~~ = bend to pitch, then hold with wide, SLOW vibrato (4Hz)
+Count 4 full beats on the bent note before moving
+Descend through B minor pentatonic: D→C→B
+The space between the descent notes IS the music`,
+      },
+      {
+        label: "The Shine On You Crazy Diamond Sustain",
+        context: "G major · 9th position · A note held until it means something",
+        tab: `e|--9b11~~----9-7-9-7-----------|
+B|-------------------10-9-7-----|
+G|---------------------------9--|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+b11~~ = bend to the major 3rd and hold for as long as you dare
+The note should bloom — feel it expand with the vibrato
+Descend slowly through the major pentatonic
+Gilmour said the note should feel like a question that answers itself`,
+      },
+      {
+        label: "The Another Brick Melodic Descent",
+        context: "Dm · 14th position · From the most famous guitar solo in radio history",
+        tab: `e|--14-12-14-12-10-12-10--------|
+B|-----------------------------12|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Pure melody — no blues scale, no tricks
+Descend from 14 (F) down through 10 (C), resolve on B string 12 (E)
+Play each note with the same weight and presence
+This is Gilmour as a classically-minded melodist, not a blues player`,
+      },
+      {
+        label: "The Pedal Steel Double Bend",
+        context: "D major · 12th position · Two strings, two intentions",
+        tab: `e|--15b17~~--15b17~~------------|
+B|--15b17~~--15-12-15-12--------|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Bend both e and B strings — but release B string while holding e
+This mimics a pedal steel guitar: one note resolves while the other holds
+The effect is two emotional voices moving independently
+Gilmour absorbed country and pedal steel into his vocabulary`,
+      },
+      {
+        label: "The Hey You Bluesy Phrase",
+        context: "G major · Open position · Gilmour with dirt on his boots",
+        tab: `e|--0---3-3-2-0---0-3-2-0-------|
+B|--3-3---------3-----------3---|
+G|--0--------------------------------|
+D|--0--------------------------------|
+A|--2--------------------------------|
+E|--3--------------------------------|
+
+G chord rings underneath while melody moves on e string
+Fret 3 (G♯/Ab) is the chromatic upper neighbour — pure tension
+Resolve down through 2-0 to the open e
+Let every open string ring — Gilmour loved resonance and space`,
+      },
+    ],
     lesson: "Gilmour's vibrato is wide and slow — a whole tone at about 4Hz. Use your whole hand to achieve it. Listen to 'Comfortably Numb' solo 2 and count: he bends, holds, and vibrates for 4 full beats before moving.",
     tone: "Strat (red '0001') · Hiwatt DR103 · Big Muff fuzz + Boss CE-2 chorus + Binson Echorec · Single-coil neck pickup",
   },
@@ -637,17 +972,83 @@ The SPACE between notes is what makes this Gilmour`,
     styleLabel: "Latin Rock",
     tag: "The Sustain King",
     signature: "Santana found the intersection of rock guitar and Afro-Cuban rhythm. His tone sustains infinitely — he holds notes until they bloom. His phrasing breathes in 8-bar phrases, always singing, never shredding.",
-    lick: `e|--12~~~~~~~~~~-10-12-10--------|
+    licks: [
+      {
+        label: "The Infinite Sustain",
+        context: "A minor · 12th position · The lick that sounds like a human voice",
+        tab: `e|--12~~~~~~~~~~-10-12-10--------|
 B|---------------------------13--|
 G|-------------------------------|
 D|-------------------------------|
 A|-------------------------------|
 E|-------------------------------|
 
-Key: A minor · 12th position
-12~~ = play note and let sustain with continuous vibrato
-The 10-12-10 descent is the 'question'
-Landing on 13 (B string, Bb) is the suspended resolution`,
+12~~ = strike the note and sustain with continuous, medium vibrato
+Let the note swell — this is the Mesa Boogie sustain in action
+The 10-12-10 descent is the 'question' to the opening statement
+Landing on B string 13 (Bb) creates unresolved tension — feel that`,
+      },
+      {
+        label: "The Smooth Phrase",
+        context: "A minor · 12th position · Santana's pop mastery",
+        tab: `e|--12-10-12-10-8-10-8----------|
+B|-----------------------------10|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+The opening phrase of 'Smooth' reduced to its essence
+Descend through A minor pentatonic in even 8th notes
+Every note has presence and weight — no throwaway notes
+The resolve onto the B string (D note) is warm, conclusive`,
+      },
+      {
+        label: "The Europa Theme Fragment",
+        context: "E minor · 12th position · His most emotional melody",
+        tab: `e|--12~~-10-12-10-8-------------|
+B|--------------------10-8-7----|
+G|---------------------------9--|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+'Europa' — the song that made people cry without words
+~~  = hold and swell the note with slow vibrato
+Descend from 12 (E) through 8 (C) to the G string resolution
+Play as if each note is a word in a sentence`,
+      },
+      {
+        label: "The Ascending Pentatonic Sequence",
+        context: "A minor · 5th–12th position · Santana building tension",
+        tab: `e|--5-8-5-8-10-8-10-12b14~~----|
+B|--5-8-5-8-10-8-10------------|
+G|--5-7-5-7-9--7-9-------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Climb through A minor pentatonic across all three strings
+The sequence 5-8 repeats on each string pair — a rolling wave
+Resolve with a full-step bend on 12 (E string) to 14 (F#)
+~~ = sustain the resolution note with vibrato for at least 4 beats`,
+      },
+      {
+        label: "The Oye Como Va Rhythmic Stab",
+        context: "A minor · 5th position · Latin rhythm as a guitar lick",
+        tab: `e|--5-5-8-5-8-5-3-5-3-1---------|
+B|--5-5-8-5-8-5-3-5-3-1---------|
+G|--5-5-7-5-7-5-2-5-2-0---------|
+D|-------------------------------|
+A|-------------------------------|
+E|-------------------------------|
+
+Play e, B, and G strings together as a unit (triple stop)
+The rhythm is: short-short-long, short-short-long (clave feel)
+Descend through Am chord positions — 5th to 3rd to 1st fret
+This is rhythm guitar played with a lead guitar attitude`,
+      },
+    ],
     lesson: "Santana's tone requires the guitar to 'sing' — use the neck pickup, dial in light overdrive, and dig in with the pick for more contact. The sustain on each note should feel like a held vocal note.",
     tone: "PRS Custom 22 (or vintage Gibson SG) · Mesa Boogie Mark I · Heavy overdrive · Neck pickup · Volume at 10",
   },
@@ -658,17 +1059,83 @@ Landing on 13 (B string, Bb) is the suspended resolution`,
     styleLabel: "Southern Rock / Slide",
     tag: "Skydog",
     signature: "Duane Allman was the greatest slide guitarist in rock history. He played a glass Coricidin bottle on his ring finger in standard tuning — his slides were melodic and vocal, not just ornamental.",
-    lick: `e|--/12\--10-/12\--10-----------|
-B|--/12\--10-/12\--10-----------|
+    licks: [
+      {
+        label: "The Slide Landing",
+        context: "G major · 12th position · The signature slide phrase",
+        tab: `e|--/12\\--10-/12\\--10-----------|
+B|--/12\\--10-/12\\--10-----------|
 G|--/12~~-----------------9----|
 D|-----------------------------|
 A|-----------------------------|
 E|-----------------------------|
 
-Key: G major · Open strings + 12th fret slide
-/ = slide up into note  \\ = slide off downward
-~~ = vibrate the slide after landing
-Both e and B at 12 = G and D (perfect 5th)`,
+/ = slide up into the note from below · \\ = slide off downward
+~~ = wrist vibrato after landing — side to side, not back and forth
+Both e and B at 12 fret = G and D (a perfect 5th — open and resonant)
+Keep the slide parallel to the fret wire at all times`,
+      },
+      {
+        label: "The Statesboro Blues Intro",
+        context: "G major · Open G position · The opener that defined Southern Rock",
+        tab: `e|--/12\\-10-/12\\-10-/8\\--------|
+B|--/12\\-10-/12\\-10-/8\\--------|
+G|--/12\\-9--/12\\-9--/7\\--------|
+D|-----------------------------|
+A|-----------------------------|
+E|-----------------------------|
+
+Slide position: the whole shape moves as a unit
+Slide from 12 (G) down to 10, back to 12, then 8
+Each position is a chord shape — slide plays harmony, not just melody
+This opened the Allman Brothers' most iconic live performances`,
+      },
+      {
+        label: "The Layla Slide Riff",
+        context: "D minor · 10th position · The most famous slide riff in rock",
+        tab: `e|--/10\\-8-/10\\-8-7---------|
+B|--/10\\-8-/10\\-8-6---------|
+G|--/10\\-9-/10\\-9-7---------|
+D|--------------------------|
+A|--------------------------|
+E|--------------------------|
+
+The opening of 'Layla' — Duane's slide over Clapton's rhythm
+Each pair of notes slides down, then returns — like waves
+The G string is one fret higher (9) — this creates the Dm voicing
+Played with urgency and intimacy simultaneously`,
+      },
+      {
+        label: "The Open String Drone Lick",
+        context: "E major · Open position · Slide meets open strings",
+        tab: `e|--0-/12\\-0-/12\\-0---------|
+B|--0-/12\\-0-/12\\-0---------|
+G|--1-/12\\-1-/12\\-1---------|
+D|--------------------------|
+A|--------------------------|
+E|--0-----------------------|
+
+Open strings ring between slide phrases — the 'breathing' technique
+The slide hits 12th fret (octave) then releases back to open
+The G string fret 1 (Ab) against open strings creates a tension
+Duane loved the contrast between slide notes and ringing open strings`,
+      },
+      {
+        label: "The Non-Slide Melodic Run",
+        context: "G major · 2nd position · Duane without the bottle",
+        tab: `e|--2-3-2-0-2-0-----------------|
+B|----------3---3-2-0-----------|
+G|--------------------2-0---0---|
+D|------------------------2-----|
+A|------------------------------|
+E|------------------------------|
+
+Duane was equally brilliant without the slide — this is often forgotten
+A descending G major phrase using fingers only
+The cross-string movement creates a cascading, harp-like effect
+Fingerpick: thumb (low strings) + index/middle (high strings)`,
+      },
+    ],
     lesson: "Slide vibrato: after landing on the note with the slide, rotate your wrist side-to-side (not forward-back). Keep the slide parallel to the fret. Mute strings behind the slide with your picking-hand fingers.",
     tone: "1957 Les Paul Goldtop · Coricidin glass slide · Marshall or Fender amp · Medium-low gain for note definition",
   },
@@ -679,18 +1146,83 @@ Both e and B at 12 = G and D (perfect 5th)`,
     styleLabel: "Blues Rock",
     tag: "The Irish Blues Tornado",
     signature: "Gary Moore combined the fire of rock with the soulfulness of blues at a ferocity nobody else matched. His bends were aggressive — often a full step and a half — and his vibrato was violent and fast.",
-    lick: `e|--15b17b19~~-15-17-15-13--15--|
+    licks: [
+      {
+        label: "The 1.5-Step Bend",
+        context: "A blues · 15th position · His most aggressive move",
+        tab: `e|--15b17b19~~-15-17-15-13--15--|
 B|------------------------------|
 G|------------------------------|
 D|------------------------------|
 A|------------------------------|
 E|------------------------------|
 
-Key: A blues · 15th position
-b17b19 = bend in two stages: first to 17, then push further to 19
-This is a 1.5-step bend — requires strong fingers
-~~ = vibrate aggressively at the top of the bend
-End on 15 (A) for resolution`,
+b17b19 = two-stage bend: push to 17, then keep pushing to 19
+This is a minor 3rd bend — 1.5 whole steps — feels almost violent
+~~ = fast, aggressive vibrato at the peak
+Thumb over the neck for maximum leverage — push with the whole hand`,
+      },
+      {
+        label: "The Still Got the Blues Slow Phrase",
+        context: "Am · 12th position · Gary Moore the heartbreaker",
+        tab: `e|--12b14~~---12-10-12-10-8-----|
+B|-------------------------------10|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+'Still Got the Blues' — his greatest ballad moment
+b14~~ = bend slowly, with wide, aching vibrato
+Descend through A minor pentatonic with total emotional commitment
+Every note should sound like regret — Gary felt every one of them`,
+      },
+      {
+        label: "The Parisienne Walkways Theme",
+        context: "Am · 5th position · The melody that made him famous",
+        tab: `e|--5b7~~---5-3-5-3-1-----------|
+B|--------------------3-1-------|
+G|------------------------2-0---|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+The opening phrase of 'Parisienne Walkways' in open position
+b7~~ = bend to pitch, hold with slow devastating vibrato
+Descend through A minor pentatonic — each note is a word
+Phil Lynott sang over this: the guitar IS the vocal melody`,
+      },
+      {
+        label: "The Fast Alternate Run",
+        context: "A minor · 17th position · Gary Moore at full speed",
+        tab: `e|--17-15-17-15-13-15-13-12-13--|
+B|------------------------------|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Strict alternate picking: down-up-down-up throughout
+Start slow — the spacing between notes must be even
+Gary played this at terrifying speeds with his whole arm
+The descending pattern: pentatonic + chromatic passing tone at 13`,
+      },
+      {
+        label: "The Slide & Bend Combination",
+        context: "A blues · 12th–17th position · Speed and soul combined",
+        tab: `e|--/15-15b17~~-15-/17-17b19-17-|
+B|------------------------------|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+/ = slide up into the note, then immediately bend
+Alternate between slides and bends — keeps the phrase unpredictable
+The combination of the two feels urgent and unstoppable
+Gary Moore played as if he had something to prove — every single time`,
+      },
+    ],
     lesson: "Gary Moore's aggressive bending comes from his left thumb over the neck for extra leverage. Wrap your thumb over the low E side of the neck and push upward with your whole hand. The bend should feel slightly violent.",
     tone: "1959 Les Paul Standard (Peter Green's guitar) · Marshall JCM800 cranked · Medium pick attack · Bridge pickup",
   },
@@ -701,18 +1233,83 @@ End on 15 (A) for resolution`,
     styleLabel: "Modern Blues",
     tag: "The New Slowhand",
     signature: "Mayer absorbed Hendrix, SRV, and BB King and synthesised them into something unmistakably his own. His thumb-over-the-neck technique adds bass notes under lead lines, creating a one-man-band effect.",
-    lick: `e|--3b5~~-3-----------------------|
-B|---------5-3-5-3--------------|
-G|------------------4-2---------|
-D|--0-0-0-----0-0-0-----4-2-0--|
+    licks: [
+      {
+        label: "The Thumb-Over Bass + Lead",
+        context: "G blues · Open position · His signature one-man-band move",
+        tab: `e|--3b5~~-3-1-3-1-0------------|
+B|--3b5~~-3-1-3-1-0------------|
+G|-----------------------------|
+D|--0-0-----0-0-----0-0--------|
+A|-----------------------------|
+E|-----------------------------|
+
+Left thumb wraps over neck: mutes/frets D string as bass
+Index and middle play the double-stop bends on e and B
+Bass (D string, thumb) and lead (e+B, fingers) play simultaneously
+This is the Hendrix 'orchestra' concept, distilled for modern blues`,
+      },
+      {
+        label: "The Gravity Slow Bend",
+        context: "B minor · 7th position · Mayer at his most vulnerable",
+        tab: `e|--7b9~~---7-5-7-5-------------|
+B|------------------8-7-5-------|
+G|------------------------7-5---|
+D|------------------------------|
 A|------------------------------|
 E|------------------------------|
 
-Key: G blues · Open position
-Thumb: bass notes on D string (frets 0, 4)
-Fingers: lead line on B and e strings
-b5~~ = bend and vibrate (the hook)
-This creates simultaneous bass + lead — the Mayer 'trick'`,
+From 'Gravity' — Mayer's most emotionally raw ballad
+b9~~ = bend the ♭3 (D) up one full step to the root (E)
+Hold the bend, add vibrato — feel the weight of it
+Descend through B minor pentatonic slowly and deliberately`,
+      },
+      {
+        label: "The Slow Dancing Phrase",
+        context: "C# minor · 9th position · The lick from his best live performance",
+        tab: `e|--9b11~~---9-7-9-7------------|
+B|-------------------10-9-7-----|
+G|---------------------------9--|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+From 'Slow Dancing in a Burning Room' — his most devastating ballad
+b11~~ = bend C# up one step to D# — the major 2nd, unexpected and tender
+The phrase descends exactly like a voice trailing off
+Mayer played this solo differently every night — learn the shape, not the notes`,
+      },
+      {
+        label: "The Hendrix Chord Stab",
+        context: "E7#9 · Open position · Mayer paying direct homage",
+        tab: `e|--0-0-3-3-0------------------|
+B|--0-0-3-3-0------------------|
+G|--1-1-4-4-1------------------|
+D|--2-2-5-5-2------------------|
+A|--2-2-5-5-2------------------|
+E|--0-0-3-3-0------------------|
+
+The E7#9 'Hendrix chord' stabbed rhythmically
+Strum: down-down-up, down-down-up (funky 16th feel)
+Mute with palm between stabs for the percussive chop
+This is Hendrix's 'Purple Haze' chord — Mayer uses it constantly`,
+      },
+      {
+        label: "The BB King Tribute Bend",
+        context: "A blues · 5th position · Mayer channelling his hero",
+        tab: `e|--5b7~~---5---8-5-8-5---------|
+B|----------8-----------8-5-----|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Mayer explicitly studied BB King — this is his version of the BB Box
+b7~~ = bend to C with the same vocal vibrato BB King used
+The 8-5 phrase on B string is Mayer's own addition to the idiom
+He understood that copying BB's notes wasn't enough — he copied the feeling`,
+      },
+    ],
     lesson: "Mayer's thumb-over technique: wrap your left thumb over the low side of the neck so it can fret the low E or A string independently. This frees your other fingers for lead while the thumb plays rhythm bass.",
     tone: "Fender Stratocaster · John Mayer Silver Sky · Two-Rock Custom Reverb · Light overdrive · In-between pickup positions",
   },
@@ -723,21 +1320,158 @@ This creates simultaneous bass + lead — the Mayer 'trick'`,
     styleLabel: "Gypsy Jazz",
     tag: "The Genius with Two Fingers",
     signature: "Django lost the use of his ring and pinky fingers in a caravan fire — yet became the most technically dazzling guitarist of his era. He invented Gypsy Jazz: blazing single-note runs, chromatic encircling, and a propulsive right-hand 'la pompe' rhythm.",
-    lick: `e|--10-8-10-8-7-5-7-5-----------|
+    licks: [
+      {
+        label: "The Two-Finger Pentatonic Run",
+        context: "G major · 5th–10th position · Play with index + middle only",
+        tab: `e|--10-8-10-8-7-5-7-5-----------|
 B|---------------------------5---|
 G|-------------------------------|
 D|-------------------------------|
 A|-------------------------------|
 E|-------------------------------|
 
-Key: G major · Jazz context · 5th–10th position
-Play entirely with index and middle finger only
-(ring + pinky unavailable — this is what Django used)
-Fast, even 16th notes — imagine bebop phrasing`,
+Play ONLY with your index and middle finger (no ring, no pinky)
+This is Django's physical reality — appreciate the constraint
+Fast, even 16th notes — bebop phrasing, no swing
+His index finger barred and shifted; middle finger played melody`,
+      },
+      {
+        label: "The Chromatic Encircling",
+        context: "G major · 9th–12th position · Approaching chord tones from both sides",
+        tab: `e|--10-9-11-10-8-10-9-7-9-8----|
+B|------------------------------|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Chromatic passing tones surrounding each chord tone (G, F, A)
+This is 'encircling' — approach the target from above and below
+Bebop vocabulary: the chromatic notes create a jazz feel
+Django used this to make the guitar sound like a horn player`,
+      },
+      {
+        label: "The Minor Swing Vamp",
+        context: "Am · Jazz · The most-played Gypsy Jazz lick ever",
+        tab: `e|--5-8-7-5-7-5-3-5-3-1---------|
+B|--5-8-7-5-7-5-3-5-3-1---------|
+G|--5-7-6-5-6-5-2-5-2-0---------|
+D|-------------------------------|
+A|-------------------------------|
+E|-------------------------------|
+
+Triple stops descending through Am — all three strings together
+This IS the 'Minor Swing' feel — the song he's most associated with
+The parallel movement (all strings moving together) = gypsy harmony
+Play with a firm downstroke on each group — decisive and rhythmic`,
+      },
+      {
+        label: "The Diminished Arpeggio",
+        context: "G7 · Over dominant chord · Django's jazz vocabulary",
+        tab: `e|--12-9-10-7-8-5-6-3-----------|
+B|------------------------------|
+G|--12-9-10-7-8-5-6-3-----------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+Diminished arpeggio on alternating e and G strings (skipping B)
+Over a G7 chord: B diminished = G7 with the root omitted
+Each group of 4 descends by a minor 3rd — the pattern repeats itself
+Django used this to create tension before resolving to the I chord`,
+      },
+      {
+        label: "The Flight Run",
+        context: "C major · 12th–5th position · Django's most dazzling descent",
+        tab: `e|--15-13-12-13-10-9-10-7-5-7-5-|
+B|------------------------------|
+G|------------------------------|
+D|------------------------------|
+A|------------------------------|
+E|------------------------------|
+
+A long, fast descent — chromatic-pentatonic blend
+Django could play this using only his index and middle finger
+The passing tones at 13 and 9 are chromatic neighbours
+This is the kind of run that made 1930s audiences fall silent in disbelief`,
+      },
+    ],
     lesson: "Try this lick using ONLY your index and middle fingers. It will feel impossible — that's Django's daily reality. His index finger would barre across multiple strings and the middle finger did all single-note work.",
     tone: "Selmer Maccaferri archtop guitar (the 'jazz guitar' shape) · No amp — pure acoustic · Thumb pick · No vibrato — speed and clarity",
   },
 ]
+
+function GuitaristCard({ g }: { g: typeof GUITARISTS[number] }) {
+  const [activeLick, setActiveLick] = useState(0)
+  const lick = g.licks[activeLick]
+
+  return (
+    <div className="rounded-2xl border border-white/15 bg-white/5 overflow-hidden">
+      {/* Header */}
+      <div className="bg-white/10 px-6 py-4 flex items-start justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <h3 className="text-xl font-bold text-white">{g.name}</h3>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-300">
+              {g.styleLabel}
+            </span>
+          </div>
+          <p className="text-amber-300 text-sm font-medium mt-0.5">{g.tag}</p>
+        </div>
+        <span className="text-purple-300/60 text-sm shrink-0">{g.years}</span>
+      </div>
+
+      <div className="px-6 py-5 space-y-5">
+        {/* Signature */}
+        <p className="text-purple-200 text-sm leading-relaxed">{g.signature}</p>
+
+        {/* Lick picker */}
+        <div>
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Choose a Lick</p>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {g.licks.map((l, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveLick(i)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-left ${
+                  activeLick === i
+                    ? "bg-purple-600 text-white"
+                    : "bg-white/10 text-purple-300 hover:bg-white/20"
+                }`}
+              >
+                {i + 1}. {l.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Active lick */}
+          <div className="rounded-xl border border-white/10 bg-black/20 overflow-hidden">
+            <div className="px-4 py-2 border-b border-white/10 flex items-center justify-between">
+              <p className="text-sm font-semibold text-white">{lick.label}</p>
+              <p className="text-xs text-purple-300/70">{lick.context}</p>
+            </div>
+            <pre className="font-mono text-green-300 bg-black/40 p-4 text-sm overflow-x-auto whitespace-pre leading-relaxed">
+              {lick.tab}
+            </pre>
+          </div>
+        </div>
+
+        {/* Lesson */}
+        <div className="border-l-4 border-amber-500 bg-amber-500/10 rounded-r-xl p-4">
+          <p className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">🎸 How to Sound Like Them</p>
+          <p className="text-sm text-amber-200 leading-relaxed">{g.lesson}</p>
+        </div>
+
+        {/* Tone */}
+        <div className="border-l-4 border-blue-400 bg-blue-400/10 rounded-r-xl p-4">
+          <p className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-1">🔊 Tone Settings</p>
+          <p className="text-sm text-blue-200 leading-relaxed">{g.tone}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function SignatureLicksTab() {
   const [filter, setFilter] = useState<StyleFilter>("all")
@@ -756,7 +1490,7 @@ function SignatureLicksTab() {
     <div>
       <h2 className="text-2xl font-bold text-white mb-2">Signature Licks</h2>
       <p className="text-purple-200 mb-6">
-        The licks that define the greatest guitarists in history — with tab, technique breakdown, and tone settings. Learn them to absorb vocabulary. Then forget them, and let them come out as your own.
+        5 licks per guitarist — from their most-copied moves to their most personal phrases. Learn them to absorb vocabulary. Then forget them and let them come out as your own.
       </p>
 
       {/* Style filter */}
@@ -778,46 +1512,7 @@ function SignatureLicksTab() {
 
       <div className="space-y-8">
         {visible.map(g => (
-          <div key={g.name} className="rounded-2xl border border-white/15 bg-white/5 overflow-hidden">
-            {/* Header */}
-            <div className="bg-white/10 px-6 py-4 flex items-start justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-3 flex-wrap">
-                  <h3 className="text-xl font-bold text-white">{g.name}</h3>
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-300">
-                    {g.styleLabel}
-                  </span>
-                </div>
-                <p className="text-amber-300 text-sm font-medium mt-0.5">{g.tag}</p>
-              </div>
-              <span className="text-purple-300/60 text-sm shrink-0">{g.years}</span>
-            </div>
-
-            <div className="px-6 py-5 space-y-5">
-              {/* Signature sound */}
-              <p className="text-purple-200 text-sm leading-relaxed">{g.signature}</p>
-
-              {/* Tab */}
-              <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Signature Lick</p>
-                <pre className="font-mono text-green-300 bg-black/40 rounded-xl p-4 text-sm overflow-x-auto whitespace-pre leading-relaxed">
-                  {g.lick}
-                </pre>
-              </div>
-
-              {/* Lesson */}
-              <div className="border-l-4 border-amber-500 bg-amber-500/10 rounded-r-xl p-4">
-                <p className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">🎸 How to Sound Like Them</p>
-                <p className="text-sm text-amber-200 leading-relaxed">{g.lesson}</p>
-              </div>
-
-              {/* Tone */}
-              <div className="border-l-4 border-blue-400 bg-blue-400/10 rounded-r-xl p-4">
-                <p className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-1">🔊 Tone Settings</p>
-                <p className="text-sm text-blue-200 leading-relaxed">{g.tone}</p>
-              </div>
-            </div>
-          </div>
+          <GuitaristCard key={g.name} g={g} />
         ))}
       </div>
 

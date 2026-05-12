@@ -8,7 +8,6 @@ type ViewTab  = "paths" | "themes" | "all"
 
 interface Module {
   href: string
-  icon: string
   title: string
   description: string
   cta: string
@@ -18,21 +17,21 @@ interface Module {
 
 interface PathStep { href: string; label: string }
 interface LearningPath {
-  icon: string
   title: string
   audience: string
   description: string
   accent: string
+  labelColor: string
   steps: PathStep[]
 }
 
 const LEARNING_PATHS: LearningPath[] = [
   {
-    icon: "🌱",
     title: "Complete Beginner",
     audience: "Never played before",
     description: "Go from zero to playing real songs — covers everything you need before touching any other module.",
-    accent: "border-green-500 bg-green-500/10",
+    accent: "border-emerald-500/40 bg-emerald-500/5",
+    labelColor: "text-emerald-400",
     steps: [
       { href: "/beginner",               label: "Guitar Basics" },
       { href: "/progressions",           label: "Chord Progressions" },
@@ -42,11 +41,11 @@ const LEARNING_PATHS: LearningPath[] = [
     ],
   },
   {
-    icon: "🎸",
     title: "Rhythm Player",
     audience: "Know basic chords",
     description: "Master strumming, groove, and harmony to become the guitarist every band wants.",
-    accent: "border-blue-500 bg-blue-500/10",
+    accent: "border-blue-500/40 bg-blue-500/5",
+    labelColor: "text-blue-400",
     steps: [
       { href: "/chord-builder",           label: "Chord Building" },
       { href: "/nashville-number-system", label: "Nashville Numbers" },
@@ -56,25 +55,25 @@ const LEARNING_PATHS: LearningPath[] = [
     ],
   },
   {
-    icon: "🎯",
     title: "Lead Guitarist",
     audience: "Ready to solo",
     description: "Build a complete soloing toolkit — scales, positions, bends, phrasing, and musical expression.",
-    accent: "border-amber-500 bg-amber-500/10",
+    accent: "border-amber-500/40 bg-amber-500/5",
+    labelColor: "text-amber-400",
     steps: [
-      { href: "/scales",         label: "Guitar Scales" },
-      { href: "/pentatonic",     label: "Pentatonic Mastery" },
-      { href: "/techniques",     label: "Guitar Techniques" },
-      { href: "/improvisation",  label: "Improvisation" },
-      { href: "/modes",          label: "Modes" },
+      { href: "/scales",        label: "Guitar Scales" },
+      { href: "/pentatonic",    label: "Pentatonic Mastery" },
+      { href: "/techniques",    label: "Guitar Techniques" },
+      { href: "/improvisation", label: "Improvisation" },
+      { href: "/modes",         label: "Modes" },
     ],
   },
   {
-    icon: "📚",
     title: "Theory Deep-Dive",
     audience: "Want to understand music",
     description: "Go beyond shapes — understand why music works and use that knowledge anywhere.",
-    accent: "border-purple-500 bg-purple-500/10",
+    accent: "border-violet-500/40 bg-violet-500/5",
+    labelColor: "text-violet-400",
     steps: [
       { href: "/music-theory",            label: "Music Theory" },
       { href: "/standard-notation",       label: "Standard Notation" },
@@ -84,13 +83,13 @@ const LEARNING_PATHS: LearningPath[] = [
     ],
   },
   {
-    icon: "🎵",
     title: "Bass Fundamentals",
     audience: "Learning bass guitar",
     description: "Master the low end from the ground up — anatomy, scales, groove patterns, and essential techniques.",
-    accent: "border-orange-500 bg-orange-500/10",
+    accent: "border-orange-500/40 bg-orange-500/5",
+    labelColor: "text-orange-400",
     steps: [
-      { href: "/bass-guitar",  label: "Bass Guitar Basics" },
+      { href: "/bass-guitar",  label: "Bass Guitar" },
       { href: "/music-theory", label: "Music Theory" },
       { href: "/scales",       label: "Guitar Scales" },
       { href: "/blues",        label: "12-Bar Blues" },
@@ -102,386 +101,342 @@ const LEARNING_PATHS: LearningPath[] = [
 interface CategoryMeta {
   id: Category
   label: string
-  icon: string
-  color: string
   dot: string
+  pill: string
 }
 
 const CATEGORY_META: CategoryMeta[] = [
-  { id: "foundations", label: "Foundations",      icon: "🏛️", color: "border-sky-500/50 bg-sky-500/10",    dot: "bg-sky-400" },
-  { id: "chords",      label: "Chords & Harmony", icon: "🎵", color: "border-violet-500/50 bg-violet-500/10", dot: "bg-violet-400" },
-  { id: "scales",      label: "Scales & Lead",    icon: "🎼", color: "border-emerald-500/50 bg-emerald-500/10", dot: "bg-emerald-400" },
-  { id: "technique",   label: "Technique",        icon: "🤘", color: "border-orange-500/50 bg-orange-500/10",  dot: "bg-orange-400" },
-  { id: "styles",      label: "Styles",           icon: "🌍", color: "border-pink-500/50 bg-pink-500/10",    dot: "bg-pink-400" },
-  { id: "songs",       label: "Songs",            icon: "🎶", color: "border-amber-500/50 bg-amber-500/10",  dot: "bg-amber-400" },
+  { id: "foundations", label: "Foundations",      dot: "bg-sky-400",     pill: "text-sky-400 bg-sky-500/10 border-sky-500/20" },
+  { id: "chords",      label: "Chords & Harmony", dot: "bg-violet-400",  pill: "text-violet-400 bg-violet-500/10 border-violet-500/20" },
+  { id: "scales",      label: "Scales & Lead",    dot: "bg-emerald-400", pill: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" },
+  { id: "technique",   label: "Technique",        dot: "bg-orange-400",  pill: "text-orange-400 bg-orange-500/10 border-orange-500/20" },
+  { id: "styles",      label: "Styles",           dot: "bg-pink-400",    pill: "text-pink-400 bg-pink-500/10 border-pink-500/20" },
+  { id: "songs",       label: "Songs",            dot: "bg-amber-400",   pill: "text-amber-400 bg-amber-500/10 border-amber-500/20" },
 ]
-
-const CATEGORY_COLORS: Record<Category, string> = {
-  foundations: "text-sky-400 bg-sky-500/10 border-sky-500/30",
-  chords:      "text-violet-400 bg-violet-500/10 border-violet-500/30",
-  scales:      "text-emerald-400 bg-emerald-500/10 border-emerald-500/30",
-  technique:   "text-orange-400 bg-orange-500/10 border-orange-500/30",
-  styles:      "text-pink-400 bg-pink-500/10 border-pink-500/30",
-  songs:       "text-amber-400 bg-amber-500/10 border-amber-500/30",
-}
-
-const CATEGORY_LABELS: Record<Category, string> = {
-  foundations: "Foundations",
-  chords:      "Chords & Harmony",
-  scales:      "Scales & Lead",
-  technique:   "Technique",
-  styles:      "Styles",
-  songs:       "Songs",
-}
 
 const MODULES: Module[] = [
   {
     href: "/how-to-use",
-    icon: "📱",
     title: "How to Use This App",
     description: "New here? Get an overview of all modules and follow structured learning paths for beginner, intermediate, or advanced levels.",
-    cta: "View Guide →",
+    cta: "View Guide",
     tags: ["guide", "beginner", "overview", "start", "learning path"],
     category: "foundations",
   },
   {
     href: "/beginner",
-    icon: "🌟",
     title: "Beginner Module",
     description: "Just starting out? Learn guitar anatomy, how to hold your guitar, read chord diagrams, and play your first chords.",
-    cta: "Start Here →",
+    cta: "Start Here",
     tags: ["beginner", "basics", "first chords", "chord diagrams", "anatomy"],
     category: "foundations",
   },
   {
     href: "/music-theory",
-    icon: "📚",
     title: "Music Theory",
     description: "Build a strong foundation in music theory. Learn notes, intervals, chord construction, and more.",
-    cta: "Study Theory →",
+    cta: "Study Theory",
     tags: ["theory", "notes", "intervals", "circle of fifths", "key signatures", "foundation"],
     category: "foundations",
   },
   {
     href: "/nashville-number-system",
-    icon: "🎯",
     title: "Nashville Number System",
     description: "Learn the universal language of chord progressions. Transpose songs instantly to any key.",
-    cta: "Learn the System →",
+    cta: "Learn the System",
     tags: ["nashville", "numbers", "transposition", "transpose", "theory", "session"],
     category: "foundations",
   },
   {
     href: "/standard-notation",
-    icon: "🎼",
     title: "Standard Notation",
     description: "Read music the way every other instrument does. Learn the staff, note values, key signatures, and train note recognition with the interactive Note Trainer.",
-    cta: "Learn to Read Music →",
-    tags: ["standard notation", "sheet music", "treble clef", "note reading", "rhythm", "key signatures", "time signatures", "sight reading", "note trainer", "staff", "theory"],
+    cta: "Learn to Read Music",
+    tags: ["standard notation", "sheet music", "treble clef", "note reading", "rhythm", "key signatures", "sight reading"],
     category: "foundations",
   },
   {
     href: "/capo-guide",
-    icon: "🎻",
     title: "Capo Guide",
     description: "Master the capo — transpose to any key using familiar shapes. Includes an interactive key calculator, common positions, and 20+ real song examples.",
-    cta: "Use the Capo →",
-    tags: ["capo", "transposing", "key", "shapes", "beginner", "singer-songwriter", "open chords", "partial capo"],
+    cta: "Use the Capo",
+    tags: ["capo", "transposing", "key", "shapes", "beginner", "singer-songwriter", "open chords"],
     category: "foundations",
   },
   {
     href: "/practice-routine",
-    icon: "📅",
     title: "Practice Routine Builder",
     description: "Build a personalised daily practice routine. Choose your time budget, level, and focus areas — get a structured session with warm-ups, exercises, and repertoire.",
-    cta: "Build My Routine →",
-    tags: ["practice", "routine", "warm-up", "schedule", "beginner", "intermediate", "advanced", "daily", "technique", "habit"],
+    cta: "Build My Routine",
+    tags: ["practice", "routine", "warm-up", "schedule", "beginner", "intermediate", "advanced", "daily"],
     category: "foundations",
   },
   {
     href: "/ear-training",
-    icon: "👂",
     title: "Ear Training",
     description: "Develop your musical ear with interval recognition, chord quality identification, and melodic memory exercises — all interactive.",
-    cta: "Train Your Ear →",
-    tags: ["ear training", "intervals", "chord recognition", "melodic memory", "listening", "pitch", "relative pitch", "harmony", "theory"],
+    cta: "Train Your Ear",
+    tags: ["ear training", "intervals", "chord recognition", "melodic memory", "listening", "pitch", "relative pitch"],
     category: "foundations",
   },
   {
     href: "/guitar-setup",
-    icon: "🔧",
     title: "Guitar Setup & Maintenance",
     description: "Learn to restring, adjust action, set intonation, and care for your guitar. Covers truss rod basics, cleaning, and when to see a luthier.",
-    cta: "Set Up Your Guitar →",
-    tags: ["setup", "maintenance", "restringing", "action", "intonation", "truss rod", "nut", "saddle", "care", "cleaning", "luthier"],
+    cta: "Set Up Your Guitar",
+    tags: ["setup", "maintenance", "restringing", "action", "intonation", "truss rod", "care"],
     category: "foundations",
   },
   {
     href: "/songwriting",
-    icon: "✍️",
     title: "Songwriting Basics",
     description: "Learn the creative process — song structure, melody writing, chord progressions, lyric craft, and the habit of finishing songs.",
-    cta: "Write Your Song →",
-    tags: ["songwriting", "lyrics", "melody", "song structure", "verse chorus bridge", "hook", "chord progressions", "creative process", "writing"],
+    cta: "Write Your Song",
+    tags: ["songwriting", "lyrics", "melody", "song structure", "verse chorus bridge", "hook"],
     category: "foundations",
   },
   {
     href: "/chord-builder",
-    icon: "🎸",
     title: "Chord Building",
     description: "Learn how chords are constructed from the ground up. Understand intervals, triads, and extensions.",
-    cta: "Start Learning →",
+    cta: "Start Learning",
     tags: ["chords", "intervals", "triads", "extensions", "theory", "construction"],
     category: "chords",
   },
   {
     href: "/progressions",
-    icon: "🎵",
     title: "Chord Progressions",
     description: "Explore common progressions used in popular music. Practice in all keys and understand the theory.",
-    cta: "Explore Progressions →",
+    cta: "Explore Progressions",
     tags: ["progressions", "chords", "keys", "popular music", "I IV V", "practice"],
     category: "chords",
   },
   {
     href: "/diatonic-chords",
-    icon: "🔢",
     title: "Diatonic Chords",
     description: "Discover the 7 chords that live inside every scale. Understand which chords belong to a key and which scales to use over any chord.",
-    cta: "Explore Diatonic Harmony →",
-    tags: ["diatonic", "chords", "scales", "harmony", "key", "major", "minor", "chord scale", "theory", "I IV V", "modes", "soloing"],
+    cta: "Explore Diatonic Harmony",
+    tags: ["diatonic", "chords", "scales", "harmony", "key", "major", "minor", "theory", "I IV V"],
     category: "chords",
   },
   {
     href: "/caged-system",
-    icon: "🔗",
     title: "CAGED System",
     description: "Master the fretboard using 5 interconnected chord shapes. See how everything connects across the neck.",
-    cta: "Unlock the Fretboard →",
+    cta: "Unlock the Fretboard",
     tags: ["caged", "fretboard", "shapes", "intermediate", "positions", "barre"],
     category: "chords",
   },
   {
     href: "/chord-substitutions",
-    icon: "🎭",
     title: "Chord Substitutions",
     description: "Learn advanced techniques to replace chords with alternatives. Add color and sophistication to your playing.",
-    cta: "Explore Substitutions →",
+    cta: "Explore Substitutions",
     tags: ["substitutions", "jazz", "advanced", "theory", "reharmonization", "color"],
     category: "chords",
   },
   {
     href: "/chord-inversions",
-    icon: "🔄",
     title: "Chord Inversions & Voice Leading",
     description: "Learn root, 1st, 2nd, and 3rd inversions. Master Drop 2 voicings and smooth voice leading for jazz, pop, and beyond.",
-    cta: "Explore Inversions →",
-    tags: ["inversions", "voice leading", "drop 2", "slash chords", "jazz", "voicings", "7th chords", "triads", "harmony", "advanced"],
+    cta: "Explore Inversions",
+    tags: ["inversions", "voice leading", "drop 2", "slash chords", "jazz", "voicings", "harmony"],
     category: "chords",
   },
   {
     href: "/backing-chords",
-    icon: "🎛️",
     title: "Backing Chords for Scales",
     description: "Playing pentatonic, Dorian, Mixolydian, or Phrygian? Find the chord progressions that activate each scale's character.",
-    cta: "Find Your Backing →",
-    tags: ["backing chords", "modes", "pentatonic", "dorian", "mixolydian", "phrygian", "lydian", "aeolian", "vamp", "progressions", "chord scale", "soloing"],
+    cta: "Find Your Backing",
+    tags: ["backing chords", "modes", "pentatonic", "dorian", "mixolydian", "phrygian", "vamp", "soloing"],
     category: "chords",
   },
   {
     href: "/scales",
-    icon: "🎼",
     title: "Guitar Scales",
     description: "Master essential scales across the fretboard. Learn positions, patterns, and soloing techniques.",
-    cta: "Learn Scales →",
+    cta: "Learn Scales",
     tags: ["scales", "pentatonic", "major", "minor", "soloing", "fretboard", "positions"],
     category: "scales",
   },
   {
     href: "/pentatonic",
-    icon: "🎯",
     title: "Pentatonic Mastery",
     description: "Master all 5 positions of the minor pentatonic scale. Connect them across the neck and play with classic licks, bends, and vibrato.",
-    cta: "Master the Pentatonic →",
-    tags: ["pentatonic", "positions", "licks", "bends", "vibrato", "soloing", "fretboard", "minor scale", "lead guitar"],
+    cta: "Master the Pentatonic",
+    tags: ["pentatonic", "positions", "licks", "bends", "vibrato", "soloing", "fretboard", "lead guitar"],
     category: "scales",
   },
   {
     href: "/modes",
-    icon: "🌀",
     title: "Modes Made Practical",
     description: "Understand Dorian, Mixolydian, Phrygian, Lydian, and Aeolian — with scale patterns, riffs, and real songs for each mode.",
-    cta: "Explore Modes →",
-    tags: ["modes", "dorian", "mixolydian", "phrygian", "lydian", "aeolian", "theory", "scales", "lead guitar", "jazz", "rock"],
+    cta: "Explore Modes",
+    tags: ["modes", "dorian", "mixolydian", "phrygian", "lydian", "aeolian", "theory", "scales", "lead guitar"],
     category: "scales",
   },
   {
     href: "/arpeggios",
-    icon: "🎵",
     title: "Arpeggios",
     description: "Learn to play chords note-by-note across the fretboard. Essential for solos and melodic playing.",
-    cta: "Master Arpeggios →",
+    cta: "Master Arpeggios",
     tags: ["arpeggios", "soloing", "fretboard", "technique", "melodic", "broken chords"],
     category: "scales",
   },
   {
     href: "/improvisation",
-    icon: "🎙️",
     title: "Improvisation",
     description: "Learn to improvise with purpose — phrases, motifs, space, and dynamics that make your solos memorable and musical.",
-    cta: "Start Improvising →",
-    tags: ["improvisation", "soloing", "phrases", "motifs", "space", "dynamics", "blues", "lead guitar", "expression"],
+    cta: "Start Improvising",
+    tags: ["improvisation", "soloing", "phrases", "motifs", "space", "dynamics", "blues", "lead guitar"],
     category: "scales",
   },
   {
     href: "/barre-chords",
-    icon: "✊",
     title: "Barre Chords",
     description: "Conquer the F chord and beyond. Master E-shape and A-shape barre chords, troubleshoot buzzing, and unlock every key on the neck.",
-    cta: "Crack the Barre →",
-    tags: ["barre chords", "F chord", "barre", "E shape", "A shape", "beginner", "intermediate", "technique", "movable chords", "minor barre"],
+    cta: "Crack the Barre",
+    tags: ["barre chords", "F chord", "barre", "E shape", "A shape", "beginner", "intermediate", "movable chords"],
     category: "technique",
   },
   {
     href: "/techniques",
-    icon: "🤘",
     title: "Guitar Techniques",
     description: "Master bends, vibrato, slides, legato, and muting. Step-by-step technique breakdowns with TAB examples and daily workout.",
-    cta: "Build Your Technique →",
-    tags: ["techniques", "bends", "vibrato", "slides", "legato", "hammer-on", "pull-off", "muting", "workout"],
+    cta: "Build Your Technique",
+    tags: ["techniques", "bends", "vibrato", "slides", "legato", "hammer-on", "pull-off", "muting"],
     category: "technique",
   },
   {
     href: "/fingerstyle-patterns",
-    icon: "🎹",
     title: "Fingerstyle Patterns",
     description: "Master fingerpicking patterns from Travis picking to classical techniques. Build independence and fluidity.",
-    cta: "Learn Patterns →",
+    cta: "Learn Patterns",
     tags: ["fingerstyle", "travis picking", "fingerpicking", "classical", "patterns", "picking"],
     category: "technique",
   },
   {
     href: "/rhythm-trainer",
-    icon: "🥁",
     title: "Rhythm Trainer",
     description: "Master strumming patterns and timing. Learn rock, folk, reggae, and more with visual and audio guides.",
-    cta: "Practice Rhythm →",
+    cta: "Practice Rhythm",
     tags: ["rhythm", "strumming", "timing", "rock", "folk", "reggae", "patterns"],
     category: "technique",
   },
   {
     href: "/riffs",
-    icon: "🎸",
     title: "Classic Riffs",
     description: "Learn iconic rock, blues, and folk riffs with full TAB. Understand what makes them great and how to build your own.",
-    cta: "Learn the Riffs →",
-    tags: ["riffs", "rock", "blues", "folk", "classic riffs", "smoke on the water", "iron man", "sunshine of your love", "wish you were here", "technique"],
+    cta: "Learn the Riffs",
+    tags: ["riffs", "rock", "blues", "folk", "classic riffs", "smoke on the water", "iron man", "wish you were here"],
     category: "technique",
   },
   {
     href: "/blues",
-    icon: "🎷",
     title: "12-Bar Blues",
     description: "Master the foundation of blues, rock & roll, and modern music. Learn the structure, shuffle rhythm, chord shapes, and how to solo.",
-    cta: "Learn the Blues →",
-    tags: ["blues", "12 bar", "shuffle", "I IV V", "dominant 7th", "pentatonic", "soloing", "rock", "delta blues", "chicago blues"],
+    cta: "Learn the Blues",
+    tags: ["blues", "12 bar", "shuffle", "I IV V", "dominant 7th", "pentatonic", "soloing", "rock", "delta blues"],
     category: "styles",
   },
   {
     href: "/funk-guitar",
-    icon: "🎛️",
     title: "Funk Guitar",
     description: "Master the chicken scratch, 16th note grooves, dominant 9th voicings, and the wah pedal. Rhythm, pocket, and space.",
-    cta: "Get in the Pocket →",
-    tags: ["funk", "rhythm", "chicken scratch", "dead notes", "muting", "16th notes", "groove", "wah", "nile rodgers", "james brown", "prince"],
+    cta: "Get in the Pocket",
+    tags: ["funk", "rhythm", "chicken scratch", "dead notes", "muting", "16th notes", "groove", "wah", "nile rodgers"],
     category: "styles",
   },
   {
     href: "/open-tunings",
-    icon: "🪕",
     title: "Open Tunings",
     description: "Retune to Open G, Open D, DADGAD, and Open E. Unlock slide guitar, drone sounds, and chord voicings impossible in standard tuning.",
-    cta: "Explore Open Tunings →",
-    tags: ["open tuning", "open g", "open d", "dadgad", "open e", "slide guitar", "keith richards", "joni mitchell", "duane allman"],
+    cta: "Explore Open Tunings",
+    tags: ["open tuning", "open g", "open d", "dadgad", "open e", "slide guitar", "keith richards", "joni mitchell"],
     category: "styles",
   },
   {
     href: "/slide-guitar",
-    icon: "🎸",
     title: "Slide Guitar",
     description: "Learn the bottleneck technique from Delta Blues to rock. Covers slide types, intonation, vibrato, Open G, Open D, and standard tuning playing.",
-    cta: "Play Slide →",
-    tags: ["slide guitar", "bottleneck", "open g", "open d", "vibrato", "intonation", "blues", "delta blues", "duane allman", "derek trucks"],
+    cta: "Play Slide",
+    tags: ["slide guitar", "bottleneck", "open g", "open d", "vibrato", "intonation", "blues", "delta blues"],
     category: "styles",
   },
   {
     href: "/jazz-guitar",
-    icon: "🎷",
     title: "Jazz Guitar",
     description: "Dive into jazz harmony — shell voicings, the ii–V–I progression, bebop scales, comping rhythm, and essential standards to learn.",
-    cta: "Explore Jazz →",
-    tags: ["jazz", "ii-v-i", "shell voicings", "comping", "standards", "bebop", "dorian", "mixolydian", "wes montgomery"],
+    cta: "Explore Jazz",
+    tags: ["jazz", "ii-v-i", "shell voicings", "comping", "standards", "bebop", "dorian", "mixolydian"],
     category: "styles",
   },
   {
     href: "/bass-guitar",
-    icon: "🎵",
     title: "Bass Guitar",
     description: "Learn the low end — anatomy, 4-string scales, groove patterns (rock, funk, reggae, jazz), and core techniques including slap & pop.",
-    cta: "Play Bass →",
-    tags: ["bass", "bass guitar", "slap", "groove", "funk", "scales", "four string", "rhythm section", "beginner", "intermediate"],
+    cta: "Play Bass",
+    tags: ["bass", "bass guitar", "slap", "groove", "funk", "scales", "four string", "rhythm section"],
     category: "styles",
   },
   {
     href: "/song-library",
-    icon: "🎶",
     title: "Song Library",
     description: "Learn 8 real songs with chord diagrams, Nashville numbers, and theory callouts. Transpose to any key.",
-    cta: "Browse Songs →",
-    tags: ["songs", "real songs", "repertoire", "practice", "transpose", "let her go", "stand by me", "jolene", "wish you were here", "autumn leaves", "classic rock", "jazz", "pop", "country"],
+    cta: "Browse Songs",
+    tags: ["songs", "real songs", "repertoire", "practice", "transpose", "let her go", "stand by me", "jolene", "wish you were here"],
     category: "songs",
   },
 ]
 
-// ── Sub-components ─────────────────────────────────────────────────────────
+// ── Helpers ─────────────────────────────────────────────────────────────────
+
+function getCategoryMeta(id: Category): CategoryMeta {
+  return CATEGORY_META.find(c => c.id === id)!
+}
+
+// ── Module card ──────────────────────────────────────────────────────────────
 
 function ModuleCard({ module }: { module: Module }) {
+  const cat = getCategoryMeta(module.category)
   return (
-    <Link href={module.href}>
-      <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 hover:bg-white/20 transition-all cursor-pointer border border-white/20 hover:scale-[1.02] h-full flex flex-col">
-        <div className="flex items-start justify-between mb-3">
-          <span className="text-4xl">{module.icon}</span>
-          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${CATEGORY_COLORS[module.category]}`}>
-            {CATEGORY_LABELS[module.category]}
+    <Link href={module.href} className="group block">
+      <div className="h-full flex flex-col bg-slate-800/50 border border-white/8 rounded-2xl p-5 hover:bg-slate-800/80 hover:border-white/15 transition-all duration-200">
+        <div className="flex items-start justify-between gap-2 mb-3">
+          <h2 className="text-base font-semibold text-white leading-snug">{module.title}</h2>
+          <span className={`shrink-0 text-xs font-medium px-2 py-0.5 rounded-full border ${cat.pill}`}>
+            {cat.label}
           </span>
         </div>
-        <h2 className="text-lg font-bold text-white mb-2">{module.title}</h2>
-        <p className="text-purple-200 text-sm mb-4 flex-1">{module.description}</p>
-        <div className="text-purple-300 font-semibold text-sm">{module.cta}</div>
+        <p className="text-sm text-slate-400 leading-relaxed flex-1 mb-4">{module.description}</p>
+        <span className="text-sm font-medium text-purple-400 group-hover:text-purple-300 transition-colors">
+          {module.cta} →
+        </span>
       </div>
     </Link>
   )
 }
 
+// ── Path card ────────────────────────────────────────────────────────────────
+
 function PathCard({ path }: { path: LearningPath }) {
   return (
-    <div className={`border-l-4 rounded-2xl p-6 ${path.accent} flex flex-col`}>
-      <div className="flex items-start gap-3 mb-3">
-        <span className="text-3xl">{path.icon}</span>
-        <div>
-          <h3 className="text-white font-bold text-lg leading-tight">{path.title}</h3>
-          <p className="text-purple-400 text-xs mt-0.5">{path.audience}</p>
-        </div>
+    <div className={`flex flex-col border rounded-2xl p-6 ${path.accent}`}>
+      <div className="mb-1">
+        <span className={`text-xs font-semibold uppercase tracking-wider ${path.labelColor}`}>
+          {path.audience}
+        </span>
       </div>
-      <p className="text-purple-200 text-sm mb-4">{path.description}</p>
-      <ol className="space-y-2 mb-5 flex-1">
+      <h3 className="text-lg font-bold text-white mb-2">{path.title}</h3>
+      <p className="text-sm text-slate-400 leading-relaxed mb-5">{path.description}</p>
+      <ol className="space-y-2 flex-1 mb-5">
         {path.steps.map((step, i) => (
           <li key={step.href}>
             <Link
               href={step.href}
-              className="flex items-center gap-2.5 text-sm text-purple-200 hover:text-white transition-colors group"
+              className="flex items-center gap-3 text-sm text-slate-300 hover:text-white transition-colors group"
             >
-              <span className="w-5 h-5 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center text-xs font-bold text-white shrink-0">
+              <span className="w-5 h-5 shrink-0 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-xs font-bold text-white transition-colors">
                 {i + 1}
               </span>
               {step.label}
@@ -491,7 +446,7 @@ function PathCard({ path }: { path: LearningPath }) {
       </ol>
       <Link
         href={path.steps[0].href}
-        className="inline-block text-xs font-semibold text-white bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-all self-start"
+        className={`self-start text-xs font-semibold px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all`}
       >
         Start Path →
       </Link>
@@ -499,35 +454,30 @@ function PathCard({ path }: { path: LearningPath }) {
   )
 }
 
+// ── Views ────────────────────────────────────────────────────────────────────
+
 function PathsView() {
   return (
-    <div>
-      <p className="text-purple-400 text-sm mb-6">
-        Choose a guided sequence — each path takes you through modules in the right order.
-      </p>
-      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-        {LEARNING_PATHS.map(path => (
-          <PathCard key={path.title} path={path} />
-        ))}
-      </div>
+    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+      {LEARNING_PATHS.map(p => <PathCard key={p.title} path={p} />)}
     </div>
   )
 }
 
 function ThemesView({ modules }: { modules: Module[] }) {
   return (
-    <div className="space-y-12">
+    <div className="space-y-10">
       {CATEGORY_META.map(cat => {
         const mods = modules.filter(m => m.category === cat.id)
-        if (mods.length === 0) return null
+        if (!mods.length) return null
         return (
           <section key={cat.id}>
-            <div className={`flex items-center gap-3 mb-5 pb-3 border-b border-white/10`}>
-              <span className="text-2xl">{cat.icon}</span>
-              <h2 className="text-xl font-bold text-white">{cat.label}</h2>
-              <span className="text-sm text-purple-400 ml-auto">{mods.length} module{mods.length > 1 ? "s" : ""}</span>
+            <div className="flex items-center gap-2.5 mb-4">
+              <span className={`w-2 h-2 rounded-full ${cat.dot}`} />
+              <h2 className="text-base font-semibold text-white">{cat.label}</h2>
+              <span className="text-xs text-slate-500 ml-auto">{mods.length} modules</span>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {mods.map(m => <ModuleCard key={m.href} module={m} />)}
             </div>
           </section>
@@ -538,22 +488,18 @@ function ThemesView({ modules }: { modules: Module[] }) {
 }
 
 function AllModulesView({ modules }: { modules: Module[] }) {
-  const [activeCategory, setActiveCategory] = useState<Category | "all">("all")
-
-  const filtered = activeCategory === "all"
-    ? modules
-    : modules.filter(m => m.category === activeCategory)
+  const [active, setActive] = useState<Category | "all">("all")
+  const filtered = active === "all" ? modules : modules.filter(m => m.category === active)
 
   return (
     <div>
-      {/* Category filter pills */}
       <div className="flex flex-wrap gap-2 mb-6">
         <button
-          onClick={() => setActiveCategory("all")}
-          className={`px-4 py-1.5 rounded-xl text-sm font-semibold transition-all ${
-            activeCategory === "all"
+          onClick={() => setActive("all")}
+          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+            active === "all"
               ? "bg-purple-600 text-white"
-              : "bg-white/10 text-purple-300 hover:bg-white/20"
+              : "text-slate-400 hover:text-white bg-white/5 hover:bg-white/10"
           }`}
         >
           All ({modules.length})
@@ -563,11 +509,11 @@ function AllModulesView({ modules }: { modules: Module[] }) {
           return (
             <button
               key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`px-4 py-1.5 rounded-xl text-sm font-semibold transition-all ${
-                activeCategory === cat.id
+              onClick={() => setActive(cat.id)}
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                active === cat.id
                   ? "bg-purple-600 text-white"
-                  : "bg-white/10 text-purple-300 hover:bg-white/20"
+                  : "text-slate-400 hover:text-white bg-white/5 hover:bg-white/10"
               }`}
             >
               {cat.label} ({count})
@@ -575,108 +521,109 @@ function AllModulesView({ modules }: { modules: Module[] }) {
           )
         })}
       </div>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filtered.map(m => <ModuleCard key={m.href} module={m} />)}
       </div>
     </div>
   )
 }
 
-// ── Main page ───────────────────────────────────────────────────────────────
+// ── Page ─────────────────────────────────────────────────────────────────────
+
+const TABS: { id: ViewTab; label: string }[] = [
+  { id: "paths",  label: "Learning Paths" },
+  { id: "themes", label: "By Theme" },
+  { id: "all",    label: "All Modules" },
+]
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("")
   const [activeView, setActiveView]   = useState<ViewTab>("paths")
 
   const isSearching = searchQuery.trim() !== ""
-
   const searchResults = MODULES.filter(m =>
     [m.title, m.description, ...m.tags].some(s =>
       s.toLowerCase().includes(searchQuery.toLowerCase())
     )
   )
 
-  const TABS: { id: ViewTab; label: string; icon: string }[] = [
-    { id: "paths",  label: "Learning Paths", icon: "🗺️" },
-    { id: "themes", label: "By Theme",        icon: "🏷️" },
-    { id: "all",    label: "All Modules",     icon: "⊞" },
-  ]
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <div className="container mx-auto px-4 py-16 max-w-7xl">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950">
+      <div className="max-w-7xl mx-auto px-4 py-12">
 
-        {/* Header */}
-        <header className="text-center mb-10">
-          <h1 className="text-3xl sm:text-5xl font-bold text-white mb-4">Guitar Lab</h1>
-          <p className="text-base sm:text-xl text-purple-200">Master guitar theory, technique, and fretboard knowledge</p>
-        </header>
+        {/* Hero */}
+        <div className="mb-10">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2 tracking-tight">
+            Guitar Lab
+          </h1>
+          <p className="text-slate-400 text-base">
+            {MODULES.length} modules covering theory, technique, scales, and styles.
+          </p>
+        </div>
 
         {/* Search */}
-        <div className="max-w-xl mx-auto mb-8">
+        <div className="max-w-lg mb-8">
           <div className="relative flex items-center">
-            <span className="absolute left-4 text-purple-400 text-lg select-none">🔍</span>
+            <svg className="absolute left-3.5 w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
             <input
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search modules… (e.g. jazz, scales, beginner)"
-              className="w-full bg-white/10 border border-white/20 rounded-xl pl-11 pr-10 py-3 text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:bg-white/15 transition-all"
+              placeholder="Search modules…"
+              className="w-full bg-slate-800/60 border border-white/8 rounded-xl pl-10 pr-9 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50 focus:bg-slate-800 transition-all"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 text-purple-400 hover:text-white transition-colors text-lg leading-none"
+                className="absolute right-3 text-slate-500 hover:text-slate-300 transition-colors"
                 aria-label="Clear search"
-              >✕</button>
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             )}
           </div>
           {isSearching && (
-            <p className="text-purple-400 text-sm mt-2 text-center">
-              {searchResults.length === 0
-                ? "No modules found"
-                : `${searchResults.length} module${searchResults.length === 1 ? "" : "s"} found`}
+            <p className="text-slate-500 text-xs mt-1.5 ml-1">
+              {searchResults.length === 0 ? "No modules found" : `${searchResults.length} result${searchResults.length === 1 ? "" : "s"}`}
             </p>
           )}
         </div>
 
-        {/* View tabs — hidden during search */}
+        {/* Tabs */}
         {!isSearching && (
-          <div className="flex justify-center mb-8">
-            <div className="flex gap-1 bg-white/5 border border-white/10 p-1 rounded-2xl">
-              {TABS.map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveView(tab.id)}
-                  className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-                    activeView === tab.id
-                      ? "bg-purple-600 text-white shadow-lg shadow-purple-900/50"
-                      : "text-purple-400 hover:text-white hover:bg-white/10"
-                  }`}
-                >
-                  <span>{tab.icon}</span>
-                  <span>{tab.label}</span>
-                </button>
-              ))}
-            </div>
+          <div className="flex gap-0.5 mb-8 bg-slate-800/40 border border-white/8 p-1 rounded-xl w-fit">
+            {TABS.map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveView(tab.id)}
+                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                  activeView === tab.id
+                    ? "bg-purple-600 text-white shadow-sm"
+                    : "text-slate-400 hover:text-white"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
         )}
 
         {/* Content */}
         {isSearching ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {searchResults.length > 0
-              ? searchResults.map(m => <ModuleCard key={m.href} module={m} />)
-              : (
-                <div className="col-span-3 text-center py-16">
-                  <div className="text-5xl mb-4">🎸</div>
-                  <p className="text-purple-200 text-lg mb-2">No modules match &ldquo;{searchQuery}&rdquo;</p>
-                  <p className="text-purple-400 text-sm">Try &ldquo;jazz&rdquo;, &ldquo;beginner&rdquo;, &ldquo;scales&rdquo;, or &ldquo;songs&rdquo;</p>
-                </div>
-              )
-            }
-          </div>
+          searchResults.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {searchResults.map(m => <ModuleCard key={m.href} module={m} />)}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <p className="text-slate-300 mb-1">No modules match &ldquo;{searchQuery}&rdquo;</p>
+              <p className="text-slate-500 text-sm">Try &ldquo;jazz&rdquo;, &ldquo;scales&rdquo;, or &ldquo;beginner&rdquo;</p>
+            </div>
+          )
         ) : activeView === "paths" ? (
           <PathsView />
         ) : activeView === "themes" ? (

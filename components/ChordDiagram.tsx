@@ -33,6 +33,9 @@ export default function ChordDiagram({ chordName, fingers, frets, size = 'medium
 
   const numFrets = calculatedFrets.length - 1
 
+  const numericFingers = fingers.filter((f): f is number => typeof f === 'number' && f > 0)
+  const minPlayedFret = numericFingers.length > 0 ? Math.min(...numericFingers) : calculatedFrets[0]
+
   const sizeClasses = {
     small:  { width: 125, height: 145, stringGap: 16, fretGap: 20 },
     medium: { width: 165, height: 180, stringGap: 22, fretGap: 28 },
@@ -68,7 +71,7 @@ export default function ChordDiagram({ chordName, fingers, frets, size = 'medium
             fontSize="12"
             textAnchor="middle"
           >
-            {calculatedFrets[0]}
+            {minPlayedFret}
           </text>
         )}
 

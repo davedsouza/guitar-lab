@@ -36,6 +36,14 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     "Diminished": [
       { fingers: ['x', 3, 4, 5, 4, 'x'], position: "3rd Fret", difficulty: 'intermediate' },
     ],
+    "Augmented": [
+      { fingers: ['x', 3, 2, 1, 1, 0], position: "Open Position", difficulty: 'intermediate' },
+      { fingers: [8, 11, 10, 9, 9, 8], position: "8th Fret (Barre)", difficulty: 'advanced' },
+    ],
+    "Sus4": [
+      { fingers: ['x', 3, 3, 0, 1, 1], position: "Open Position", difficulty: 'beginner' },
+      { fingers: [8, 10, 10, 10, 8, 8], position: "8th Fret (Barre)", difficulty: 'intermediate' },
+    ],
   },
 
   // ─── C# ──────────────────────────────────────────────────────────────────
@@ -62,6 +70,14 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     ],
     "Diminished": [
       { fingers: ['x', 4, 5, 6, 5, 'x'], position: "4th Fret", difficulty: 'intermediate' },
+    ],
+    "Augmented": [
+      { fingers: ['x', 4, 3, 2, 2, 1], position: "4th Position", difficulty: 'intermediate' },
+      { fingers: [9, 12, 11, 10, 10, 9], position: "9th Fret (Barre)", difficulty: 'advanced' },
+    ],
+    "Sus4": [
+      { fingers: ['x', 4, 6, 6, 7, 4], position: "4th Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: [9, 11, 11, 11, 9, 9], position: "9th Fret (Barre)", difficulty: 'intermediate' },
     ],
   },
 
@@ -92,6 +108,14 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     "Diminished": [
       { fingers: ['x', 5, 6, 7, 6, 'x'], position: "5th Fret", difficulty: 'intermediate' },
     ],
+    "Augmented": [
+      { fingers: ['x', 'x', 0, 3, 3, 2], position: "Open Position", difficulty: 'intermediate' },
+      { fingers: ['x', 5, 4, 3, 3, 2], position: "5th Position", difficulty: 'intermediate' },
+    ],
+    "Sus4": [
+      { fingers: ['x', 'x', 0, 2, 3, 3], position: "Open Position", difficulty: 'beginner' },
+      { fingers: ['x', 5, 7, 7, 8, 5], position: "5th Fret (Barre)", difficulty: 'intermediate' },
+    ],
   },
 
   // ─── D# ──────────────────────────────────────────────────────────────────
@@ -118,6 +142,14 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     ],
     "Diminished": [
       { fingers: ['x', 6, 7, 8, 7, 'x'], position: "6th Fret", difficulty: 'intermediate' },
+    ],
+    "Augmented": [
+      { fingers: ['x', 'x', 1, 4, 4, 3], position: "1st Position", difficulty: 'intermediate' },
+      { fingers: ['x', 6, 5, 4, 4, 3], position: "6th Position", difficulty: 'intermediate' },
+    ],
+    "Sus4": [
+      { fingers: ['x', 'x', 1, 3, 4, 4], position: "1st Position", difficulty: 'intermediate' },
+      { fingers: ['x', 6, 8, 8, 9, 6], position: "6th Fret (Barre)", difficulty: 'intermediate' },
     ],
   },
 
@@ -148,6 +180,14 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     "Diminished": [
       { fingers: ['x', 7, 8, 9, 8, 'x'], position: "7th Fret", difficulty: 'intermediate' },
     ],
+    "Augmented": [
+      { fingers: [0, 3, 2, 1, 1, 0], position: "Open Position", difficulty: 'intermediate' },
+      { fingers: ['x', 7, 6, 5, 5, 4], position: "7th Position", difficulty: 'intermediate' },
+    ],
+    "Sus4": [
+      { fingers: [0, 2, 2, 2, 0, 0], position: "Open Position", difficulty: 'beginner' },
+      { fingers: ['x', 7, 9, 9, 10, 7], position: "7th Fret (Barre)", difficulty: 'intermediate' },
+    ],
   },
 
   // ─── F ───────────────────────────────────────────────────────────────────
@@ -176,6 +216,14 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     "Diminished": [
       { fingers: ['x', 8, 9, 10, 9, 'x'], position: "8th Fret", difficulty: 'intermediate' },
     ],
+    "Augmented": [
+      { fingers: [1, 4, 3, 2, 2, 1], position: "1st Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: ['x', 8, 7, 6, 6, 5], position: "8th Position", difficulty: 'intermediate' },
+    ],
+    "Sus4": [
+      { fingers: [1, 3, 3, 3, 1, 1], position: "1st Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: ['x', 8, 10, 10, 11, 8], position: "8th Fret (Barre)", difficulty: 'intermediate' },
+    ],
   },
 
   // ─── F# ──────────────────────────────────────────────────────────────────
@@ -202,6 +250,14 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     ],
     "Diminished": [
       { fingers: ['x', 9, 10, 11, 10, 'x'], position: "9th Fret", difficulty: 'intermediate' },
+    ],
+    "Augmented": [
+      { fingers: [2, 5, 4, 3, 3, 2], position: "2nd Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: ['x', 9, 8, 7, 7, 6], position: "9th Position", difficulty: 'intermediate' },
+    ],
+    "Sus4": [
+      { fingers: [2, 4, 4, 4, 2, 2], position: "2nd Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: ['x', 9, 11, 11, 12, 9], position: "9th Fret (Barre)", difficulty: 'intermediate' },
     ],
   },
 
@@ -231,6 +287,14 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     "Diminished": [
       { fingers: ['x', 10, 11, 12, 11, 'x'], position: "10th Fret", difficulty: 'intermediate' },
     ],
+    "Augmented": [
+      { fingers: [3, 6, 5, 4, 4, 3], position: "3rd Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: ['x', 10, 9, 8, 8, 7], position: "10th Position", difficulty: 'advanced' },
+    ],
+    "Sus4": [
+      { fingers: [3, 3, 0, 0, 1, 3], position: "Open Position", difficulty: 'beginner' },
+      { fingers: [3, 5, 5, 5, 3, 3], position: "3rd Fret (Barre)", difficulty: 'intermediate' },
+    ],
   },
 
   // ─── G# ──────────────────────────────────────────────────────────────────
@@ -257,6 +321,14 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     ],
     "Diminished": [
       { fingers: ['x', 11, 12, 13, 12, 'x'], position: "11th Fret", difficulty: 'intermediate' },
+    ],
+    "Augmented": [
+      { fingers: [4, 7, 6, 5, 5, 4], position: "4th Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: ['x', 11, 10, 9, 9, 8], position: "11th Position", difficulty: 'advanced' },
+    ],
+    "Sus4": [
+      { fingers: [4, 6, 6, 6, 4, 4], position: "4th Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: ['x', 'x', 1, 1, 2, 4], position: "1st Position", difficulty: 'beginner' },
     ],
   },
 
@@ -287,6 +359,14 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     "Diminished": [
       { fingers: ['x', 0, 1, 2, 1, 'x'], position: "Open Position", difficulty: 'intermediate' },
     ],
+    "Augmented": [
+      { fingers: ['x', 0, 3, 2, 2, 1], position: "Open Position", difficulty: 'intermediate' },
+      { fingers: [5, 8, 7, 6, 6, 5], position: "5th Fret (Barre)", difficulty: 'intermediate' },
+    ],
+    "Sus4": [
+      { fingers: ['x', 0, 2, 2, 3, 0], position: "Open Position", difficulty: 'beginner' },
+      { fingers: [5, 7, 7, 7, 5, 5], position: "5th Fret (Barre)", difficulty: 'intermediate' },
+    ],
   },
 
   // ─── A# ──────────────────────────────────────────────────────────────────
@@ -313,6 +393,14 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     ],
     "Diminished": [
       { fingers: ['x', 1, 2, 3, 2, 'x'], position: "1st Fret", difficulty: 'intermediate' },
+    ],
+    "Augmented": [
+      { fingers: ['x', 1, 4, 3, 3, 2], position: "1st Position", difficulty: 'intermediate' },
+      { fingers: [6, 9, 8, 7, 7, 6], position: "6th Fret (Barre)", difficulty: 'intermediate' },
+    ],
+    "Sus4": [
+      { fingers: ['x', 1, 3, 3, 4, 1], position: "1st Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: [6, 8, 8, 8, 6, 6], position: "6th Fret (Barre)", difficulty: 'intermediate' },
     ],
   },
 
@@ -341,6 +429,14 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     ],
     "Diminished": [
       { fingers: ['x', 2, 3, 4, 3, 'x'], position: "2nd Fret", difficulty: 'intermediate' },
+    ],
+    "Augmented": [
+      { fingers: ['x', 2, 5, 4, 4, 3], position: "2nd Position", difficulty: 'intermediate' },
+      { fingers: [7, 10, 9, 8, 8, 7], position: "7th Fret (Barre)", difficulty: 'intermediate' },
+    ],
+    "Sus4": [
+      { fingers: ['x', 2, 4, 4, 5, 2], position: "2nd Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: [7, 9, 9, 9, 7, 7], position: "7th Fret (Barre)", difficulty: 'intermediate' },
     ],
   },
 }

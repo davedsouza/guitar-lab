@@ -387,6 +387,14 @@ const MODULES: Module[] = [
     tags: ["songs", "real songs", "repertoire", "practice", "transpose", "let her go", "stand by me", "jolene", "wish you were here"],
     category: "songs",
   },
+  {
+    href: "/guitarist-workflow",
+    title: "Guitarist Workflow",
+    description: "Study how legendary guitarists — BB King, Hendrix, SRV, and more — approach their playing. Break down their scales, phrasing, technique, and mindset.",
+    cta: "Study the Greats",
+    tags: ["guitarist workflow", "bb king", "hendrix", "srv", "style", "phrasing", "technique", "lead guitar", "inspiration"],
+    category: "styles",
+  },
 ]
 
 // ── Helpers ─────────────────────────────────────────────────────────────────

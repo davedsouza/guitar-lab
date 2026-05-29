@@ -12,6 +12,29 @@ npm run lint     # ESLint
 
 No test suite is configured.
 
+## Two-folder sync rule
+
+This project exists in two locations that must always be kept identical:
+
+- **Desktop (git repo):** `/Users/daviddsouza/Desktop/Guitar Lab/`
+- **Source:** `/Users/daviddsouza/my-new-app/guitar-learning-app/`
+
+**After every edit session, run this sync command before finishing:**
+
+```bash
+rsync -av --exclude='.git' --exclude='node_modules' --exclude='.next' "/Users/daviddsouza/Desktop/Guitar Lab/" "/Users/daviddsouza/my-new-app/guitar-learning-app/"
+```
+
+Then verify with:
+
+```bash
+diff "/Users/daviddsouza/Desktop/Guitar Lab/app/chord-builder/page.tsx" "/Users/daviddsouza/my-new-app/guitar-learning-app/app/chord-builder/page.tsx" && echo "In sync"
+```
+
+(Replace the file path with any file you just edited to spot-check.)
+
+After syncing, push to GitHub via **GitHub Desktop** — CLI push fails (HTTPS credentials not configured in terminal).
+
 ## Architecture
 
 Next.js 16 App Router. Every route is `app/<module>/page.tsx`. There is no shared page-level layout beyond `app/layout.tsx` (which only sets fonts and metadata) — no global navbar, no shared sidebar.

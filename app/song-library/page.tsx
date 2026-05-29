@@ -7,20 +7,24 @@ import { getChordShape } from "@/lib/chordShapes"
 
 const KEYS = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"]
 
-// Keys where flat spellings are preferred (F, Bb, Eb, Ab, Db)
+// Keys where flat spellings are preferred
 const FLAT_KEY_INDICES = new Set([1, 3, 5, 8, 10])
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type ChordQuality = "Major" | "Minor" | "Dominant" | "Minor 7th" | "Major 7th" | "Diminished"
-type Genre = "Pop" | "Soul" | "Classic Rock" | "Country" | "Jazz"
+type Genre = "Pop" | "Soul" | "Classic Rock" | "Country" | "Jazz" | "Blues"
 type Difficulty = "Beginner" | "Intermediate" | "Advanced"
 
 interface ChordSlot {
   roman: string
-  /** Semitones from root of the song's original key (0 = root, 7 = fifth, etc.) */
   semitones: number
   quality: ChordQuality
+}
+
+interface RecommendedScale {
+  name: string
+  why: string
 }
 
 interface Song {
@@ -29,12 +33,12 @@ interface Song {
   artist: string
   genre: Genre
   difficulty: Difficulty
-  /** Index into KEYS[] for the song's original/famous key */
   originalKey: number
   displayKey: string
   progression: ChordSlot[]
   theoryCallout: string
   relatedModules: { href: string; label: string }[]
+  recommendedScales: RecommendedScale[]
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -50,7 +54,6 @@ function getQualitySuffix(quality: ChordQuality): string {
   }
 }
 
-/** Returns the preferred spelling of a note given the active key context */
 function getNoteSpelling(noteIndex: number, activeKey: number): string {
   const note = KEYS[noteIndex]
   if (!note.includes("/")) return note
@@ -58,7 +61,6 @@ function getNoteSpelling(noteIndex: number, activeKey: number): string {
   return FLAT_KEY_INDICES.has(activeKey) ? flat : sharp
 }
 
-/** Maps song quality labels → chordShapes.ts key names */
 function getVoicingsQuality(quality: ChordQuality): string {
   switch (quality) {
     case "Dominant": return "Dominant 7th"
@@ -70,14 +72,6 @@ function getVoicingsQuality(quality: ChordQuality): string {
   }
 }
 
-/**
- * Given a chord's semitone offset from its song's root, return the chord name
- * transposed to selectedKey.
- *
- * Formula: (song.originalKey + semitones + transposition) % 12
- * which simplifies to: (selectedKey + semitones) % 12
- * because transposition = selectedKey - originalKey, and originalKey cancels.
- */
 function getChordName(semitones: number, quality: ChordQuality, selectedKey: number): string {
   const noteIndex = (selectedKey + semitones) % 12
   const rootNote = getNoteSpelling(noteIndex, selectedKey)
@@ -87,6 +81,7 @@ function getChordName(semitones: number, quality: ChordQuality, selectedKey: num
 // ─── Song Data ────────────────────────────────────────────────────────────────
 
 const SONGS: Song[] = [
+  // ── Original 8 songs ──
   {
     id: "let-her-go",
     title: "Let Her Go",
@@ -106,6 +101,10 @@ const SONGS: Song[] = [
       { href: "/progressions", label: "Chord Progressions" },
       { href: "/nashville-number-system", label: "Nashville Numbers" },
     ],
+    recommendedScales: [
+      { name: "Major", why: "All chords are diatonic — the major scale covers the whole song" },
+      { name: "Pentatonic Major", why: "5-note shortcut, zero clashes, instantly melodic" },
+    ],
   },
   {
     id: "stand-by-me",
@@ -124,6 +123,10 @@ const SONGS: Song[] = [
     theoryCallout: "The 50s progression I–vi–IV–V creates a timeless circular feel. The vi chord (relative minor) shares two notes with the I chord — it's the smoothest possible move away from home.",
     relatedModules: [
       { href: "/progressions", label: "Chord Progressions" },
+    ],
+    recommendedScales: [
+      { name: "Major", why: "Pure major key — the major scale covers all four chords" },
+      { name: "Pentatonic Major", why: "Works over every chord, very singable melodic lines" },
     ],
   },
   {
@@ -147,6 +150,10 @@ const SONGS: Song[] = [
       { href: "/scales", label: "Guitar Scales" },
       { href: "/music-theory", label: "Music Theory" },
     ],
+    recommendedScales: [
+      { name: "Natural Minor", why: "The ♭III and ♭VI are pure Aeolian — this is natural minor's home" },
+      { name: "Pentatonic Minor", why: "Removes the tension tones for a bluesy, singable sound" },
+    ],
   },
   {
     id: "jolene",
@@ -166,6 +173,10 @@ const SONGS: Song[] = [
     relatedModules: [
       { href: "/chord-builder", label: "Chord Builder" },
     ],
+    recommendedScales: [
+      { name: "Natural Minor", why: "All chords come from the natural minor scale" },
+      { name: "Pentatonic Minor", why: "Country picking lines sit perfectly in the minor pentatonic box" },
+    ],
   },
   {
     id: "sweet-home-alabama",
@@ -184,6 +195,10 @@ const SONGS: Song[] = [
     relatedModules: [
       { href: "/scales", label: "Guitar Scales" },
       { href: "/chord-substitutions", label: "Chord Substitutions" },
+    ],
+    recommendedScales: [
+      { name: "Mixolydian", why: "The ♭VII chord is the signature of Mixolydian mode — this scale nails it" },
+      { name: "Pentatonic Major", why: "Safe and bluesy across all three chords" },
     ],
   },
   {
@@ -205,6 +220,10 @@ const SONGS: Song[] = [
       { href: "/nashville-number-system", label: "Nashville Numbers" },
       { href: "/chord-substitutions", label: "Chord Substitutions" },
     ],
+    recommendedScales: [
+      { name: "Natural Minor", why: "The i, iv and ♭III all come from natural minor" },
+      { name: "Dorian", why: "Over the iv and ♭VII7 chords, Dorian's natural 6 adds a jazzier colour" },
+    ],
   },
   {
     id: "wish-you-were-here",
@@ -224,6 +243,10 @@ const SONGS: Song[] = [
     relatedModules: [
       { href: "/chord-builder", label: "Chord Builder" },
       { href: "/progressions", label: "Chord Progressions" },
+    ],
+    recommendedScales: [
+      { name: "Major", why: "100% diatonic major — one scale fits every chord perfectly" },
+      { name: "Pentatonic Major", why: "Pink Floyd's tone lives in the major pentatonic warmth" },
     ],
   },
   {
@@ -245,6 +268,209 @@ const SONGS: Song[] = [
       { href: "/chord-substitutions", label: "Chord Substitutions" },
       { href: "/nashville-number-system", label: "Nashville Numbers" },
     ],
+    recommendedScales: [
+      { name: "Major", why: "The ii–V–I is the core of major key jazz harmony" },
+      { name: "Dorian", why: "Play Dorian over the ii chord for a distinctly jazzy flavour" },
+    ],
+  },
+
+  // ── New songs ──
+  {
+    id: "knockin-on-heavens-door",
+    title: "Knockin' on Heaven's Door",
+    artist: "Bob Dylan",
+    genre: "Classic Rock",
+    difficulty: "Beginner",
+    originalKey: 7,
+    displayKey: "G",
+    progression: [
+      { roman: "I", semitones: 0, quality: "Major" },
+      { roman: "V", semitones: 7, quality: "Major" },
+      { roman: "ii", semitones: 2, quality: "Minor" },
+      { roman: "IV", semitones: 5, quality: "Major" },
+    ],
+    theoryCallout: "I–V–ii–IV substitutes Am (ii) where most songs use Em (vi). Both are minor chords in G, but ii shares two notes with IV, creating a more searching, world-weary quality — perfect for Dylan's lyrical mood.",
+    relatedModules: [
+      { href: "/progressions", label: "Chord Progressions" },
+      { href: "/chord-substitutions", label: "Chord Substitutions" },
+    ],
+    recommendedScales: [
+      { name: "Major", why: "All chords are diatonic to G major — one scale covers everything" },
+      { name: "Pentatonic Major", why: "Simple, singable lines that sit perfectly over the rhythm" },
+    ],
+  },
+  {
+    id: "nothing-else-matters",
+    title: "Nothing Else Matters",
+    artist: "Metallica",
+    genre: "Classic Rock",
+    difficulty: "Intermediate",
+    originalKey: 4,
+    displayKey: "Em",
+    progression: [
+      { roman: "i", semitones: 0, quality: "Minor" },
+      { roman: "♭VI", semitones: 8, quality: "Major" },
+      { roman: "♭III", semitones: 3, quality: "Major" },
+      { roman: "♭VII", semitones: 10, quality: "Major" },
+    ],
+    theoryCallout: "Pure natural minor (Aeolian). The ♭VI–♭III–♭VII triad — C, G, D in E minor — are the three borrowed major chords that give minor-key rock its cinematic power. You'll find this exact movement in power ballads across every decade.",
+    relatedModules: [
+      { href: "/scales", label: "Guitar Scales" },
+      { href: "/music-theory", label: "Music Theory" },
+    ],
+    recommendedScales: [
+      { name: "Natural Minor", why: "The ♭VI–♭III–♭VII are pure Aeolian — natural minor is the home scale here" },
+      { name: "Pentatonic Minor", why: "Hendrix-style minor pentatonic phrases work beautifully over all four chords" },
+    ],
+  },
+  {
+    id: "hotel-california",
+    title: "Hotel California",
+    artist: "Eagles",
+    genre: "Classic Rock",
+    difficulty: "Advanced",
+    originalKey: 11,
+    displayKey: "Bm",
+    progression: [
+      { roman: "i", semitones: 0, quality: "Minor" },
+      { roman: "V", semitones: 7, quality: "Major" },
+      { roman: "♭VII", semitones: 10, quality: "Major" },
+      { roman: "IV", semitones: 5, quality: "Major" },
+      { roman: "♭VI", semitones: 8, quality: "Major" },
+      { roman: "♭III", semitones: 3, quality: "Major" },
+      { roman: "iv", semitones: 5, quality: "Minor" },
+      { roman: "V", semitones: 7, quality: "Major" },
+    ],
+    theoryCallout: "One of rock's most harmonically complete progressions — it cycles through nearly all chords in B natural minor. The major V (F#) is borrowed from harmonic minor, giving it an exotic Spanish/classical quality. Joe Walsh's iconic solo is improvised over this exact cycle.",
+    relatedModules: [
+      { href: "/scales", label: "Guitar Scales" },
+      { href: "/chord-substitutions", label: "Chord Substitutions" },
+    ],
+    recommendedScales: [
+      { name: "Natural Minor", why: "The full diatonic minor scale handles the ♭VI, ♭III, and iv chords perfectly" },
+      { name: "Pentatonic Minor", why: "Start here — then add the ♭6 and ♭7 for the full Aeolian flavour" },
+    ],
+  },
+  {
+    id: "hey-joe",
+    title: "Hey Joe",
+    artist: "Jimi Hendrix",
+    genre: "Blues",
+    difficulty: "Intermediate",
+    originalKey: 4,
+    displayKey: "E",
+    progression: [
+      { roman: "♭VI", semitones: 8, quality: "Major" },
+      { roman: "♭III", semitones: 3, quality: "Major" },
+      { roman: "♭VII", semitones: 10, quality: "Major" },
+      { roman: "IV", semitones: 5, quality: "Major" },
+      { roman: "I", semitones: 0, quality: "Major" },
+    ],
+    theoryCallout: "Five consecutive major chords descending in perfect 4ths: C–G–D–A–E. Each chord is a fifth below the last — an unstoppable gravitational pull to E. The ♭VI and ♭III point toward E Mixolydian, giving the song its simultaneously dark and triumphant blues-rock character.",
+    relatedModules: [
+      { href: "/scales", label: "Guitar Scales" },
+      { href: "/progressions", label: "Chord Progressions" },
+    ],
+    recommendedScales: [
+      { name: "Mixolydian", why: "The ♭VII chord (D) is the signature move of Mixolydian — this mode nails the Hendrix vibe" },
+      { name: "Blues", why: "Hendrix's iconic bends and vibrato come from layering blues notes over Mixolydian" },
+    ],
+  },
+  {
+    id: "creep",
+    title: "Creep",
+    artist: "Radiohead",
+    genre: "Pop",
+    difficulty: "Beginner",
+    originalKey: 7,
+    displayKey: "G",
+    progression: [
+      { roman: "I", semitones: 0, quality: "Major" },
+      { roman: "III", semitones: 4, quality: "Major" },
+      { roman: "IV", semitones: 5, quality: "Major" },
+      { roman: "iv", semitones: 5, quality: "Minor" },
+    ],
+    theoryCallout: "The B major chord (III — not the diatonic Bm) is a secondary dominant that briefly tonicises C. Then the chromatic drop from C major to C minor (IV→iv) is the emotional gut-punch that defines the chorus. Minor plagal motion (IV→iv) creates an unstoppable sense of dissolution.",
+    relatedModules: [
+      { href: "/chord-substitutions", label: "Chord Substitutions" },
+      { href: "/music-theory", label: "Music Theory" },
+    ],
+    recommendedScales: [
+      { name: "Major", why: "Works over G, C, and Cm — treat the B chord as a brief passing moment" },
+      { name: "Pentatonic Major", why: "Avoids the chromatic tension notes — smooth over the whole loop" },
+    ],
+  },
+  {
+    id: "hallelujah",
+    title: "Hallelujah",
+    artist: "Leonard Cohen",
+    genre: "Pop",
+    difficulty: "Intermediate",
+    originalKey: 0,
+    displayKey: "C",
+    progression: [
+      { roman: "I", semitones: 0, quality: "Major" },
+      { roman: "vi", semitones: 9, quality: "Minor" },
+      { roman: "IV", semitones: 5, quality: "Major" },
+      { roman: "V", semitones: 7, quality: "Major" },
+    ],
+    theoryCallout: "I–vi–IV–V is the 50s progression — the same DNA as Stand By Me. Cohen's arrangement adds an E7 (secondary dominant, V/vi) that briefly treats Am as a temporary home, giving the vi chord far more emotional weight than usual. Tiny move, enormous impact.",
+    relatedModules: [
+      { href: "/progressions", label: "Chord Progressions" },
+      { href: "/nashville-number-system", label: "Nashville Numbers" },
+    ],
+    recommendedScales: [
+      { name: "Major", why: "Purely diatonic — the C major scale covers every chord" },
+      { name: "Pentatonic Major", why: "The folk-pop fingerpicking feel lives in the major pentatonic" },
+    ],
+  },
+  {
+    id: "brown-eyed-girl",
+    title: "Brown Eyed Girl",
+    artist: "Van Morrison",
+    genre: "Soul",
+    difficulty: "Beginner",
+    originalKey: 7,
+    displayKey: "G",
+    progression: [
+      { roman: "I", semitones: 0, quality: "Major" },
+      { roman: "IV", semitones: 5, quality: "Major" },
+      { roman: "I", semitones: 0, quality: "Major" },
+      { roman: "V", semitones: 7, quality: "Major" },
+    ],
+    theoryCallout: "Pure I–IV–I–V — the oldest rock and roll formula. Just the three primary chords, no colour. The secret of Brown Eyed Girl's joy isn't harmonic complexity, it's rhythmic momentum. Master these three chords and you can play hundreds of classics from every decade.",
+    relatedModules: [
+      { href: "/progressions", label: "Chord Progressions" },
+      { href: "/beginner", label: "Beginner Module" },
+    ],
+    recommendedScales: [
+      { name: "Major", why: "Three primary chords — the major scale is completely at home here" },
+      { name: "Pentatonic Major", why: "This is the perfect I–IV–V practice ground for pentatonic solos" },
+    ],
+  },
+  {
+    id: "comfortably-numb",
+    title: "Comfortably Numb",
+    artist: "Pink Floyd",
+    genre: "Classic Rock",
+    difficulty: "Advanced",
+    originalKey: 11,
+    displayKey: "Bm",
+    progression: [
+      { roman: "i", semitones: 0, quality: "Minor" },
+      { roman: "♭VII", semitones: 10, quality: "Major" },
+      { roman: "♭VI", semitones: 8, quality: "Major" },
+      { roman: "iv", semitones: 5, quality: "Minor" },
+    ],
+    theoryCallout: "The descending natural minor sequence i–♭VII–♭VI–iv is one of rock's most cinematic movements. In B minor: Bm–A–G–Em — gravity pulling you down the scale. Gilmour's legendary solo sits in the chorus's D major key, creating one of music's great contrasts: a major-key oasis inside a minor-key song.",
+    relatedModules: [
+      { href: "/scales", label: "Guitar Scales" },
+      { href: "/music-theory", label: "Music Theory" },
+    ],
+    recommendedScales: [
+      { name: "Natural Minor", why: "The descending i–♭VII–♭VI–iv motion is pure Aeolian — natural minor is essential here" },
+      { name: "Pentatonic Minor", why: "Gilmour's verse tone is rooted in minor pentatonic with added ♭6 colour tones" },
+    ],
   },
 ]
 
@@ -256,6 +482,7 @@ const GENRE_COLORS: Record<Genre, string> = {
   "Classic Rock": "bg-red-600 text-white",
   Country: "bg-yellow-600 text-white",
   Jazz: "bg-purple-700 text-white",
+  Blues: "bg-indigo-700 text-white",
 }
 
 const DIFFICULTY_COLORS: Record<Difficulty, string> = {
@@ -264,7 +491,7 @@ const DIFFICULTY_COLORS: Record<Difficulty, string> = {
   Advanced: "bg-red-700 text-white",
 }
 
-const GENRES: (Genre | "All")[] = ["All", "Pop", "Soul", "Classic Rock", "Country", "Jazz"]
+const GENRES: (Genre | "All")[] = ["All", "Pop", "Soul", "Classic Rock", "Country", "Jazz", "Blues"]
 const DIFFICULTIES: (Difficulty | "All")[] = ["All", "Beginner", "Intermediate", "Advanced"]
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -301,7 +528,7 @@ export default function SongLibrary() {
             ← Back to Home
           </Link>
           <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Song Library</h1>
-          <p className="text-purple-200">Real songs with chord diagrams, Nashville numbers, and theory insights. Transpose to any key instantly.</p>
+          <p className="text-purple-200">Real songs with chord diagrams, scales to solo over, and theory insights. Transpose to any key instantly.</p>
         </div>
 
         {/* Key Selector */}
@@ -461,7 +688,7 @@ export default function SongLibrary() {
                       {isExpanded ? (
                         <><span className="text-xs">▲</span> Hide Details</>
                       ) : (
-                        <><span className="text-xs">▼</span> Chord Diagrams &amp; Theory</>
+                        <><span className="text-xs">▼</span> Diagrams, Scales &amp; Theory</>
                       )}
                     </button>
                   </div>
@@ -479,7 +706,6 @@ export default function SongLibrary() {
                             )
                             .map((slot, i) => {
                               const noteIndex = (selectedKey + slot.semitones) % 12
-                              // Always use sharp spelling for chordShapes lookup (lib has C#/D#/etc, not Db/Eb)
                               const rootNoteForLookup = KEYS[noteIndex].split("/")[0]
                               const voicingQuality = getVoicingsQuality(slot.quality)
                               const shape = getChordShape(rootNoteForLookup, voicingQuality, 0)
@@ -499,6 +725,31 @@ export default function SongLibrary() {
                               )
                             })}
                         </div>
+                      </div>
+
+                      {/* Compatible Scales */}
+                      <div className="bg-white/5 rounded-xl p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-purple-400 text-sm">🎸</span>
+                          <h4 className="text-sm font-semibold text-purple-300 uppercase tracking-wider">Scales to Solo Over This</h4>
+                        </div>
+                        <div className="space-y-2 mb-3">
+                          {song.recommendedScales.map((scale, i) => (
+                            <div key={i} className="flex items-start gap-3">
+                              <span className="text-amber-400 font-bold text-sm mt-0.5 shrink-0">→</span>
+                              <div>
+                                <span className="text-white text-sm font-semibold">{scale.name}</span>
+                                <span className="text-purple-400 text-xs ml-2">{scale.why}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <Link
+                          href="/scales"
+                          className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 text-xs font-semibold transition-colors"
+                        >
+                          Open Scales module →
+                        </Link>
                       </div>
 
                       {/* Theory Callout */}
@@ -548,9 +799,10 @@ export default function SongLibrary() {
         <div className="mt-10 bg-white/5 rounded-xl p-5 border border-white/10">
           <h3 className="text-white font-semibold mb-3">How to use this library</h3>
           <div className="text-purple-300 text-sm space-y-1.5">
-            <p>• <strong className="text-purple-200">Transpose:</strong> Select any key above — all songs update instantly. Great for matching a singer's range.</p>
+            <p>• <strong className="text-purple-200">Transpose:</strong> Select any key above — all songs update instantly. Great for matching a singer&apos;s range.</p>
             <p>• <strong className="text-purple-200">Nashville numbers</strong> (I, IV, V…) stay fixed regardless of key — they describe chord relationships, not specific notes.</p>
-            <p>• <strong className="text-purple-200">Expand</strong> any song to see fingering diagrams and the theory behind why the progression works the way it does.</p>
+            <p>• <strong className="text-purple-200">Expand</strong> any song to see fingering diagrams, scales to improvise with, and the theory behind the progression.</p>
+            <p>• <strong className="text-purple-200">Scales:</strong> The recommended scales link directly to the <Link href="/scales" className="text-amber-400 hover:text-amber-300">Scales module</Link> where you can see every position on the neck.</p>
           </div>
         </div>
       </div>

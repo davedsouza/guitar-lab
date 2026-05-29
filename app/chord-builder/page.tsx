@@ -19,6 +19,46 @@ const CHORD_TYPES = [
   { name: "Sus4", formula: "1 - 4 - 5", intervals: [0, 5, 7], description: "Open, unresolved feel" },
 ]
 
+const CHORD_SCALE_MAP: Record<string, { name: string; description: string; feel: string }[]> = {
+  "Major": [
+    { name: "Major", description: "The natural home scale — all 7 notes of the key", feel: "Bright & full" },
+    { name: "Pentatonic Major", description: "5-note shortcut — no clashes, always musical", feel: "Catchy & clean" },
+    { name: "Mixolydian", description: "Major with ♭7 — adds a bluesy, swaggering edge", feel: "Groovy & bold" },
+  ],
+  "Minor": [
+    { name: "Natural Minor", description: "The natural home scale for minor chords", feel: "Dark & cinematic" },
+    { name: "Pentatonic Minor", description: "5-note version — bluesy and effortless", feel: "Blues & soul" },
+    { name: "Dorian", description: "Minor with a natural 6 — brighter and funkier", feel: "Funky & modern" },
+  ],
+  "Dominant 7th": [
+    { name: "Mixolydian", description: "Major scale with ♭7 — the dominant chord's natural home", feel: "Groovy & bluesy" },
+    { name: "Blues", description: "Pentatonic minor + blue notes — the defining blues sound", feel: "Raw & soulful" },
+    { name: "Pentatonic Minor", description: "Always works over dominant 7ths for blues feel", feel: "Classic rock/blues" },
+  ],
+  "Major 7th": [
+    { name: "Major", description: "Natural fit — maj7 is built directly from the major scale", feel: "Dreamy & lush" },
+    { name: "Lydian", description: "Major with #4 — adds shimmer and floating tension", feel: "Floaty & cinematic" },
+    { name: "Pentatonic Major", description: "Clean and melodic — safe over any major 7th", feel: "Airy & sweet" },
+  ],
+  "Minor 7th": [
+    { name: "Dorian", description: "The #1 choice for minor 7th in jazz and funk", feel: "Funky & sophisticated" },
+    { name: "Pentatonic Minor", description: "Effortless over any minor 7th — always works", feel: "Blues & soul" },
+    { name: "Natural Minor", description: "Darker, more serious feel than Dorian", feel: "Dark & deep" },
+  ],
+  "Diminished": [
+    { name: "Natural Minor", description: "Diminished is the vii° of minor — same parent scale", feel: "Tense & dark" },
+    { name: "Pentatonic Minor", description: "Use for brief passing phrases over diminished chords", feel: "Edgy blues" },
+  ],
+  "Augmented": [
+    { name: "Major", description: "Augmented appears as a chromatic colour in major contexts", feel: "Mysterious" },
+    { name: "Pentatonic Major", description: "Avoids the tension tones — smooth approach", feel: "Open & floating" },
+  ],
+  "Sus4": [
+    { name: "Major", description: "Sus4 resolves naturally within a major key context", feel: "Open & unresolved" },
+    { name: "Pentatonic Major", description: "Avoids the major 3rd — perfect over sus4 shapes", feel: "Airy & clean" },
+  ],
+}
+
 export default function ChordBuilder() {
   const [selectedRoot, setSelectedRoot] = useState(0) // C
   const [selectedChordType, setSelectedChordType] = useState(0) // Major
@@ -207,6 +247,31 @@ export default function ChordBuilder() {
                   ))}
                 </div>
               </div>
+            </div>
+
+            {/* Compatible Scales */}
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+              <h3 className="text-lg font-bold text-white mb-1">Compatible Scales</h3>
+              <p className="text-purple-400 text-xs mb-4">
+                Scales that sound great played over a <span className="text-purple-200 font-semibold">{CHORD_TYPES[selectedChordType].name}</span> chord
+              </p>
+              <div className="space-y-2">
+                {(CHORD_SCALE_MAP[CHORD_TYPES[selectedChordType].name] ?? []).map((s, i) => (
+                  <div key={i} className="bg-white/5 rounded-lg p-3 flex items-start gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="text-white text-sm font-semibold">{s.name}</div>
+                      <div className="text-purple-400 text-xs mt-0.5 leading-relaxed">{s.description}</div>
+                    </div>
+                    <span className="text-purple-300 text-xs bg-white/10 px-2 py-1 rounded-full shrink-0 whitespace-nowrap">{s.feel}</span>
+                  </div>
+                ))}
+              </div>
+              <Link
+                href="/scales"
+                className="mt-4 inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 text-xs font-semibold transition-colors"
+              >
+                Explore all scales in the Scales module →
+              </Link>
             </div>
           </div>
         </div>

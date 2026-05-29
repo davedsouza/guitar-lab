@@ -15,9 +15,39 @@ const geistMono = Geist_Mono({
   display: "swap",
 })
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3005")
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Guitar Lab — Master Guitar Theory & Technique",
   description: "Interactive guitar learning platform covering scales, chords, arpeggios, CAGED system, Nashville numbers, and advanced techniques.",
+  openGraph: {
+    title: "Guitar Lab — Master Guitar Theory & Technique",
+    description: "Interactive guitar learning platform covering scales, chords, arpeggios, CAGED system, Nashville numbers, and advanced techniques.",
+    url: siteUrl,
+    siteName: "Guitar Lab",
+    images: [
+      {
+        url: "/guitar-og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Guitar Lab — Master Guitar Theory & Technique",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Guitar Lab — Master Guitar Theory & Technique",
+    description: "Interactive guitar learning platform covering scales, chords, arpeggios, CAGED system, Nashville numbers, and advanced techniques.",
+    images: ["/guitar-og.jpg"],
+  },
 }
 
 export const viewport: Viewport = {

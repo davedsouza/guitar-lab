@@ -1,5 +1,6 @@
 "use client"
 
+import AsciiTab from "@/components/AsciiTab"
 import React, { useState } from "react"
 import Link from "next/link"
 
@@ -630,7 +631,7 @@ function GuitarNotationTab() {
           Use the notation for rhythm and pitch, the TAB for position.
         </p>
         <div className="bg-black/40 rounded-xl p-4 font-mono text-xs text-green-300 overflow-x-auto">
-          <pre>{`Standard:   &  ♩    ♩    ♩    ♩   |
+          <AsciiTab text={`Standard:   &  ♩    ♩    ♩    ♩   |
             |  •────•────•────•   |
             |  G4   A4   B4   A4  |
 
@@ -639,7 +640,7 @@ TAB:        e|──────────────────|
             G|──5────7────9────7-|
             D|──────────────────|
             A|──────────────────|
-            E|──────────────────|`}</pre>
+            E|──────────────────|`} />
         </div>
         <p className="text-purple-300 text-xs mt-3">
           The TAB confirms you play those notes on the G string at frets 5, 7, 9. The notation gives you the exact rhythm.

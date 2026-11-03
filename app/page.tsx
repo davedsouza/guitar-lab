@@ -2,6 +2,8 @@
 
 import Link from "next/link"
 import { useState } from "react"
+import { LEARNING_PATHS, PATH_KEY, type LearningPath } from "@/lib/learningPaths"
+import { useLocalState } from "@/lib/jam/storage"
 
 type Category = "foundations" | "chords" | "scales" | "technique" | "styles" | "songs"
 type ViewTab  = "paths" | "themes" | "all"
@@ -14,103 +16,6 @@ interface Module {
   tags: string[]
   category: Category
 }
-
-interface PathStep { href: string; label: string }
-interface LearningPath {
-  title: string
-  audience: string
-  description: string
-  accent: string
-  labelColor: string
-  steps: PathStep[]
-}
-
-const LEARNING_PATHS: LearningPath[] = [
-  {
-    title: "Complete Beginner",
-    audience: "Never played before",
-    description: "Go from zero to playing real songs — covers everything you need before touching any other module.",
-    accent: "border-emerald-500/40 bg-emerald-500/5",
-    labelColor: "text-emerald-400",
-    steps: [
-      { href: "/beginner",               label: "Guitar Basics" },
-      { href: "/progressions",           label: "Chord Progressions" },
-      { href: "/barre-chords",           label: "Barre Chords" },
-      { href: "/rhythm-trainer",         label: "Rhythm Trainer" },
-      { href: "/song-library",           label: "Song Library" },
-    ],
-  },
-  {
-    title: "Rhythm Player",
-    audience: "Know basic chords",
-    description: "Master strumming, groove, and harmony to become the guitarist every band wants.",
-    accent: "border-blue-500/40 bg-blue-500/5",
-    labelColor: "text-blue-400",
-    steps: [
-      { href: "/chord-builder",           label: "Chord Building" },
-      { href: "/nashville-number-system", label: "Nashville Numbers" },
-      { href: "/diatonic-chords",         label: "Diatonic Chords" },
-      { href: "/rhythm-trainer",          label: "Rhythm Trainer" },
-      { href: "/funk-guitar",             label: "Funk Guitar" },
-    ],
-  },
-  {
-    title: "Lead Guitarist",
-    audience: "Ready to solo",
-    description: "Build a complete soloing toolkit — scales, positions, bends, phrasing, and musical expression.",
-    accent: "border-amber-500/40 bg-amber-500/5",
-    labelColor: "text-amber-400",
-    steps: [
-      { href: "/scales",        label: "Guitar Scales" },
-      { href: "/pentatonic",    label: "Pentatonic Mastery" },
-      { href: "/techniques",    label: "Guitar Techniques" },
-      { href: "/improvisation", label: "Improvisation" },
-      { href: "/modes",         label: "Modes" },
-    ],
-  },
-  {
-    title: "Theory Deep-Dive",
-    audience: "Want to understand music",
-    description: "Go beyond shapes — understand why music works and use that knowledge anywhere.",
-    accent: "border-violet-500/40 bg-violet-500/5",
-    labelColor: "text-violet-400",
-    steps: [
-      { href: "/music-theory",            label: "Music Theory" },
-      { href: "/circle-of-fifths",        label: "Circle of Fifths" },
-      { href: "/diatonic-chords",         label: "Diatonic Chords" },
-      { href: "/tonal-map",               label: "Tonal Map" },
-      { href: "/chord-substitutions",     label: "Chord Substitutions" },
-    ],
-  },
-  {
-    title: "Harmony & Composition",
-    audience: "Want to write better music",
-    description: "Master how chords relate, how progressions move, and how to use harmony creatively in your own songs.",
-    accent: "border-purple-500/40 bg-purple-500/5",
-    labelColor: "text-purple-400",
-    steps: [
-      { href: "/diatonic-chords",         label: "Diatonic Chords" },
-      { href: "/triads",                  label: "Triads" },
-      { href: "/tonal-map",               label: "Tonal Map" },
-      { href: "/progressions",            label: "Progressions" },
-      { href: "/chord-substitutions",     label: "Chord Substitutions" },
-    ],
-  },
-  {
-    title: "Bass Fundamentals",
-    audience: "Learning bass guitar",
-    description: "Master the low end from the ground up — anatomy, scales, groove patterns, and essential techniques.",
-    accent: "border-orange-500/40 bg-orange-500/5",
-    labelColor: "text-orange-400",
-    steps: [
-      { href: "/bass-guitar",  label: "Bass Guitar" },
-      { href: "/music-theory", label: "Music Theory" },
-      { href: "/scales",       label: "Guitar Scales" },
-      { href: "/blues",        label: "12-Bar Blues" },
-      { href: "/funk-guitar",  label: "Funk Guitar" },
-    ],
-  },
-]
 
 interface CategoryMeta {
   id: Category
@@ -129,6 +34,14 @@ const CATEGORY_META: CategoryMeta[] = [
 ]
 
 const MODULES: Module[] = [
+  {
+    href: "/jam",
+    title: "Jam Mode",
+    description: "Built for your phone when you are playing with other people: chord finder with tab, Nashville cheat sheet, transpose and capo, big-print charts, setlist, progression ideas by genre, tuner, and tips for each instrument in your band.",
+    cta: "Open Jam Mode",
+    tags: ["jam", "live", "band", "phone", "nashville", "chord finder", "tab", "transpose", "capo", "setlist", "chart", "tuner", "metronome", "progressions", "genre", "bass", "piano", "harmonica", "key finder"],
+    category: "songs",
+  },
   {
     href: "/how-to-use",
     title: "How to Use This App",
@@ -418,6 +331,14 @@ const MODULES: Module[] = [
     category: "styles",
   },
   {
+    href: "/harmonica",
+    title: "Harmonica",
+    description: "The 10-hole blues harp from first note to solo: tap-to-hear hole diagram, tunes, chords, positions and key finder, 12-bar blues, bending, and overblows.",
+    cta: "Play Harmonica",
+    tags: ["harmonica", "harp", "blues harp", "diatonic", "cross harp", "bending", "richter", "mouth organ", "blues", "folk"],
+    category: "styles",
+  },
+  {
     href: "/song-library",
     title: "Song Library",
     description: "Learn 8 real songs with chord diagrams, Nashville numbers, and theory callouts. Transpose to any key.",
@@ -465,7 +386,11 @@ function ModuleCard({ module }: { module: Module }) {
 
 // ── Path card ────────────────────────────────────────────────────────────────
 
+const parseTitle = (raw: unknown) => (typeof raw === "string" ? raw : null)
+
 function PathCard({ path }: { path: LearningPath }) {
+  const [, setActivePath] = useLocalState<string>(PATH_KEY, "", parseTitle)
+  const pick = () => setActivePath(path.title)
   return (
     <div className={`flex flex-col border rounded-2xl p-6 ${path.accent}`}>
       <div className="mb-1">
@@ -480,6 +405,7 @@ function PathCard({ path }: { path: LearningPath }) {
           <li key={step.href}>
             <Link
               href={step.href}
+              onClick={pick}
               className="flex items-center gap-3 text-sm text-slate-300 hover:text-white transition-colors group"
             >
               <span className="w-5 h-5 shrink-0 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-xs font-bold text-white transition-colors">
@@ -492,6 +418,7 @@ function PathCard({ path }: { path: LearningPath }) {
       </ol>
       <Link
         href={path.steps[0].href}
+        onClick={pick}
         className={`self-start text-xs font-semibold px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all`}
       >
         Start Path →

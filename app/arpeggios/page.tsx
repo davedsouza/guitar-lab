@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import FullChordFretboard from "@/components/FullChordFretboard"
+import GuitarTonePicker from "@/components/GuitarTonePicker"
+import { getGuitarKind, playGuitarNote, preloadGuitar } from "@/lib/jam/guitarAudio"
 
 const NOTES = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"]
 
@@ -161,47 +163,18 @@ export default function Arpeggios() {
   const arpeggioType = ARPEGGIO_TYPES[selectedType]
   const position = ARPEGGIO_POSITIONS.major[selectedPosition]
 
-  // Audio context
+  // Start the guitar sound on a tap so the browser allows audio
   useEffect(() => {
-    if (typeof window === 'undefined') return
-
-    const createAudioContext = () => {
-      if (!(window as any).audioContext) {
-        (window as any).audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-      }
-    }
-
-    document.addEventListener('click', createAudioContext, { once: true })
-    return () => document.removeEventListener('click', createAudioContext)
+    const warm = () => preloadGuitar(getGuitarKind())
+    document.addEventListener('click', warm)
+    return () => document.removeEventListener('click', warm)
   }, [])
 
-  // Play note sound
+  // Play note sound (string 1 = high e, 6 = low E)
   const playNote = (stringNum: number, fret: number) => {
     if (typeof window === 'undefined' || volume === 0) return
-
-    const audioContext = (window as any).audioContext
-    if (!audioContext) return
-
-    // Calculate frequency based on string and fret
-    const stringBaseFreqs = [329.63, 246.94, 196.00, 146.83, 110.00, 82.41] // E B G D A E
-    const baseFreq = stringBaseFreqs[stringNum - 1]
-    const frequency = baseFreq * Math.pow(2, fret / 12)
-
-    const oscillator = audioContext.createOscillator()
-    const gainNode = audioContext.createGain()
-
-    oscillator.connect(gainNode)
-    gainNode.connect(audioContext.destination)
-
-    oscillator.frequency.value = frequency
-    oscillator.type = 'triangle'
-
-    gainNode.gain.setValueAtTime(0, audioContext.currentTime)
-    gainNode.gain.linearRampToValueAtTime(volume * 0.3, audioContext.currentTime + 0.01)
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5)
-
-    oscillator.start(audioContext.currentTime)
-    oscillator.stop(audioContext.currentTime + 0.5)
+    const openMidi = [64, 59, 55, 50, 45, 40]
+    playGuitarNote(openMidi[stringNum - 1] + fret, getGuitarKind(), { ring: 1.2, volume: volume * 2 })
   }
 
   // Playback logic
@@ -684,6 +657,8 @@ export default function Arpeggios() {
                   className="w-full accent-purple-600"
                 />
               </div>
+
+              <GuitarTonePicker variant="select" />
 
               {/* Volume Control */}
               <div>

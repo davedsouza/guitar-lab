@@ -1,5 +1,6 @@
 "use client"
 
+import AsciiTab from "@/components/AsciiTab"
 import { useState } from "react"
 import Link from "next/link"
 import ChordDiagram from "@/components/ChordDiagram"
@@ -712,7 +713,7 @@ export default function BluesPage() {
                   <div key={item.chord} className="bg-white/5 rounded-xl p-5">
                     <div className="text-white font-bold mb-1">{item.chord}</div>
                     <p className="text-purple-300 text-sm mb-3">{item.desc}</p>
-                    <pre className="font-mono text-green-300 text-xs bg-black/40 rounded-lg p-4 overflow-x-auto leading-relaxed">{item.tab.join("\n")}</pre>
+                    <AsciiTab text={item.tab.join("\n")} />
                     <p className="text-purple-400 text-xs mt-2 italic">{item.note}</p>
                   </div>
                 ))}
@@ -769,7 +770,7 @@ export default function BluesPage() {
                     <span className="bg-purple-600/40 text-purple-200 text-xs px-2.5 py-1 rounded-full font-medium capitalize shrink-0">{lick.category}</span>
                   </div>
                   <p className="text-purple-200 text-sm leading-relaxed mb-4">{lick.desc}</p>
-                  <pre className="font-mono text-green-300 text-xs bg-black/40 rounded-xl p-4 overflow-x-auto leading-relaxed">{lick.tab.join("\n")}</pre>
+                  <AsciiTab text={lick.tab.join("\n")} />
                   <div className="mt-3 bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-2.5">
                     <span className="text-amber-300 font-semibold text-xs">Tip: </span>
                     <span className="text-purple-200 text-xs">{lick.tip}</span>
@@ -794,7 +795,7 @@ export default function BluesPage() {
                       <span className="text-purple-400 text-sm">{wu.bars}</span>
                     </div>
                     <p className="text-purple-200 text-sm mb-4">{wu.desc}</p>
-                    <pre className="font-mono text-green-300 text-xs bg-black/40 rounded-xl p-4 overflow-x-auto leading-relaxed">{wu.tab.join("\n")}</pre>
+                    <AsciiTab text={wu.tab.join("\n")} />
                     <div className="mt-3 bg-blue-500/10 border border-blue-500/20 rounded-lg px-4 py-2.5">
                       <span className="text-blue-300 font-semibold text-xs">How it works: </span>
                       <span className="text-purple-200 text-xs">{wu.tip}</span>
@@ -1053,7 +1054,7 @@ export default function BluesPage() {
                   <div key={item.tech} className="bg-white/5 rounded-xl p-4">
                     <div className="text-amber-300 font-semibold mb-2">{item.tech}</div>
                     <p className="text-purple-200 text-sm mb-3">{item.desc}</p>
-                    <pre className="font-mono text-green-300 text-xs bg-black/40 rounded-lg p-3 overflow-x-auto leading-relaxed">{item.tab.join("\n")}</pre>
+                    <AsciiTab text={item.tab.join("\n")} />
                     <p className="text-purple-400 text-xs mt-1 italic">{item.tabNote}</p>
                   </div>
                 ))}
@@ -1110,36 +1111,36 @@ export default function BluesPage() {
               <p className="text-purple-200 text-sm mb-5">
                 &ldquo;Box 1&rdquo; is where every blues guitarist starts. B.B. King, Clapton, Hendrix — this position.
               </p>
-              {currentKey.key === "A" && <pre className="font-mono text-green-300 text-sm bg-black/40 rounded-xl p-5 overflow-x-auto leading-relaxed">{`e|--5--------8--|
+              {currentKey.key === "A" && <AsciiTab text={`e|--5--------8--|
 B|--5--------8--|
 G|--5---6----7--|   ← Eb (blue note) fret 6
 D|--5--------7--|
 A|--5--------7--|
-E|--5--------8--|`}</pre>}
-              {currentKey.key === "E" && <pre className="font-mono text-green-300 text-sm bg-black/40 rounded-xl p-5 overflow-x-auto leading-relaxed">{`e|--0--------3--|
+E|--5--------8--|`} />}
+              {currentKey.key === "E" && <AsciiTab text={`e|--0--------3--|
 B|--0--------3--|
 G|--0---1----2--|   ← Bb (blue note) fret 1
 D|--0--------2--|
 A|--0--------2--|
-E|--0--------3--|`}</pre>}
-              {currentKey.key === "G" && <pre className="font-mono text-green-300 text-sm bg-black/40 rounded-xl p-5 overflow-x-auto leading-relaxed">{`e|--3--------6--|
+E|--0--------3--|`} />}
+              {currentKey.key === "G" && <AsciiTab text={`e|--3--------6--|
 B|--3--------6--|
 G|--3---4----5--|   ← Db (blue note) fret 4
 D|--3--------5--|
 A|--3--------5--|
-E|--3--------6--|`}</pre>}
-              {currentKey.key === "D" && <pre className="font-mono text-green-300 text-sm bg-black/40 rounded-xl p-5 overflow-x-auto leading-relaxed">{`e|--10-------13--|
+E|--3--------6--|`} />}
+              {currentKey.key === "D" && <AsciiTab text={`e|--10-------13--|
 B|--10-------13--|
 G|--10--11---12--|   ← Ab (blue note) fret 11
 D|--10-------12--|
 A|--10-------12--|
-E|--10-------13--|`}</pre>}
-              {currentKey.key === "C" && <pre className="font-mono text-green-300 text-sm bg-black/40 rounded-xl p-5 overflow-x-auto leading-relaxed">{`e|--8--------11--|
+E|--10-------13--|`} />}
+              {currentKey.key === "C" && <AsciiTab text={`e|--8--------11--|
 B|--8--------11--|
 G|--8---9----10--|   ← F# (blue note) fret 9
 D|--8--------10--|
 A|--8--------10--|
-E|--8--------11--|`}</pre>}
+E|--8--------11--|`} />}
             </div>
 
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">

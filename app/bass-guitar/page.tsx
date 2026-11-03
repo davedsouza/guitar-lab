@@ -1,5 +1,6 @@
 "use client"
 
+import AsciiTab from "@/components/AsciiTab"
 import { useState } from "react"
 import Link from "next/link"
 
@@ -239,9 +240,7 @@ function TabBlock({ code, label }: { code: string; label?: string }) {
   return (
     <div>
       {label && <p className="text-purple-400 text-xs uppercase tracking-wider mb-2 font-semibold">{label}</p>}
-      <pre className="bg-slate-900/80 border border-white/10 rounded-xl p-4 text-green-300 text-sm font-mono overflow-x-auto leading-relaxed whitespace-pre">
-        {code}
-      </pre>
+      <AsciiTab text={code} />
     </div>
   )
 }
@@ -1157,14 +1156,14 @@ E|--5--|       ← these are identical pitches`,
                   </div>
 
                   <div className="grid lg:grid-cols-2 gap-5">
-                    <div className="bg-white/10 rounded-2xl p-5 border border-white/20">
+                    <div className="min-w-0 bg-white/10 rounded-2xl p-5 border border-white/20">
                       <h3 className="text-white font-bold mb-1">Shape (key of A)</h3>
                       <p className="text-purple-400 text-xs mb-4">
                         Root at fret 5 on E string. <span className="text-amber-400">Amber = root (R)</span>. Move the shape to change key.
                       </p>
                       <BassNeckDiagram dots={arp.dots} rootFret={5} before={2} after={4} />
                     </div>
-                    <div className="bg-white/10 rounded-2xl p-5 border border-white/20">
+                    <div className="min-w-0 bg-white/10 rounded-2xl p-5 border border-white/20">
                       <h3 className="text-white font-bold mb-1">Notes in Position</h3>
                       <p className="text-purple-400 text-xs mb-3">Ascending through the arpeggio</p>
                       <TabBlock code={arp.tab} />

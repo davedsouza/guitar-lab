@@ -1,7 +1,9 @@
 "use client"
 
-import React, { useState, useRef, useCallback } from "react"
+import React, { useState } from "react"
 import Link from "next/link"
+import GuitarTonePicker from "@/components/GuitarTonePicker"
+import { getGuitarKind, playGuitarNote, preloadGuitar } from "@/lib/jam/guitarAudio"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type CalloutType = "tip" | "warning" | "insight" | "exercise"
@@ -59,31 +61,8 @@ const CHORD_QUALITIES = [
 ]
 
 // ─── Audio utilities ──────────────────────────────────────────────────────────
-function getAudioContext(): AudioContext | null {
-  if (typeof window === "undefined") return null
-  const W = window as Window & { webkitAudioContext?: typeof AudioContext }
-  const AC = window.AudioContext || W.webkitAudioContext
-  if (!AC) return null
-  return new AC()
-}
-
-function playNote(ctx: AudioContext, freq: number, startTime: number, duration: number, gain = 0.3) {
-  const osc = ctx.createOscillator()
-  const gainNode = ctx.createGain()
-  osc.type = "sine"
-  osc.frequency.value = freq
-  gainNode.gain.setValueAtTime(0, startTime)
-  gainNode.gain.linearRampToValueAtTime(gain, startTime + 0.02)
-  gainNode.gain.setValueAtTime(gain, startTime + duration - 0.05)
-  gainNode.gain.linearRampToValueAtTime(0, startTime + duration)
-  osc.connect(gainNode)
-  gainNode.connect(ctx.destination)
-  osc.start(startTime)
-  osc.stop(startTime + duration)
-}
-
-function semitoneToFreq(base: number, semitones: number) {
-  return base * Math.pow(2, semitones / 12)
+function freqToMidi(freq: number) {
+  return Math.round(69 + 12 * Math.log2(freq / 440))
 }
 
 const BASE_FREQ = 261.63 // C4
@@ -109,52 +88,25 @@ export default function EarTrainingPage() {
   const [chordScore, setChordScore] = useState({ correct: 0, total: 0 })
   const [chordHistory, setChordHistory] = useState<Record<string, { correct: number; total: number }>>({})
 
-  const audioCtxRef = useRef<AudioContext | null>(null)
-
-  const getCtx = useCallback(() => {
-    if (!audioCtxRef.current || audioCtxRef.current.state === "closed") {
-      audioCtxRef.current = getAudioContext()
-    }
-    return audioCtxRef.current
-  }, [])
-
   function playInterval(baseFreq: number, semitones: number) {
-    const ctx = getCtx()
-    if (!ctx) return
-    const now = ctx.currentTime
-    playNote(ctx, baseFreq, now, 0.8)
-    playNote(ctx, semitoneToFreq(baseFreq, semitones), now, 0.8)
+    const m = freqToMidi(baseFreq)
+    playGuitarNote(m, getGuitarKind(), { ring: 1.4 })
+    playGuitarNote(m + semitones, getGuitarKind(), { ring: 1.4 })
   }
 
   function playIntervalMelodic(baseFreq: number, semitones: number) {
-    const ctx = getCtx()
-    if (!ctx) return
-    const now = ctx.currentTime
-    playNote(ctx, baseFreq, now, 0.6)
-    playNote(ctx, semitoneToFreq(baseFreq, semitones), now + 0.65, 0.8)
+    const m = freqToMidi(baseFreq)
+    playGuitarNote(m, getGuitarKind(), { ring: 1.2 })
+    playGuitarNote(m + semitones, getGuitarKind(), { delay: 0.65, ring: 1.4 })
   }
 
   function playChordQuality(intervals: number[], baseFreq: number) {
-    const ctx = getCtx()
-    if (!ctx) return
-    const now = ctx.currentTime
-    intervals.forEach((semitones, i) => {
-      const osc = ctx.createOscillator()
-      const gainNode = ctx.createGain()
-      osc.type = "triangle"
-      osc.frequency.value = semitoneToFreq(baseFreq, semitones)
-      gainNode.gain.setValueAtTime(0, now + i * 0.07)
-      gainNode.gain.linearRampToValueAtTime(0.2, now + i * 0.07 + 0.03)
-      gainNode.gain.setValueAtTime(0.2, now + 1.2)
-      gainNode.gain.linearRampToValueAtTime(0, now + 1.5)
-      osc.connect(gainNode)
-      gainNode.connect(ctx.destination)
-      osc.start(now + i * 0.07)
-      osc.stop(now + 1.6)
-    })
+    const m = freqToMidi(baseFreq)
+    intervals.forEach((semitones, i) => playGuitarNote(m + semitones, getGuitarKind(), { delay: i * 0.07, ring: 2 }))
   }
 
   function newIntervalQuestion() {
+    preloadGuitar(getGuitarKind())
     const randomInterval = INTERVALS[Math.floor(Math.random() * INTERVALS.length)]
     const baseFreqs = [261.63, 277.18, 293.66, 311.13, 329.63, 349.23]
     const base = baseFreqs[Math.floor(Math.random() * baseFreqs.length)]
@@ -178,6 +130,7 @@ export default function EarTrainingPage() {
   }
 
   function newChordQuestion() {
+    preloadGuitar(getGuitarKind())
     const idx = Math.floor(Math.random() * CHORD_QUALITIES.length)
     setQuizChordIdx(idx)
     setChordAnswer(null)
@@ -205,6 +158,8 @@ export default function EarTrainingPage() {
           <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2 mt-4">Ear Training</h1>
           <p className="text-purple-300 text-sm sm:text-base">Train your ears to recognise intervals, chords, and melodies — the skill that ties everything together</p>
         </div>
+
+        <GuitarTonePicker variant="select" className="mb-4" />
 
         <div className="flex flex-wrap gap-2 mb-8">
           {TABS.map((tab, i) => (

@@ -1,5 +1,6 @@
 "use client"
 
+import AsciiTab from "@/components/AsciiTab"
 import React, { useState } from "react"
 import Link from "next/link"
 import ChordDiagram from "@/components/ChordDiagram"
@@ -44,9 +45,7 @@ function TabBlock({ label, children }: { label?: string; children: string }) {
   return (
     <div className="mb-4">
       {label && <p className="text-purple-400 text-xs mb-2">{label}</p>}
-      <pre className="font-mono text-green-300 bg-black/40 rounded-xl p-4 text-xs leading-relaxed overflow-x-auto whitespace-pre">
-        {children}
-      </pre>
+      <AsciiTab text={children} />
     </div>
   )
 }

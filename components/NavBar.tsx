@@ -3,6 +3,8 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useRef, useEffect } from "react"
+import GuitarTonePicker from "@/components/GuitarTonePicker"
+import NextLesson from "@/components/NextLesson"
 
 interface NavModule {
   href: string
@@ -77,6 +79,7 @@ const NAV_CATEGORIES: NavCategory[] = [
       { href: "/slide-guitar", label: "Slide Guitar" },
       { href: "/open-tunings", label: "Open Tunings" },
       { href: "/bass-guitar",  label: "Bass Guitar" },
+      { href: "/harmonica",    label: "Harmonica" },
     ],
   },
   {
@@ -112,6 +115,8 @@ export default function NavBar() {
   }, [pathname])
 
   const isHome = pathname === "/"
+
+  if (pathname.startsWith("/jam")) return null
 
   return (
     <nav className="sticky top-0 z-50 border-b border-white/8 bg-slate-900/80 backdrop-blur-xl">
@@ -178,6 +183,14 @@ export default function NavBar() {
             )}
           </div>
 
+          {/* Jam link */}
+          <Link
+            href="/jam"
+            className="px-3 py-1.5 rounded-lg text-sm font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 transition-colors"
+          >
+            Jam
+          </Link>
+
           {/* Quick links */}
           {[
             { href: "/song-library", label: "Songs" },
@@ -197,11 +210,14 @@ export default function NavBar() {
           ))}
         </div>
 
+        <div className="ml-auto flex items-center gap-3">
+        <GuitarTonePicker variant="select" className="hidden md:flex" />
+
         {/* Home pill (shown when inside a module) */}
         {!isHome && (
           <Link
             href="/"
-            className="hidden md:flex ml-auto items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors"
+            className="hidden md:flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -210,9 +226,11 @@ export default function NavBar() {
           </Link>
         )}
 
+        <NextLesson />
+
         {/* Mobile hamburger */}
         <button
-          className="md:hidden ml-auto p-2 text-slate-400 hover:text-white transition-colors"
+          className="md:hidden p-2 text-slate-400 hover:text-white transition-colors"
           onClick={() => setMobileOpen(v => !v)}
           aria-label="Toggle menu"
         >
@@ -226,6 +244,7 @@ export default function NavBar() {
             </svg>
           )}
         </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -233,11 +252,18 @@ export default function NavBar() {
         <div className="md:hidden border-t border-white/8 bg-slate-900/95 backdrop-blur-xl max-h-[80vh] overflow-y-auto">
           <div className="px-4 py-4 space-y-6">
             <Link
+              href="/jam"
+              className="flex items-center justify-center min-h-12 rounded-xl bg-amber-500 text-slate-950 text-base font-bold"
+            >
+              Jam Mode: playing with others
+            </Link>
+            <Link
               href="/"
               className="block text-sm font-semibold text-white mb-4"
             >
               ← Home
             </Link>
+            <GuitarTonePicker variant="select" />
             {NAV_CATEGORIES.map(cat => (
               <div key={cat.label}>
                 <p className={`text-xs font-semibold uppercase tracking-wider mb-2 ${cat.color}`}>

@@ -1,5 +1,6 @@
 "use client"
 
+import AsciiTab from "@/components/AsciiTab"
 import React, { useState } from "react"
 import Link from "next/link"
 
@@ -89,9 +90,7 @@ function CategoryPill({ category }: { category: RoutineBlock["category"] }) {
 
 function TabNotation({ lines }: { lines: string[] }) {
   return (
-    <pre className="bg-black/40 border border-white/10 rounded-xl p-4 text-green-300 text-xs font-mono overflow-x-auto leading-relaxed">
-      {lines.join("\n")}
-    </pre>
+    <AsciiTab text={lines.join("\n")} />
   )
 }
 

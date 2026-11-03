@@ -1,12 +1,19 @@
+"use client"
+
+import { fingersToMidi, playGuitar, useGuitarKind } from "@/lib/jam/guitarAudio"
+
 interface ChordDiagramProps {
   chordName: string
   fingers: (number | string)[]  // Array of 6 strings, 0 = open, x = muted, number = fret
   frets?: number[]  // Optional: which frets to show (default 0-4)
   size?: 'small' | 'medium' | 'large'
+  playable?: boolean  // Show the Play button (strums the chord in standard tuning)
 }
 
-export default function ChordDiagram({ chordName, fingers, frets, size = 'medium' }: ChordDiagramProps) {
+export default function ChordDiagram({ chordName, fingers, frets, size = 'medium', playable = true }: ChordDiagramProps) {
   const strings = 6
+  const [guitar] = useGuitarKind()
+  const midis = fingersToMidi(fingers)
 
   // Auto-calculate fret range if not provided
   const calculatedFrets = frets || (() => {
@@ -170,6 +177,16 @@ export default function ChordDiagram({ chordName, fingers, frets, size = 'medium
           <text x={startX + dims.stringGap * 5} y={startY + numFrets * dims.fretGap + 15} textAnchor="middle">e</text>
         </g>
       </svg>
+      {playable && midis.length >= 2 && (
+        <button
+          type="button"
+          aria-label={`Play ${chordName}`}
+          onClick={e => { e.stopPropagation(); playGuitar(midis, guitar, 'strum') }}
+          className="mt-1.5 h-9 min-w-16 rounded-lg border border-white/20 bg-white/10 px-3 text-xs font-bold text-white hover:bg-white/20 active:scale-95"
+        >
+          <span aria-hidden>▶ </span>Play
+        </button>
+      )}
     </div>
   )
 }

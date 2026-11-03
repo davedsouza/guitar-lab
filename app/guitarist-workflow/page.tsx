@@ -1,5 +1,6 @@
 "use client"
 
+import AsciiTab from "@/components/AsciiTab"
 import { useState } from "react"
 import Link from "next/link"
 
@@ -1351,9 +1352,7 @@ function TabsView({ guitarist }: { guitarist: Guitarist }) {
       {/* TAB notation */}
       <div className="mb-6">
         <p className="text-purple-400 text-xs uppercase tracking-wider mb-3 font-semibold">TAB</p>
-        <pre className="bg-slate-950 border border-white/10 rounded-2xl p-5 text-sm font-mono text-green-300 overflow-x-auto leading-relaxed whitespace-pre">
-          {tab.tab}
-        </pre>
+        <AsciiTab text={tab.tab} />
       </div>
 
       {/* How to play */}

@@ -1,5 +1,6 @@
 "use client"
 
+import AsciiTab from "@/components/AsciiTab"
 import React, { useState } from "react"
 import Link from "next/link"
 
@@ -45,7 +46,7 @@ function TabBlock({ label, children }: { label?: string; children: string }) {
   return (
     <div className="mb-4">
       {label && <p className="text-purple-400 text-xs mb-2">{label}</p>}
-      <pre className="font-mono text-green-300 bg-black/40 rounded-xl p-4 text-xs leading-relaxed overflow-x-auto whitespace-pre">{children}</pre>
+      <AsciiTab text={children} />
     </div>
   )
 }
@@ -675,7 +676,7 @@ function PracticeTab() {
           ].map(r => (
             <div key={r.goal} className="flex gap-3 border-b border-white/10 pb-2">
               <p className="text-purple-300 flex-1">{r.goal}</p>
-              <p className="text-amber-400 font-semibold flex-shrink-0">{r.ans}</p>
+              <p className="max-w-[50%] text-right text-amber-400 font-semibold">{r.ans}</p>
             </div>
           ))}
         </div>

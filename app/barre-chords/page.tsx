@@ -1,5 +1,6 @@
 "use client"
 
+import AsciiTab from "@/components/AsciiTab"
 import React, { useState } from "react"
 import Link from "next/link"
 import ChordDiagram from "@/components/ChordDiagram"
@@ -60,9 +61,7 @@ function Card({ children, className = "" }: { children: React.ReactNode; classNa
 // ─── TAB block ────────────────────────────────────────────────────────────────
 function Tab({ children }: { children: string }) {
   return (
-    <pre className="font-mono text-green-300 bg-black/40 rounded-xl p-4 text-xs leading-relaxed overflow-x-auto whitespace-pre">
-      {children}
-    </pre>
+    <AsciiTab text={children} />
   )
 }
 

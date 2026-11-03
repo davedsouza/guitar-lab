@@ -1,5 +1,6 @@
 "use client"
 
+import AsciiTab from "@/components/AsciiTab"
 import { useState } from "react"
 import Link from "next/link"
 import ChordDiagram from "@/components/ChordDiagram"
@@ -56,14 +57,12 @@ function TabExample() {
   return (
     <div className="bg-slate-800 rounded-xl p-4 font-mono text-sm">
       <div className="text-purple-300 mb-2">Example TAB:</div>
-      <pre className="text-white leading-relaxed">
-{`e|---0---3---0---0---|
+      <AsciiTab text={`e|---0---3---0---0---|
 B|---1---0---1---1---|
 G|---0---0---2---0---|
 D|---2---0---2---2---|
 A|---3---2---0---3---|
-E|-------3----------|`}
-      </pre>
+E|-------3----------|`} />
       <div className="text-purple-200 text-xs mt-3">
         Numbers = which fret to press | 0 = open string | Lines = strings (e is thinnest)
       </div>

@@ -203,15 +203,15 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     ],
     "Dominant 7th": [
       { fingers: [1, 3, 1, 2, 1, 1], position: "1st Fret (Barre)", difficulty: 'intermediate' },
-      { fingers: ['x', 8, 10, 8, 9, 8], position: "8th Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: ['x', 8, 10, 8, 10, 8], position: "8th Fret (Barre)", difficulty: 'intermediate' },
     ],
     "Major 7th": [
       { fingers: [1, 3, 2, 2, 1, 1], position: "1st Fret (Barre)", difficulty: 'intermediate' },
-      { fingers: ['x', 8, 10, 9, 9, 8], position: "8th Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: ['x', 8, 10, 9, 10, 8], position: "8th Fret (Barre)", difficulty: 'intermediate' },
     ],
     "Minor 7th": [
       { fingers: [1, 3, 1, 1, 1, 1], position: "1st Fret (Barre)", difficulty: 'intermediate' },
-      { fingers: ['x', 8, 10, 8, 8, 8], position: "8th Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: ['x', 8, 10, 8, 9, 8], position: "8th Fret (Barre)", difficulty: 'intermediate' },
     ],
     "Diminished": [
       { fingers: ['x', 8, 9, 10, 9, 'x'], position: "8th Fret", difficulty: 'intermediate' },
@@ -282,7 +282,7 @@ export const CHORD_VOICINGS: Record<string, Record<string, ChordVoicing[]>> = {
     ],
     "Minor 7th": [
       { fingers: [3, 5, 3, 3, 3, 3], position: "3rd Fret (Barre)", difficulty: 'intermediate' },
-      { fingers: ['x', 10, 12, 10, 10, 10], position: "10th Fret (Barre)", difficulty: 'intermediate' },
+      { fingers: ['x', 10, 12, 10, 11, 10], position: "10th Fret (Barre)", difficulty: 'intermediate' },
     ],
     "Diminished": [
       { fingers: ['x', 10, 11, 12, 11, 'x'], position: "10th Fret", difficulty: 'intermediate' },

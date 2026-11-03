@@ -1,5 +1,6 @@
 "use client";
 
+import AsciiTab from "@/components/AsciiTab"
 import { useState } from "react";
 import Link from "next/link";
 
@@ -48,9 +49,7 @@ function TabBlock({ lines, label }: { lines: string[]; label?: string }) {
           {label}
         </p>
       )}
-      <pre className="bg-slate-900/80 border border-white/10 rounded-xl p-4 text-green-300 text-sm font-mono overflow-x-auto leading-relaxed">
-        {lines.join("\n")}
-      </pre>
+      <AsciiTab text={lines.join("\n")} />
     </div>
   );
 }

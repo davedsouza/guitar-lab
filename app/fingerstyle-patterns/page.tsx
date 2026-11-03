@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import GuitarTonePicker from "@/components/GuitarTonePicker"
+import { getGuitarKind, playGuitarNote, preloadGuitar } from "@/lib/jam/guitarAudio"
 
 // Fingerstyle patterns
 // Format: Array of { string: 1-6 (1=high e, 6=low E), finger: "p"|"i"|"m"|"a", duration: beats }
@@ -164,57 +166,20 @@ export default function FingerstylePatterns() {
 
   const pattern = PATTERNS[selectedPattern]
 
-  // Audio context for playing notes
+  // Start the guitar sound on a tap so the browser allows audio
   useEffect(() => {
-    if (typeof window === 'undefined') return
-
-    // Create audio context on user interaction
-    const createAudioContext = () => {
-      if (!(window as any).audioContext) {
-        (window as any).audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-      }
-    }
-
-    document.addEventListener('click', createAudioContext, { once: true })
-    return () => document.removeEventListener('click', createAudioContext)
+    const warm = () => preloadGuitar(getGuitarKind())
+    document.addEventListener('click', warm)
+    return () => document.removeEventListener('click', warm)
   }, [])
 
-  // Play a note sound
+  // Play a note sound (string 1 = high e, 6 = low E)
   const playNote = (stringNum: number) => {
     if (typeof window === 'undefined' || volume === 0) return
-
-    const audioContext = (window as any).audioContext
-    if (!audioContext) return
-
-    // Map string numbers to frequencies (approximate guitar tuning)
-    const frequencies: Record<number, number> = {
-      1: 329.63, // E4 (high e)
-      2: 246.94, // B3
-      3: 196.00, // G3
-      4: 146.83, // D3
-      5: 110.00, // A2
-      6: 82.41,  // E2 (low E)
-    }
-
-    const oscillator = audioContext.createOscillator()
-    const gainNode = audioContext.createGain()
-
-    oscillator.connect(gainNode)
-    gainNode.connect(audioContext.destination)
-
-    oscillator.frequency.value = frequencies[stringNum]
-    oscillator.type = 'triangle' // Softer sound than sine
-
-    // Envelope: quick attack, longer decay
-    gainNode.gain.setValueAtTime(0, audioContext.currentTime)
-    gainNode.gain.linearRampToValueAtTime(volume * 0.3, audioContext.currentTime + 0.01)
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.6)
-
-    oscillator.start(audioContext.currentTime)
-    oscillator.stop(audioContext.currentTime + 0.6)
+    const openMidi = [64, 59, 55, 50, 45, 40]
+    playGuitarNote(openMidi[stringNum - 1], getGuitarKind(), { ring: 1.6, volume: volume * 2 })
   }
 
-  // Animation loop - step through notes one by one
   useEffect(() => {
     if (!isPlaying) {
       setCurrentNoteIndex(0)
@@ -452,6 +417,10 @@ export default function FingerstylePatterns() {
                   <span>Medium (75)</span>
                   <span>Fast (120)</span>
                 </div>
+              </div>
+
+              <div className="mb-4">
+                <GuitarTonePicker variant="select" />
               </div>
 
               {/* Volume Control */}

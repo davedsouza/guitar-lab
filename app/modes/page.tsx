@@ -1,5 +1,6 @@
 "use client"
 
+import AsciiTab from "@/components/AsciiTab"
 import { useState } from "react"
 import Link from "next/link"
 
@@ -35,9 +36,7 @@ function TabBlock({ label, children }: { label: string; children: string }) {
   return (
     <div className="mb-4">
       <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">{label}</p>
-      <pre className="font-mono text-green-300 bg-black/40 rounded-xl p-4 text-sm overflow-x-auto whitespace-pre leading-relaxed">
-        {children}
-      </pre>
+      <AsciiTab text={children} />
     </div>
   )
 }
@@ -551,7 +550,7 @@ function ApplyingTab() {
             { chord: "Minor chord (Am, Em)", mode: "Dorian or Aeolian", feel: "Cool or Melancholic" },
             { chord: "Minor with dark/exotic feel", mode: "Phrygian", feel: "Dark/Spanish" },
           ].map(r => (
-            <div key={r.chord} className="flex gap-3 border-b border-white/10 pb-2">
+            <div key={r.chord} className="flex flex-wrap gap-x-3 gap-y-1 border-b border-white/10 pb-2">
               <div className="w-40 text-purple-300 text-xs flex-shrink-0">{r.chord}</div>
               <div className="w-28 text-green-300 font-semibold text-xs">{r.mode}</div>
               <div className="text-purple-400 text-xs">{r.feel}</div>

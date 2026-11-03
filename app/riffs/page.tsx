@@ -1,5 +1,6 @@
 "use client"
 
+import AsciiTab from "@/components/AsciiTab"
 import { useState } from "react"
 import Link from "next/link"
 
@@ -37,9 +38,7 @@ function TabBlock({ label, song, artist, children }: { label: string; song?: str
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{label}</p>
         {song && <p className="text-purple-300 text-xs">— {song}{artist ? ` · ${artist}` : ""}</p>}
       </div>
-      <pre className="font-mono text-green-300 bg-black/40 rounded-xl p-4 text-sm overflow-x-auto whitespace-pre leading-relaxed">
-        {children}
-      </pre>
+      <AsciiTab text={children} />
     </div>
   )
 }
@@ -1451,9 +1450,7 @@ function GuitaristCard({ g }: { g: typeof GUITARISTS[number] }) {
               <p className="text-sm font-semibold text-white">{lick.label}</p>
               <p className="text-xs text-purple-300/70">{lick.context}</p>
             </div>
-            <pre className="font-mono text-green-300 bg-black/40 p-4 text-sm overflow-x-auto whitespace-pre leading-relaxed">
-              {lick.tab}
-            </pre>
+            <AsciiTab text={lick.tab} />
           </div>
         </div>
 

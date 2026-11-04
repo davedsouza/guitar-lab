@@ -14,9 +14,17 @@ function ensure(): AudioContext | null {
     if (nav.audioSession) { try { nav.audioSession.type = "playback" } catch { /* not supported */ } }
     master = ctx.createGain()
     master.gain.value = 0.5
-    master.connect(ctx.destination)
+    // Phone speakers are quiet, so notes are loud and a limiter catches chord peaks
+    const limiter = ctx.createDynamicsCompressor()
+    limiter.threshold.value = -8
+    limiter.knee.value = 6
+    limiter.ratio.value = 12
+    limiter.attack.value = 0.003
+    limiter.release.value = 0.15
+    master.connect(limiter)
+    limiter.connect(ctx.destination)
   }
-  if (ctx.state === "suspended") void ctx.resume()
+  if (ctx.state !== "running") void ctx.resume().catch(() => {})
   return ctx
 }
 
@@ -104,10 +112,13 @@ export function preloadSound() {
     .catch(() => { triedLoad = false; setStatus("synth") })
 }
 
+// The harmonica recording is about 15 dB quieter than the synth at the same gain
+const SAMPLE_BOOST = 22
+
 function note(c: AudioContext, midi: number, when: number, dur: number, vol: number) {
   if (sample) {
     const p = sample
-    p.play(midi, when, { gain: vol * 4.5, duration: dur, attack: 0.03, release: 0.12 })
+    p.play(midi, when, { gain: vol * SAMPLE_BOOST, duration: dur, attack: 0.03, release: 0.12 })
     return { stop: () => { try { p.stop(c.currentTime) } catch { /* nothing playing */ } } }
   }
   return voice(c, master!, midi, when, dur, vol)
@@ -130,6 +141,7 @@ export function stopAll() {
 export function playNotes(midis: number[], seconds = 1) {
   const c = ensure()
   if (!c || !master) return
+  preloadSound()
   stopAll()
   const vol = 0.22 / Math.sqrt(midis.length)
   midis.forEach(m => live.push(note(c, m, c.currentTime + 0.01, seconds, vol)))
@@ -141,6 +153,7 @@ export interface SeqStep { midis: number[]; at: number; len: number }
 export function playSequence(steps: SeqStep[], bpm: number, onEnd?: () => void) {
   const c = ensure()
   if (!c || !master || steps.length === 0) { onEnd?.(); return }
+  preloadSound()
   stopAll()
   const spb = 60 / bpm
   const t0 = c.currentTime + 0.08

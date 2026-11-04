@@ -489,8 +489,8 @@ function InteractiveFretboardQuiz({
   const doubleDotFrets = [12]
 
   return (
-    <div className="flex justify-center">
-      <svg width={width} height={height} className="bg-gradient-to-br from-amber-900/20 to-amber-700/10 rounded-xl border border-amber-600/30">
+    <div className="flex max-w-full overflow-x-auto" role="region" aria-label="Fretboard diagram, scrolls sideways" tabIndex={0}>
+      <svg width={width} height={height} className="shrink-0 mx-auto bg-gradient-to-br from-amber-900/20 to-amber-700/10 rounded-xl border border-amber-600/30">
         {/* Nut */}
         <line
           x1={startX}
@@ -634,8 +634,8 @@ function FretboardDiagram({
   const doubleDotFrets = [12]
 
   return (
-    <div className="flex justify-center">
-      <svg width={width} height={height} className="bg-gradient-to-br from-amber-900/20 to-amber-700/10 rounded-xl border border-amber-600/30">
+    <div className="flex max-w-full overflow-x-auto" role="region" aria-label="Fretboard diagram, scrolls sideways" tabIndex={0}>
+      <svg width={width} height={height} className="shrink-0 mx-auto bg-gradient-to-br from-amber-900/20 to-amber-700/10 rounded-xl border border-amber-600/30">
         {/* Nut */}
         <line
           x1={startX}
@@ -793,8 +793,8 @@ function InteractiveCircleOfFifths({
       {/* Notes around the circle */}
       {notes.map((note, index) => {
         const angle = (index * 30 - 90) * (Math.PI / 180)
-        const x = centerX + radius * Math.cos(angle)
-        const y = centerY + radius * Math.sin(angle)
+        const x = Math.round((centerX + radius * Math.cos(angle)) * 100) / 100
+        const y = Math.round((centerY + radius * Math.sin(angle)) * 100) / 100
         const isSelected = selectedKey === index
 
         return (

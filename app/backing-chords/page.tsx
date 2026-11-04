@@ -470,7 +470,7 @@ function HowItWorksTab() {
           Each mode differs from the plain major or minor scale by one or two notes. Those notes are its <strong className="text-white">characteristic notes</strong>.
           The backing chord needs to <strong className="text-white">contain or imply</strong> that characteristic note to activate the mode&apos;s sound.
         </p>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" role="region" aria-label="Scrollable table" tabIndex={0}>
           <table className="w-full text-sm min-w-[420px]">
             <thead>
               <tr className="text-purple-400 border-b border-white/10 text-xs">
@@ -1329,7 +1329,7 @@ function PracticeTab() {
       </div>
 
       <Card title="Quick-Reference Cheat Sheet">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" role="region" aria-label="Scrollable table" tabIndex={0}>
           <table className="w-full text-xs min-w-[480px]">
             <thead>
               <tr className="text-purple-400 border-b border-white/10">

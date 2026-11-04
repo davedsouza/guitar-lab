@@ -208,6 +208,7 @@ export default function RhythmTrainer() {
     if (!audioContextRef.current || volume === 0) return
 
     const audioContext = audioContextRef.current
+    if (audioContext.state !== 'running') void audioContext.resume().catch(() => {})
     const oscillator = audioContext.createOscillator()
     const gainNode = audioContext.createGain()
 
@@ -222,7 +223,7 @@ export default function RhythmTrainer() {
     const clickVolume = isAccent ? volume * 0.8 : volume * 0.4
 
     gainNode.gain.setValueAtTime(clickVolume, now)
-    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.05)
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.05)
 
     oscillator.start(now)
     oscillator.stop(now + 0.05)
@@ -563,6 +564,7 @@ export default function RhythmTrainer() {
                 </div>
                 <input
                   type="range"
+                  aria-label="Tempo"
                   min="40"
                   max="160"
                   value={tempo}
@@ -591,6 +593,7 @@ export default function RhythmTrainer() {
                 </div>
                 <input
                   type="range"
+                  aria-label="Volume"
                   min="0"
                   max="1"
                   step="0.1"

@@ -106,7 +106,7 @@ function WhatIsItTab() {
       </Card>
 
       <Card title="The Result — 7 Diatonic Chords (C Major)">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" role="region" aria-label="Scrollable table" tabIndex={0}>
           <table className="w-full text-sm text-center min-w-[480px]">
             <thead>
               <tr className="text-purple-400 border-b border-white/10">
@@ -490,7 +490,7 @@ function OnGuitarTab() {
 
       <Card title="G Major Diatonic Chords — Open Position">
         <p className="text-purple-200 text-sm mb-3">The 7 diatonic chords of G major using open chord shapes:</p>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" role="region" aria-label="Scrollable table" tabIndex={0}>
           <table className="w-full text-sm text-center min-w-[500px]">
             <thead>
               <tr className="text-purple-400 border-b border-white/10">

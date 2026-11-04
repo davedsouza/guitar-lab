@@ -99,7 +99,7 @@ function ensure(): AudioContext | null {
     master.gain.value = 0.7
     master.connect(ctx.destination)
   }
-  if (ctx.state === "suspended") void ctx.resume()
+  if (ctx.state !== "running") void ctx.resume().catch(() => {})
   return ctx
 }
 

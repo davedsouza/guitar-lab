@@ -19,7 +19,7 @@ function ensure(): AudioContext | null {
     master.gain.value = 0.6
     master.connect(ctx.destination)
   }
-  if (ctx.state === "suspended") void ctx.resume()
+  if (ctx.state !== "running") void ctx.resume().catch(() => {})
   return ctx
 }
 
@@ -36,13 +36,14 @@ function voice(c: AudioContext, out: AudioNode, midi: number, when: number, dur:
   env.gain.exponentialRampToValueAtTime(0.0001, when + Math.max(dur, decay))
   const filter = c.createBiquadFilter()
   filter.type = "lowpass"
-  filter.frequency.setValueAtTime(timbre === "bass" ? 900 : 3200, when)
-  filter.frequency.exponentialRampToValueAtTime(timbre === "bass" ? 300 : 700, when + 0.5)
+  filter.frequency.setValueAtTime(timbre === "bass" ? 2200 : 3200, when)
+  filter.frequency.exponentialRampToValueAtTime(timbre === "bass" ? 900 : 700, when + 0.5)
   filter.connect(env)
   env.connect(out)
-  const types: OscillatorType[] = timbre === "piano" ? ["triangle", "sine"] : timbre === "bass" ? ["sine", "triangle"] : ["sawtooth", "triangle"]
+  const types: OscillatorType[] = timbre === "piano" ? ["triangle", "sine"] : timbre === "bass" ? ["triangle", "sawtooth"] : ["sawtooth", "triangle"]
   const mult = timbre === "piano" ? [1, 2] : [1, 1]
-  const gains = timbre === "piano" ? [0.7, 0.25] : [0.45, 0.5]
+  // Bass keeps harmonics because phone speakers cannot play the low fundamental
+  const gains = timbre === "piano" ? [0.7, 0.25] : timbre === "bass" ? [0.4, 0.7] : [0.45, 0.5]
   const oscs = types.map((type, i) => {
     const o = c.createOscillator()
     const g = c.createGain()

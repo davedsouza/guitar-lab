@@ -650,6 +650,7 @@ export default function Arpeggios() {
                 </div>
                 <input
                   type="range"
+                  aria-label="Tempo"
                   min="40"
                   max="160"
                   value={tempo}
@@ -675,6 +676,7 @@ export default function Arpeggios() {
                 </div>
                 <input
                   type="range"
+                  aria-label="Volume"
                   min="0"
                   max="1"
                   step="0.1"

@@ -67,6 +67,8 @@ function Tuner() {
   const streamRef = useRef<MediaStream | null>(null)
   const timer = useRef<number | null>(null)
   const history = useRef<number[]>([])
+  const refCtx = useRef<AudioContext | null>(null)
+  const refGain = useRef<GainNode | null>(null)
 
   useWakeLock(running)
 
@@ -83,6 +85,7 @@ function Tuner() {
   }, [])
 
   useEffect(() => stop, [stop])
+  useEffect(() => () => { refCtx.current?.close().catch(() => {}) }, [])
 
   async function start() {
     setError("")
@@ -124,18 +127,34 @@ function Tuner() {
   }
 
   function playRef(f: number) {
-    const ctx = new AudioContext()
-    const o = ctx.createOscillator()
+    let ctx = refCtx.current
+    if (!ctx) {
+      const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+      ctx = new AC()
+      refCtx.current = ctx
+    }
+    if (ctx.state !== "running") void ctx.resume().catch(() => {})
+    const t = ctx.currentTime
+    refGain.current?.gain.cancelScheduledValues(t)
+    refGain.current?.gain.setTargetAtTime(0.0001, t, 0.03)
+    // Phone speakers cannot play below about 150 Hz, so the tone is rich in upper harmonics; the ear still hears the low pitch
+    const filter = ctx.createBiquadFilter()
+    filter.type = "lowpass"
+    filter.frequency.value = Math.min(3000, f * 12)
     const g = ctx.createGain()
-    o.type = "triangle"
-    o.frequency.value = f
-    g.gain.setValueAtTime(0.0001, ctx.currentTime)
-    g.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime + 0.05)
-    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 2.2)
-    o.connect(g).connect(ctx.destination)
-    o.start()
-    o.stop(ctx.currentTime + 2.3)
-    o.onended = () => ctx.close().catch(() => {})
+    g.gain.setValueAtTime(0.0001, t)
+    g.gain.exponentialRampToValueAtTime(0.28, t + 0.05)
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 2.2)
+    filter.connect(g).connect(ctx.destination)
+    refGain.current = g
+    for (const type of ["sawtooth", "triangle"] as OscillatorType[]) {
+      const o = ctx.createOscillator()
+      o.type = type
+      o.frequency.value = f
+      o.connect(filter)
+      o.start(t)
+      o.stop(t + 2.3)
+    }
   }
 
   const strings = INSTRUMENTS[inst]
@@ -217,6 +236,7 @@ function Metronome() {
       o.stop(time + 0.08)
     }
     const timer = window.setInterval(() => {
+      if (ctx.state !== "running") void ctx.resume().catch(() => {})
       while (next < ctx.currentTime + 0.12) {
         const idx = n % beatsRef.current
         click(next, idx === 0)

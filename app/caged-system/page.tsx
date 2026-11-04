@@ -124,7 +124,7 @@ export default function CAGEDSystem() {
         </div>
 
         {/* Main Content */}
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Panel - Theory & Explanation */}
           <div className="space-y-6">
             {/* What is CAGED */}
@@ -244,7 +244,7 @@ export default function CAGEDSystem() {
           </div>
 
           {/* Right Panel - Visual Shapes */}
-          <div className="space-y-6">
+          <div className="space-y-6 min-w-0">
             {/* View Mode Toggle */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <div className="flex flex-col gap-3 mb-4">
@@ -355,8 +355,10 @@ export default function CAGEDSystem() {
 
                   {/* Connected Fretboard View */}
                   <div className="bg-gradient-to-br from-amber-900/20 to-amber-700/10 rounded-xl p-6 border border-amber-600/30">
-                    <div className="flex justify-center">
+                    <div className="flex max-w-full overflow-x-auto" role="region" aria-label="CAGED fretboard, scrolls sideways" tabIndex={0}>
+                      <div className="mx-auto shrink-0">
                       <FretboardCAGED selectedKey={selectedKey} selectedNote={selectedNote} showNoteNames={showNoteNames} />
+                      </div>
                     </div>
                   </div>
 
@@ -413,10 +415,10 @@ export default function CAGEDSystem() {
               <p className="text-purple-200 text-sm mb-4">
                 The shapes always appear in this order as you move up the neck:
               </p>
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex flex-wrap items-center justify-between gap-y-2 gap-x-1">
                 {CAGED_ORDER.map((shapeName, index) => (
                   <div key={shapeName} className="flex items-center">
-                    <div className={`${CAGED_SHAPES[shapeName].color} text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg`}>
+                    <div className={`${CAGED_SHAPES[shapeName].color} text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-lg`}>
                       {shapeName}
                     </div>
                     {index < CAGED_ORDER.length - 1 && (

@@ -119,7 +119,7 @@ function WhatWhyTab() {
       </Card>
 
       <Card title="The Four Main Open Tunings">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" role="region" aria-label="Scrollable table" tabIndex={0}>
           <table className="w-full text-sm min-w-[500px]">
             <thead>
               <tr className="text-purple-400 border-b border-white/10 text-xs">

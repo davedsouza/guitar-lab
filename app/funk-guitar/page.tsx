@@ -101,7 +101,7 @@ function MindsetTab() {
       </Card>
 
       <Card title="Funk vs Other Styles — The Key Differences">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" role="region" aria-label="Scrollable table" tabIndex={0}>
           <table className="w-full text-sm min-w-[400px]">
             <thead>
               <tr className="text-purple-400 border-b border-white/10 text-xs">
@@ -498,7 +498,7 @@ These compact shapes move quickly across the neck for fast chord changes.`}
       </Card>
 
       <Card title="The Funk Chord Vocabulary">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" role="region" aria-label="Scrollable table" tabIndex={0}>
           <table className="w-full text-sm min-w-[420px]">
             <thead>
               <tr className="text-purple-400 border-b border-white/10 text-xs">

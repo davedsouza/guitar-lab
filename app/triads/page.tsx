@@ -349,7 +349,7 @@ function ShapesTab({ root, setRoot, quality, setQuality, strSet, setStrSet }: {
         <p className="text-white/40 text-xs uppercase tracking-widest mb-4">
           {NOTES[root]} {quality} — {set.label} ({set.notes})
         </p>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {([0, 1, 2] as (0|1|2)[]).map(inv => {
             const fingers   = computeTriadFingering(root, quality, set.indices, inv)
             const noteNames = triadNoteNames(root, quality, inv)

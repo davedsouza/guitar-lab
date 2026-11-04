@@ -209,11 +209,13 @@ function ChordViewer({ chordName, fn }: { chordName: string; fn: Fn }) {
 // ─── SVG helpers ──────────────────────────────────────────────────────────────
 
 const CX = 190, CY = 190
+// Server and browser trig differ in the last digit; rounding keeps the SVG identical on both
+const rd = (n: number) => Math.round(n * 100) / 100
 
 function sectorPath(r1: number, r2: number, startDeg: number, endDeg: number): string {
   const r = (d: number) => (d * Math.PI) / 180
   const p = (radius: number, deg: number) =>
-    [CX + radius * Math.cos(r(deg)), CY + radius * Math.sin(r(deg))]
+    [rd(CX + radius * Math.cos(r(deg))), rd(CY + radius * Math.sin(r(deg)))]
   const [x1, y1] = p(r1, startDeg), [x2, y2] = p(r2, startDeg)
   const [x3, y3] = p(r2, endDeg),   [x4, y4] = p(r1, endDeg)
   return `M${x1},${y1}L${x2},${y2}A${r2},${r2},0,0,1,${x3},${y3}L${x4},${y4}A${r1},${r1},0,0,0,${x1},${y1}Z`
@@ -254,10 +256,10 @@ function CoFCircle({ selected, onSelect }: { selected: number; onSelect: (i: num
         const fill   = sectorFill(dist, sel)
         const stroke = sectorStroke(dist, sel)
         const r = (d: number) => (d * Math.PI) / 180
-        const lxM = CX + R_MAJ_LBL * Math.cos(r(ang))
-        const lyM = CY + R_MAJ_LBL * Math.sin(r(ang))
-        const lxm = CX + R_MIN_LBL * Math.cos(r(ang))
-        const lym = CY + R_MIN_LBL * Math.sin(r(ang))
+        const lxM = rd(CX + R_MAJ_LBL * Math.cos(r(ang)))
+        const lyM = rd(CY + R_MAJ_LBL * Math.sin(r(ang)))
+        const lxm = rd(CX + R_MIN_LBL * Math.cos(r(ang)))
+        const lym = rd(CY + R_MIN_LBL * Math.sin(r(ang)))
 
         return (
           <g key={i} onClick={() => onSelect(i)} style={{ cursor: "pointer" }}>
@@ -314,14 +316,14 @@ function ProgCircle({ keyPos, degrees }: { keyPos: number; degrees: number[] }) 
               stroke={isUsed ? "#6d28d9" : "#130d2a"}
               strokeWidth={isUsed ? "2" : "1"}
             />
-            <text x={CX + R_LBL * Math.cos(rad)} y={CY + R_LBL * Math.sin(rad) + 5}
+            <text x={rd(CX + R_LBL * Math.cos(rad))} y={rd(CY + R_LBL * Math.sin(rad) + 5)}
               textAnchor="middle" pointerEvents="none"
               fill={isUsed ? "white" : "#2d2550"}
               fontSize={isUsed ? "13" : "10"} fontWeight={isUsed ? "bold" : "normal"}>
               {key.major}
             </text>
             {isUsed && (
-              <text x={CX + 120 * Math.cos(rad)} y={CY + 120 * Math.sin(rad) + 4}
+              <text x={rd(CX + 120 * Math.cos(rad))} y={rd(CY + 120 * Math.sin(rad) + 4)}
                 textAnchor="middle" pointerEvents="none"
                 fill="#c4b5fd" fontSize="9" fontWeight="bold">
                 {stepNums}
@@ -338,8 +340,8 @@ function ProgCircle({ keyPos, degrees }: { keyPos: number; degrees: number[] }) 
         if (fp === tp) return null
         const fa = ((fp * 30 - 90) * Math.PI) / 180
         const ta = ((tp * 30 - 90) * Math.PI) / 180
-        const x1 = CX + ARROW_R * Math.cos(fa), y1 = CY + ARROW_R * Math.sin(fa)
-        const x2 = CX + ARROW_R * Math.cos(ta), y2 = CY + ARROW_R * Math.sin(ta)
+        const x1 = rd(CX + ARROW_R * Math.cos(fa)), y1 = rd(CY + ARROW_R * Math.sin(fa))
+        const x2 = rd(CX + ARROW_R * Math.cos(ta)), y2 = rd(CY + ARROW_R * Math.sin(ta))
         const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy) || 1
         const ox = dx / len * 8, oy = dy / len * 8
         return (

@@ -46,8 +46,8 @@ export default function FullChordFretboard({
   return (
     <div className="flex flex-col items-center">
       <div className="text-white font-bold mb-4 text-center text-lg">{chordName}</div>
-      <div className="flex justify-center">
-        <svg width={width} height={height} className="bg-gradient-to-br from-amber-900/20 to-amber-700/10 rounded-xl border border-amber-600/30">
+      <div className="flex max-w-full overflow-x-auto" role="region" aria-label="Fretboard diagram, scrolls sideways" tabIndex={0}>
+        <svg width={width} height={height} className="shrink-0 mx-auto bg-gradient-to-br from-amber-900/20 to-amber-700/10 rounded-xl border border-amber-600/30">
           {/* Nut (thick line at left) */}
           <line
             x1={startX}

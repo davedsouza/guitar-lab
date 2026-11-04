@@ -406,6 +406,7 @@ export default function FingerstylePatterns() {
                 </div>
                 <input
                   type="range"
+                  aria-label="Tempo"
                   min="30"
                   max="120"
                   value={tempo}
@@ -438,6 +439,7 @@ export default function FingerstylePatterns() {
                 </div>
                 <input
                   type="range"
+                  aria-label="Volume"
                   min="0"
                   max="1"
                   step="0.1"
@@ -571,7 +573,7 @@ export default function FingerstylePatterns() {
               <p className="text-purple-300 text-xs mb-4">
                 {pattern.pattern.length} notes total • Follow the highlighted note
               </p>
-              <div className="space-y-2 max-h-96 overflow-y-auto pr-2">
+              <div className="space-y-2 max-h-96 overflow-y-auto pr-2" role="region" aria-label="Scrollable list" tabIndex={0}>
                 {(() => {
                   const sortedPattern = [...pattern.pattern].sort((a, b) => a.beat - b.beat)
                   return sortedPattern.map((note, index) => {

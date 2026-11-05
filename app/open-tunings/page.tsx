@@ -85,7 +85,7 @@ function WhatWhyTab() {
       </p>
 
       <Callout type="insight">
-        Standard tuning is optimised for playing conventional chord shapes. Open tunings are optimised for
+        Standard tuning is optimized for playing conventional chord shapes. Open tunings are optimized for
         <strong className="text-white"> slide guitar, drones, and sounds that are physically impossible in standard tuning</strong>.
         They don&apos;t replace standard — they open entirely new worlds.
       </Callout>
@@ -107,7 +107,7 @@ function WhatWhyTab() {
             },
             {
               title: "Sympathetic resonance",
-              body: "Open strings vibrate in response to fretted notes. The result is a bloom and sustain that characterises acoustic blues, Celtic folk, and ambient music."
+              body: "Open strings vibrate in response to fretted notes. The result is a bloom and sustain that characterizes acoustic blues, Celtic folk, and ambient music."
             },
           ].map(r => (
             <div key={r.title} className="border-b border-white/10 pb-3">
@@ -350,7 +350,7 @@ Joni never stayed on straight barres — she explored partial voicings.`}
       </Card>
 
       <Callout type="exercise">
-        Tune to Open D. Fingerpick: thumb on D (6th string), index on F# (3rd), middle on A (2nd), ring on D (1st). That four-note arpeggio is the foundation of hundreds of folk songs. Add fret 2 on one string at a time and listen to how the chord colour shifts.
+        Tune to Open D. Fingerpick: thumb on D (6th string), index on F# (3rd), middle on A (2nd), ring on D (1st). That four-note arpeggio is the foundation of hundreds of folk songs. Add fret 2 on one string at a time and listen to how the chord color shifts.
       </Callout>
     </div>
   )
@@ -972,7 +972,7 @@ function FretboardTab() {
               strokeWidth={f === 0 ? 3 : 1}
             />
           ))}
-          {/* String lines (thicker towards bottom = lower strings) */}
+          {/* String lines (thicker toward bottom = lower strings) */}
           {Array.from({ length: 6 }, (_, s) => (
             <line key={`str-${s}`}
               x1={NX - 25} y1={TY + s * SH}

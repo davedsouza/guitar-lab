@@ -3,10 +3,11 @@
 import { useState } from "react"
 import { ChordTap } from "@/components/jam/ChordSheet"
 import BandGuidance from "@/components/jam/BandGuidance"
+import { useRememberedKey } from "@/lib/jam/storage"
 import KeyPicker from "@/components/jam/KeyPicker"
 import { Chip, Panel } from "@/components/jam/ui"
 import type { GuidanceGenre } from "@/lib/jam/band"
-import { fromNashville, prefersFlats, type KeyRef } from "@/lib/jam/theory"
+import { fromNashville, prefersFlats } from "@/lib/jam/theory"
 
 interface Strum {
   name: string
@@ -79,7 +80,7 @@ const SIGNALS = [
 ]
 
 export default function Patterns() {
-  const [key, setKey] = useState<KeyRef>({ root: 9, minor: false })
+  const [key, setKey] = useRememberedKey({ root: 9, minor: false }, false)
   const [quick, setQuick] = useState(false)
   const [genre, setGenre] = useState<GuidanceGenre>("blues")
   const flats = prefersFlats(key)

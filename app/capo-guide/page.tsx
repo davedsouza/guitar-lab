@@ -401,7 +401,7 @@ function TransposingSongsTab() {
     },
     {
       key: "Db",
-      option1: { capo: 4, shape: "A", note: "A shapes sit in Db — country and pop favourite" },
+      option1: { capo: 4, shape: "A", note: "A shapes sit in Db — country and pop favorite" },
       option2: { capo: 1, shape: "C", note: "C shapes at capo 1 produce Db" },
     },
   ]

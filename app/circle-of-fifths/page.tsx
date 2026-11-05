@@ -741,7 +741,7 @@ function KeySigsTab({ selected, setSelected }: { selected: number; setSelected: 
 
       <Callout type="tip">
         For flats: the second-to-last flat added is always the key name. 2 flats = B♭ E♭, key is B♭.
-        3 flats = B♭ E♭ A♭, key is E♭. (Exception: 1 flat = F major — just memorise it.)
+        3 flats = B♭ E♭ A♭, key is E♭. (Exception: 1 flat = F major — just memorize it.)
       </Callout>
     </div>
   )
@@ -918,7 +918,7 @@ function ModulationTab({ selected }: { selected: number }) {
       <Card>
         <h2 className="text-white font-semibold mb-3">Moving between keys</h2>
         <p className="text-purple-200/80 text-sm leading-relaxed mb-3">
-          Modulation means shifting the tonal centre — making the listener feel a different key as "home."
+          Modulation means shifting the tonal center — making the listener feel a different key as "home."
           The circle tells you which keys to modulate to and which chords to use as the bridge.
         </p>
         <p className="text-purple-200/80 text-sm leading-relaxed">
@@ -1008,11 +1008,11 @@ function ModulationTab({ selected }: { selected: number }) {
             <span className="text-sky-400 text-lg font-bold shrink-0">3</span>
             <div>
               <h3 className="text-white font-semibold">Relative major / minor shift</h3>
-              <p className="text-white/50 text-xs">The smoothest possible shift — same notes, new centre</p>
+              <p className="text-white/50 text-xs">The smoothest possible shift — same notes, new center</p>
             </div>
           </div>
           <p className="text-white/60 text-sm leading-relaxed mb-3">
-            {key.major} major and {key.minor} share all 7 notes. Shift between them by emphasising
+            {key.major} major and {key.minor} share all 7 notes. Shift between them by emphasizing
             the new root chord — no chord changes needed, just a different gravitational pull.
           </p>
           <div className="bg-black/30 rounded-xl p-4 font-mono text-sm">
@@ -1173,7 +1173,7 @@ function SongwritingTab({ selected }: { selected: number }) {
       title: "Relative minor shift",
       subtitle: `${key.minor} — same notes, darker home`,
       effect: "Effortless tonal shift, no new notes",
-      how: `Let ${chords[5].name} become the new tonic — emphasise it at phrase endings`,
+      how: `Let ${chords[5].name} become the new tonic — emphasize it at phrase endings`,
       emotional: "Introspective, darker, suspended",
       examples: "Stairway to Heaven, Sultans of Swing",
       color: "border-sky-500/30 bg-sky-500/8",

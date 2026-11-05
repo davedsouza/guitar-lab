@@ -643,14 +643,14 @@ function DorianTab() {
         <div className="space-y-4">
           <div>
             <ChordProg chords={["Am", "D", "Am", "D"]} label="Minimal — pure i–IV loop" />
-            <p className="text-purple-300 text-xs">Santana&apos;s favourite territory. Endlessly repeatable.</p>
+            <p className="text-purple-300 text-xs">Santana&apos;s favorite territory. Endlessly repeatable.</p>
           </div>
           <div>
             <ChordProg chords={["Am", "G", "D", "Am"]} label="Three chords — adds ♭VII for movement" />
             <p className="text-purple-300 text-xs">The G (♭VII) adds motion. Still clearly Dorian thanks to the D chord.</p>
           </div>
           <div>
-            <ChordProg chords={["Am7", "D", "Fmaj7", "E"]} label="Jazz Dorian — more colour chords" />
+            <ChordProg chords={["Am7", "D", "Fmaj7", "E"]} label="Jazz Dorian — more color chords" />
             <p className="text-purple-300 text-xs">Used in jazz-fusion contexts. The Am7 and D are the Dorian anchors.</p>
           </div>
           <div>
@@ -829,7 +829,7 @@ function PhrygianTab() {
           </div>
           <div>
             <ChordProg chords={["Em", "F", "G", "Am"]} label="Expanded Phrygian — more movement" />
-            <p className="text-purple-300 text-xs">The F chord (♭II) establishes Phrygian. G and Am add colour.</p>
+            <p className="text-purple-300 text-xs">The F chord (♭II) establishes Phrygian. G and Am add color.</p>
           </div>
           <div>
             <ChordProg chords={["Em", "F", "Em", "G"]} label="Phrygian with ♭III resolution" />
@@ -903,7 +903,7 @@ function LydianAeolianTab() {
         </p>
         <ChordProg chords={["Fmaj7", "G"]} label="F Lydian vamp — the II major signals Lydian" />
         <p className="text-purple-300 text-xs mb-3">G major contains B natural — the #4 of F. That&apos;s what makes it float.</p>
-        <ChordProg chords={["Gmaj7", "A"]} label="G Lydian vamp (Satriani's favourite key area)" />
+        <ChordProg chords={["Gmaj7", "A"]} label="G Lydian vamp (Satriani's favorite key area)" />
         <ChordProg chords={["Dmaj7", "E"]} label="D Lydian vamp" />
       </Card>
 
@@ -992,7 +992,7 @@ function LydianAeolianTab() {
 
       <Callout type="exercise">
         <p className="font-semibold mb-1">Aeolian vs Dorian Comparison:</p>
-        Loop Am – Dm (Aeolian feel). Solo in A natural minor. Then switch the Dm to a D major. Same loop, one chord changed. Now play A Dorian (add the F#). Hear how the whole colour of the solo shifts — same root, completely different emotional character.
+        Loop Am – Dm (Aeolian feel). Solo in A natural minor. Then switch the Dm to a D major. Same loop, one chord changed. Now play A Dorian (add the F#). Hear how the whole color of the solo shifts — same root, completely different emotional character.
       </Callout>
 
       <KeyChordExplorer mode="lydian"  title="Lydian — Pick Your Key" />
@@ -1015,7 +1015,7 @@ function MajorTab() {
       <Card title="Why the Major Scale Is Different">
         <p className="text-purple-200 text-sm mb-3">
           The major scale isn&apos;t a &quot;mode&quot; with a single characteristic note to activate — it <em>is</em> the reference. All 7 diatonic chords work under it.
-          Your job is to choose which chords to emphasise for the mood you want.
+          Your job is to choose which chords to emphasize for the mood you want.
         </p>
         <div className="grid sm:grid-cols-2 gap-3 text-sm">
           {[
@@ -1037,13 +1037,13 @@ function MajorTab() {
           <ChordProg chords={["C", "F", "G"]} label="I – IV – V — the backbone of rock and country" />
           <ChordProg chords={["C", "G", "Am", "F"]} label="I – V – vi – IV — four-chord hit machine" />
           <ChordProg chords={["C", "Am", "F", "G"]} label="I – vi – IV – V — classic doo-wop / pop" />
-          <ChordProg chords={["C", "Dm", "F", "G"]} label="I – ii – IV – V — jazz-flavoured pop" />
+          <ChordProg chords={["C", "Dm", "F", "G"]} label="I – ii – IV – V — jazz-flavored pop" />
           <ChordProg chords={["C", "F", "C", "G"]} label="Simple major vamp — pure major scale freedom" />
         </div>
       </Card>
 
       <Callout type="tip">
-        The major scale works equally well over all 7 diatonic chords. The difference is what you <strong className="text-white">emphasise</strong>: land on the 3rd over the I chord for brightness, the 7th for a dreamy maj7 colour, the 5th for stability.
+        The major scale works equally well over all 7 diatonic chords. The difference is what you <strong className="text-white">emphasize</strong>: land on the 3rd over the I chord for brightness, the 7th for a dreamy maj7 color, the 5th for stability.
       </Callout>
 
       <Card title="Major Scale vs Relative Minor">
@@ -1055,7 +1055,7 @@ function MajorTab() {
           <ChordProg chords={["C", "G", "Am", "F"]} label="→ Sounds major (C is home)" />
           <ChordProg chords={["Am", "F", "C", "G"]} label="→ Sounds minor (Am is home — same chords!)" />
         </div>
-        <p className="text-purple-300 text-xs mt-3">Same chords. Same scale. The first chord sets the tonal centre.</p>
+        <p className="text-purple-300 text-xs mt-3">Same chords. Same scale. The first chord sets the tonal center.</p>
       </Card>
 
       <KeyChordExplorer mode="major" title="Major Scale — Pick Your Key" />
@@ -1156,7 +1156,7 @@ function LocriañTab() {
       </div>
 
       <Callout type="warning">
-        Locrian is the most theoretically important but practically rare mode. The diminished home chord (i°) has no root fifth — it never truly resolves. Most musicians use it in short bursts for dark colour, not as a full tonal centre.
+        Locrian is the most theoretically important but practically rare mode. The diminished home chord (i°) has no root fifth — it never truly resolves. Most musicians use it in short bursts for dark color, not as a full tonal center.
       </Callout>
 
       <Card title="Why Locrian Is So Tense">
@@ -1195,7 +1195,7 @@ function LocriañTab() {
             { context: "Metal & Djent", use: "Half-time riffs built around the tritone — the ♭5 interval creates maximum heaviness", example: "Meshuggah, Periphery" },
             { context: "Film scoring", use: "Short Locrian passages signal dread, horror, or imminent danger", example: "Hans Zimmer tension cues" },
             { context: "Jazz (brief)", use: "The 7th degree of any major key is Locrian — used over half-diminished chords (ø7)", example: "ii°7 in minor key ii-V-i" },
-            { context: "Passing colour", use: "Single-bar Locrian runs before resolving to a more stable mode", example: "Prog rock, Dream Theater" },
+            { context: "Passing color", use: "Single-bar Locrian runs before resolving to a more stable mode", example: "Prog rock, Dream Theater" },
           ].map(r => (
             <div key={r.context} className="border-b border-white/10 pb-3">
               <p className="text-white font-semibold">{r.context}</p>
@@ -1208,7 +1208,7 @@ function LocriañTab() {
 
       <Callout type="exercise">
         <p className="font-semibold mb-1">Locrian Tension Exercise:</p>
-        Loop Bdim → C (2 bars each, slow — 55 BPM). Solo using B Locrian. Land heavily on the F# (♭5) over Bdim to maximise the tritone tension. When you hit C, resolve to E or G (the 3rd or 5th of C major). Feel how the tension needs that resolution.
+        Loop Bdim → C (2 bars each, slow — 55 BPM). Solo using B Locrian. Land heavily on the F# (♭5) over Bdim to maximize the tritone tension. When you hit C, resolve to E or G (the 3rd or 5th of C major). Feel how the tension needs that resolution.
       </Callout>
 
       <KeyChordExplorer mode="locrian" title="Locrian — Pick Your Key" />
@@ -1264,7 +1264,7 @@ function PracticeTab() {
         "Loop Em – F (2 bars each, slow).",
         "Solo in E minor pentatonic.",
         "Add the F note (♭2): fret 1 on the high e string.",
-        "Let the F note ring over the F chord. Instant Spanish flavour.",
+        "Let the F note ring over the F chord. Instant Spanish flavor.",
         "Try the Andalusian cadence: Am – G – F – E. Solo through the whole descent.",
       ],
     },
@@ -1290,7 +1290,7 @@ function PracticeTab() {
       </p>
 
       <Callout type="insight">
-        The goal is <strong className="text-white">ear recognition</strong>, not theory memorisation. When you can feel the difference between a Dorian and Aeolian backing just by listening — without thinking about note names — you&apos;ve got it.
+        The goal is <strong className="text-white">ear recognition</strong>, not theory memorization. When you can feel the difference between a Dorian and Aeolian backing just by listening — without thinking about note names — you&apos;ve got it.
       </Callout>
 
       <div className="space-y-3 mb-8">

@@ -1,4 +1,5 @@
-import { CHORD_VOICINGS, getChordVoicings, type ChordVoicing } from "@/lib/chordShapes"
+import { getChordVoicings, type ChordVoicing } from "@/lib/chordShapes"
+import { BIBLE_QUALITIES, bibleIdFromSuffix, bibleVoicings } from "@/lib/chordBible"
 
 export const SHARP_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 export const FLAT_NAMES = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
@@ -14,9 +15,12 @@ const FLAT_MINOR_KEYS = new Set([2, 7, 0, 5, 10, 3])
 export interface KeyRef {
   root: number
   minor: boolean
+  /** Set when the player chose sharps or flats on purpose. */
+  flats?: boolean
 }
 
 export function prefersFlats(key: KeyRef): boolean {
+  if (typeof key.flats === "boolean") return key.flats
   return key.minor ? FLAT_MINOR_KEYS.has(key.root) : FLAT_MAJOR_KEYS.has(key.root)
 }
 
@@ -143,20 +147,36 @@ export interface VoicingMatch {
 
 function qualityFromSuffix(suffix: string): { quality: string; simplified: boolean } {
   const s = suffix.replace(/[()]/g, "")
-  if (s === "" || s === "M" || s === "maj" || s === "5") return { quality: "Major", simplified: s === "5" }
-  if (s === "m") return { quality: "Minor", simplified: false }
-  if (s === "7") return { quality: "Dominant 7th", simplified: false }
-  if (s === "maj7" || s === "M7" || s === "ma7") return { quality: "Major 7th", simplified: false }
-  if (s === "m7") return { quality: "Minor 7th", simplified: false }
-  if (s === "dim" || s === "dim7") return { quality: "Diminished", simplified: s === "dim7" }
-  if (s === "aug" || s === "+") return { quality: "Augmented", simplified: false }
-  if (s === "sus4" || s === "sus") return { quality: "Sus4", simplified: false }
-  if (s === "m7b5") return { quality: "Diminished", simplified: true }
-  if (/^m(6|9|11|13|add9)/.test(s)) return { quality: s.startsWith("m6") || s.includes("add") ? "Minor" : "Minor 7th", simplified: true }
+  if (s === "5") return { quality: "Major", simplified: true }
+  const id = bibleIdFromSuffix(s)
+  if (id) return { quality: BIBLE_QUALITIES.find(q => q.id === id)!.label, simplified: false }
+  if (/^m(6|add9)/.test(s)) return { quality: "Minor", simplified: true }
+  if (/^m(9|11|13)/.test(s)) return { quality: "Minor 7th", simplified: true }
   if (/^(maj9|maj13|M9)/.test(s)) return { quality: "Major 7th", simplified: true }
-  if (/^(9|11|13|7sus4|7b9|7#9|7#11|7b5|7#5)/.test(s)) return { quality: "Dominant 7th", simplified: true }
-  if (/^sus2/.test(s)) return { quality: "Sus4", simplified: true }
+  if (/^7sus/.test(s)) return { quality: "Sus4", simplified: true }
+  if (/^(9|11|13|7b9|7#9|7#11|7b5)/.test(s)) return { quality: "Dominant 7th", simplified: true }
+  if (/^sus2/.test(s)) return { quality: "Sus2", simplified: true }
   return { quality: "Major", simplified: true }
+}
+
+// Library shapes come first (they are the friendly open shapes); Bible shapes follow.
+export function voicingsFor(rootPc: number, quality: string): ChordVoicing[] | null {
+  const lib = getChordVoicings(SHARP_NAMES[rootPc], quality) ?? []
+  const bq = BIBLE_QUALITIES.find(q => q.label === quality)
+  const seen = new Set(lib.map(v => v.fingers.join(",")))
+  const extra: ChordVoicing[] = []
+  if (bq) {
+    const all = bibleVoicings(rootPc, bq.id)
+    const ordered = bq.libKey ? all.filter(v => v.rootBass) : [...all.filter(v => v.rootBass), ...all.filter(v => !v.rootBass)]
+    for (const v of ordered) {
+      const k = v.fingers.join(",")
+      if (seen.has(k)) continue
+      seen.add(k)
+      extra.push({ fingers: v.fingers, position: v.position, difficulty: v.difficulty })
+    }
+  }
+  const out = [...lib, ...extra]
+  return out.length ? out : null
 }
 
 export function findVoicings(sym: string): VoicingMatch | null {
@@ -164,7 +184,7 @@ export function findVoicings(sym: string): VoicingMatch | null {
   if (!c) return null
   const rootName = SHARP_NAMES[c.root]
   const { quality, simplified } = qualityFromSuffix(c.suffix)
-  const voicings = getChordVoicings(rootName, quality)
+  const voicings = voicingsFor(c.root, quality)
   if (!voicings) return null
   return { rootName, quality, voicings, simplified }
 }
@@ -183,7 +203,7 @@ export function fingersText(fingers: (number | string)[]): string {
 }
 
 export function listAllQualities(): string[] {
-  return Object.keys(CHORD_VOICINGS["C"])
+  return BIBLE_QUALITIES.map(q => q.label)
 }
 
 // ─── Key finder ───────────────────────────────────────────────────────────────
@@ -280,12 +300,17 @@ export function isChordLine(line: string): boolean {
 
 export function transposeChartText(text: string, semis: number, flats: boolean): string {
   if (semis === 0) return text
+  return mapChartChords(text, c => transposeChord(c, semis, flats))
+}
+
+// Rewrites every chord in a chart (bracketed, bar lines and chord-above-lyric lines), keeping the layout.
+export function mapChartChords(text: string, fn: (chord: string) => string): string {
   return text
     .split("\n")
     .map(line => {
       if (INLINE_CHORD.test(line)) {
         INLINE_CHORD.lastIndex = 0
-        return line.replace(INLINE_CHORD, (_, c: string) => `[${transposeChord(c, semis, flats)}]`)
+        return line.replace(INLINE_CHORD, (_, c: string) => `[${fn(c)}]`)
       }
       INLINE_CHORD.lastIndex = 0
       if (!isChordLine(line)) return line
@@ -301,7 +326,7 @@ export function transposeChartText(text: string, semis: number, flats: boolean):
           gap = gap.slice(0, gap.length - take)
           carry -= take
         }
-        const next = parseChord(m[2]) ? transposeChord(m[2], semis, flats) : m[2]
+        const next = parseChord(m[2]) ? fn(m[2]) : m[2]
         carry += next.length - m[2].length
         out += gap + next
       }

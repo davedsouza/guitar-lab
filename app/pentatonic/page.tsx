@@ -239,7 +239,7 @@ function LicksTab() {
       <p className="text-purple-200 mb-6">These are the building blocks of rock and blues guitar. Learn these licks, understand how they work, and mix and match them in your own solos.</p>
 
       <Callout type="tip">
-        Don&apos;t just memorise these — understand them. Know which notes they use, why they sound good, and how to transpose them to other keys.
+        Don&apos;t just memorize these — understand them. Know which notes they use, why they sound good, and how to transpose them to other keys.
       </Callout>
 
       <TabBlock label="Lick 1 — The Classic BB King Box">
@@ -465,7 +465,7 @@ function PracticeTab() {
         "Learn Licks 3, 4, and 5",
         "Improvise a 3-chorus blues: each chorus in a different position",
         "Focus on dynamics — vary your attack intensity",
-        "Build a signature 8-bar solo using your favourite licks",
+        "Build a signature 8-bar solo using your favorite licks",
       ]
     },
   ]

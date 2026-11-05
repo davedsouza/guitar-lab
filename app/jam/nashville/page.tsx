@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRememberedKey } from "@/lib/jam/storage"
 import KeyPicker from "@/components/jam/KeyPicker"
 import BandGuidance from "@/components/jam/BandGuidance"
 import { ChordTap } from "@/components/jam/ChordSheet"
@@ -9,7 +10,7 @@ import { Chip, Panel } from "@/components/jam/ui"
 import type { GuidanceGenre } from "@/lib/jam/band"
 import { progressionChords } from "@/lib/jam/charts"
 import { GENRES } from "@/lib/jam/genres"
-import { diatonicChords, findVoicings, fromNashville, keyLabel, prefersFlats, type KeyRef } from "@/lib/jam/theory"
+import { diatonicChords, findVoicings, fromNashville, keyLabel, prefersFlats } from "@/lib/jam/theory"
 
 const COMMON: { name: string; nums: string[] }[] = [
   { name: "Three-chord song", nums: ["1", "4", "5", "1"] },
@@ -36,7 +37,7 @@ const SAY = [
 ]
 
 export default function Nashville() {
-  const [key, setKey] = useState<KeyRef>({ root: 7, minor: false })
+  const [key, setKey] = useRememberedKey({ root: 7, minor: false })
   const [sevenths, setSevenths] = useState(false)
   const [picked, setPicked] = useState<number | null>(null)
   const [genre, setGenre] = useState<GuidanceGenre>("general")

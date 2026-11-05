@@ -114,7 +114,7 @@ export default function MusicTheory() {
                 { icon: "💡", title: "Turn accidents into intentions", body: "That note that sounded great by accident? Theory tells you why — and lets you recreate it deliberately every time." },
                 { icon: "🗣️", title: "Communicate with other musicians", body: "Knowing intervals, chord names, and key relationships means you can follow and lead any musical conversation." },
                 { icon: "🔓", title: "Unlock every other module", body: "Scales, progressions, arpeggios, chord substitutions — all of it makes more sense once you understand the underlying theory." },
-                { icon: "👂", title: "Train your ear faster", body: "Theory gives your ear a framework. Instead of hearing random sounds, you start recognising intervals, chord qualities, and patterns." },
+                { icon: "👂", title: "Train your ear faster", body: "Theory gives your ear a framework. Instead of hearing random sounds, you start recognizing intervals, chord qualities, and patterns." },
               ].map((item) => (
                 <div key={item.title} className="bg-white/5 rounded-xl p-4 flex gap-3">
                   <span className="text-2xl shrink-0">{item.icon}</span>

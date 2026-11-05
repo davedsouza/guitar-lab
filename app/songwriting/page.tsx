@@ -109,7 +109,7 @@ function ProcessTab() {
           {[
             { title: "Write every day", desc: "Even 10 minutes. Write bad songs — finishing a bad song teaches more than planning a great one." },
             { title: "Record everything", desc: "Hum into your phone. Voice memos disappear from memory within hours. Record even the dumb ideas." },
-            { title: "Steal like an artist", desc: "Analyse songs you love: what's the chord progression? What's the melodic rhythm? Then use those ideas as jumping-off points." },
+            { title: "Steal like an artist", desc: "Analyze songs you love: what's the chord progression? What's the melodic rhythm? Then use those ideas as jumping-off points." },
             { title: "Separate writing from editing", desc: "Write fast, edit later. Don't stop mid-line to fix a word — finish the draft, then revise." },
             { title: "Play for people", desc: "The moment you play a song for someone, you hear it differently. Play rough demos, not polished recordings." },
           ].map(item => (

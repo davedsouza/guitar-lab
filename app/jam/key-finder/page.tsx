@@ -4,7 +4,7 @@ import { useMemo, useState } from "react"
 import Link from "next/link"
 import { ChordTap } from "@/components/jam/ChordSheet"
 import BandGuidance from "@/components/jam/BandGuidance"
-import { Chip, Hint, Panel, inputClass } from "@/components/jam/ui"
+import { Chip, Hint, NextSteps, Panel, inputClass } from "@/components/jam/ui"
 import { diatonicChords, guessKeys, keyLabel, parseChordList, type KeyRef } from "@/lib/jam/theory"
 
 const QUICK = ["C", "D", "E", "F", "G", "A", "B", "Am", "Bm", "Dm", "Em", "F#m", "Cm", "Gm"]
@@ -85,6 +85,7 @@ function FitChords({ k }: { k: KeyRef }) {
           </ChordTap>
         ))}
       </div>
+      <NextSteps items={[{ href: "/jam/scales", label: "Scales" }, { href: "/jam/progressions", label: "Ideas" }, { href: "/jam/transpose", label: "Transpose" }]} />
     </div>
   )
 }

@@ -156,7 +156,7 @@ export default function EarTrainingPage() {
         <div className="mb-8">
           <Link href="/" className="text-purple-300 hover:text-white text-sm">← Back to modules</Link>
           <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2 mt-4">Ear Training</h1>
-          <p className="text-purple-300 text-sm sm:text-base">Train your ears to recognise intervals, chords, and melodies — the skill that ties everything together</p>
+          <p className="text-purple-300 text-sm sm:text-base">Train your ears to recognize intervals, chords, and melodies — the skill that ties everything together</p>
         </div>
 
         <GuitarTonePicker variant="select" className="mb-4" />
@@ -179,7 +179,7 @@ export default function EarTrainingPage() {
               <Card>
                 <h3 className="text-white font-semibold mb-2">What is ear training?</h3>
                 <p className="text-purple-200 text-sm leading-relaxed">
-                  Ear training is the practice of developing your ability to recognise musical elements by sound alone —
+                  Ear training is the practice of developing your ability to recognize musical elements by sound alone —
                   intervals (the distance between two notes), chord qualities (major vs minor vs 7th), rhythms, and melodies.
                   It bridges the gap between what you play and what you hear.
                 </p>
@@ -203,7 +203,7 @@ export default function EarTrainingPage() {
               </Card>
               <Callout type="insight">
                 Every module in this app benefits from ear training. When you can hear a chord quality, you understand
-                why a substitution works. When you recognise intervals, improvisation becomes conversation rather than
+                why a substitution works. When you recognize intervals, improvisation becomes conversation rather than
                 guesswork. Ear training is the multiplier on everything else you learn.
               </Callout>
               <Card>
@@ -391,7 +391,7 @@ export default function EarTrainingPage() {
             <div>
               <h2 className="text-xl font-bold text-white mb-4">Chord Quality by Ear</h2>
               <p className="text-purple-200 text-sm mb-4 leading-relaxed">
-                Every chord type has a distinct emotional colour. Click each chord to hear it and absorb its character.
+                Every chord type has a distinct emotional color. Click each chord to hear it and absorb its character.
               </p>
               <div className="grid sm:grid-cols-2 gap-3 mb-6">
                 {CHORD_QUALITIES.map(chord => (
@@ -408,7 +408,7 @@ export default function EarTrainingPage() {
                 <div className="space-y-2 text-sm">
                   {[
                     ["Major vs Minor", "Major sounds resolved and upward; minor sounds darker and inward. The 3rd (3rd note of the chord) is the key difference — major 3rd vs minor 3rd."],
-                    ["Dom 7th vs Major 7th", "Both are \"major-flavoured\" but the dom 7th has a b7 that creates tension, while the major 7th adds a dreamy floating quality."],
+                    ["Dom 7th vs Major 7th", "Both are \"major-flavored\" but the dom 7th has a b7 that creates tension, while the major 7th adds a dreamy floating quality."],
                     ["Minor 7th vs Diminished", "Minor 7th is smooth and relaxed; diminished has a tense, unstable quality because of the tritone between the root and the diminished 5th."],
                   ].map(([pair, desc]) => (
                     <div key={pair} className="bg-black/20 rounded-lg p-3 border border-white/5">
@@ -529,7 +529,7 @@ export default function EarTrainingPage() {
               <Callout type="insight">
                 <strong>Sing what you play.</strong> The most powerful melodic memory exercise is also the simplest: hum
                 or sing every note you play. If you can not sing it, you do not truly know it. This single habit,
-                practised consistently, will transform your musical ear within months.
+                practiced consistently, will transform your musical ear within months.
               </Callout>
               <Card>
                 <h3 className="text-white font-semibold mb-3">5-step method for learning a melody by ear</h3>
@@ -554,7 +554,7 @@ export default function EarTrainingPage() {
                   {[
                     "Sing any scale you practice — every note, out loud. Connect the sound to the position.",
                     "Learn one new melody a week purely by ear (a nursery rhyme, a TV jingle, a simple folk song).",
-                    "After practising a riff or lick, put your guitar down and try to sing it perfectly. Then pick up and check.",
+                    "After practicing a riff or lick, put your guitar down and try to sing it perfectly. Then pick up and check.",
                     "Transcribe: find a 4-bar melody in a song you love and work out the exact notes. Slow down on YouTube or use an app.",
                     "Play a note on your guitar, close your eyes, and try to hear a different note before playing it — then play.",
                   ].map((ex, i) => (

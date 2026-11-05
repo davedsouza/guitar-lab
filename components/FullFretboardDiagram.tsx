@@ -257,7 +257,7 @@ export default function FullFretboardDiagram({
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 rounded-full bg-purple-600 border-2 border-white" />
-              <span className="text-purple-200">Colour tone</span>
+              <span className="text-purple-200">Color tone</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 rounded-full bg-blue-600 border-2 border-white" />

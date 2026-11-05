@@ -92,7 +92,7 @@ function WhatIsSlideTab() {
     <div>
       <h2 className="text-2xl font-bold text-white mb-2">What is Slide Guitar?</h2>
       <p className="text-purple-200 mb-6 leading-relaxed">
-        Slide guitar is one of the most expressive and instantly recognisable sounds in all of music.
+        Slide guitar is one of the most expressive and instantly recognizable sounds in all of music.
         A hard object — glass, metal, ceramic, or brass — is placed on a finger and glided along the
         strings instead of pressing them against frets. The result is a voice-like, crying, singing
         tone that no other technique can replicate.
@@ -183,7 +183,7 @@ function WhatIsSlideTab() {
             {
               name: "David Gilmour",
               style: "Rock",
-              note: "Standard tuning slide for colour and texture. \"Comfortably Numb\" influence is unmistakable.",
+              note: "Standard tuning slide for color and texture. \"Comfortably Numb\" influence is unmistakable.",
             },
             {
               name: "Ben Harper",
@@ -473,7 +473,7 @@ function TechniqueTab() {
     <div>
       <h2 className="text-2xl font-bold text-white mb-2">Technique Fundamentals</h2>
       <p className="text-purple-200 mb-6 leading-relaxed">
-        Slide technique can be summarised in one sentence: hover the slide directly above the fret
+        Slide technique can be summarized in one sentence: hover the slide directly above the fret
         wire with light pressure and damp everything you are not playing. Everything else — vibrato,
         approach, phrasing — grows from that foundation.
       </p>
@@ -510,7 +510,7 @@ function TechniqueTab() {
               number: "04",
               title: "Fretting-Hand Damping",
               color: "text-amber-400",
-              body: "The fingers behind the slide (towards the nut) should rest lightly on the strings. This mutes open-string noise and prevents metallic ringing. Typically the two fingers immediately behind the slide touch the strings without pressing to the fretboard.",
+              body: "The fingers behind the slide (toward the nut) should rest lightly on the strings. This mutes open-string noise and prevents metallic ringing. Typically the two fingers immediately behind the slide touch the strings without pressing to the fretboard.",
             },
             {
               number: "05",
@@ -550,7 +550,7 @@ function TechniqueTab() {
             },
             {
               label: "Direction",
-              note: "Move the slide slightly towards the nut then back towards the bridge. The motion is along the string (lengthwise), not across it.",
+              note: "Move the slide slightly toward the nut then back toward the bridge. The motion is along the string (lengthwise), not across it.",
             },
             {
               label: "Start time",
@@ -935,7 +935,7 @@ Each note approached from below or held with vibrato.
 The line moves through D major scale tones over the I chord.
 Think: singing a melody, not playing a lick.
 
-Two-string harmonised variation:
+Two-string harmonized variation:
 D |-/12~---------/10~-------/7~-----|
 A |----------/10~------/7~------/5~--|`}
         </TabBlock>
@@ -1112,7 +1112,7 @@ Arrive at 12 together, then step down through the scale.`}
 
       <Card title="David Gilmour Approach — Standard Tuning Slide">
         <p className="text-purple-300 text-sm mb-3">
-          David Gilmour uses slide primarily as a colouring device — a way to add texture and sustain
+          David Gilmour uses slide primarily as a coloring device — a way to add texture and sustain
           to notes within a solo. His approach is minimal, slow, and intensely emotional. The vibrato
           is wide and deliberate. Less is always more.
         </p>
@@ -1332,7 +1332,7 @@ function PracticeTab() {
               tuning: "Standard",
               difficulty: "Intermediate",
               diffColor: "text-amber-400",
-              note: "Brief slide moments within a standard-tuned song. Great for learning to insert slide as a colour without changing tuning.",
+              note: "Brief slide moments within a standard-tuned song. Great for learning to insert slide as a color without changing tuning.",
             },
             {
               song: "Need Your Love So Bad",
@@ -1437,7 +1437,7 @@ function PracticeTab() {
       <Callout type="exercise">
         The most important practice exercise at any level: record yourself playing a 12-bar blues in
         Open G, listen back, and identify the three worst moments. Fix those three things specifically
-        in the next session. Repeat every week. After one month, you will not recognise your own playing.
+        in the next session. Repeat every week. After one month, you will not recognize your own playing.
       </Callout>
     </div>
   )

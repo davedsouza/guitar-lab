@@ -555,7 +555,7 @@ function MutingTab() {
       <BodyText>
         Keep your palm pressed lightly against the bridge the entire time. Try
         four pressure levels: very light, light, medium, heavy. Each level is a
-        different sonic colour in your palette.
+        different sonic color in your palette.
       </BodyText>
 
       <SectionTitle>Type 2: Fretting Hand Muting</SectionTitle>

@@ -267,7 +267,7 @@ const PRACTICE_LEVELS = [
     color: "border-emerald-500",
     goal: "You can play through all 12 bars without losing your place.",
     tasks: [
-      "Memorise the 12-bar structure (write it on paper: I I I I | IV IV I I | V IV I V)",
+      "Memorize the 12-bar structure (write it on paper: I I I I | IV IV I I | V IV I V)",
       "Play the I7 chord only, counting 1-2-3-4 for each bar. Say the chord name out loud as you reach bar 5 (IV) and bar 9 (V).",
       "Do this at 60 BPM with a metronome. No shuffle yet — just even downstrokes.",
       "Loop it 5 times without stopping. Your internal clock is the skill being trained.",
@@ -479,7 +479,7 @@ export default function BluesPage() {
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <h2 className="text-xl font-bold text-white mb-4">The Three Chords — I, IV, V</h2>
               <p className="text-purple-200 text-sm mb-4">
-                Every 12-bar blues uses the same three chords relative to the key, labelled by Roman numeral. In the key of A:
+                Every 12-bar blues uses the same three chords relative to the key, labeled by Roman numeral. In the key of A:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {[

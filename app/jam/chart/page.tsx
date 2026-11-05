@@ -5,13 +5,17 @@ import { useSearchParams } from "next/navigation"
 import BandGuidance from "@/components/jam/BandGuidance"
 import { useChordSheet } from "@/components/jam/ChordSheet"
 import KeyPicker from "@/components/jam/KeyPicker"
-import { BigButton, Chip, Hint, Panel, inputClass } from "@/components/jam/ui"
+import PlayBar from "@/components/jam/PlayBar"
+import ShareButton from "@/components/jam/ShareButton"
+import { BigButton, Chip, Hint, NextSteps, Panel, inputClass } from "@/components/jam/ui"
 import type { GuidanceGenre } from "@/lib/jam/band"
 import { STARTER_CHARTS } from "@/lib/jam/charts"
+import { MOODS, moodChord } from "@/lib/jam/swap"
+import { chartToText, textToChart } from "@/lib/jam/share"
 import { POPULAR_ACOUSTIC } from "@/lib/jam/songs"
 import { CHARTS_KEY, makeChart, parseCharts, parseFont, useLocalState, useWakeLock, type SavedChart } from "@/lib/jam/storage"
 import {
-  classifyChart, extractChordsFromChart, extractPhrases, keyLabel, noteName, parseChord, parseNote,
+  classifyChart, extractChordsFromChart, extractPhrases, keyLabel, mapChartChords, noteName, parseChord, parseNote,
   prefersFlats, transposeChartText, type KeyRef,
 } from "@/lib/jam/theory"
 
@@ -26,7 +30,7 @@ function ChordSpan({ chord, onTap }: { chord: string; onTap: (c: string) => void
     <button
       type="button"
       onClick={() => onTap(chord)}
-      className="relative rounded px-0.5 font-mono font-extrabold text-amber-300 underline-offset-4 after:absolute after:-inset-x-2 after:-inset-y-2 after:content-[''] active:bg-amber-400/30"
+      className="relative rounded px-0.5 font-mono font-extrabold text-amber-300 underline decoration-dotted decoration-amber-300/60 underline-offset-4 after:absolute after:-inset-x-2 after:-inset-y-2 after:content-[''] active:bg-amber-400/30"
     >
       {chord}
     </button>
@@ -110,6 +114,11 @@ function ChartInner() {
   const showChord = useChordSheet()
   const [draft, setDraft] = useState<SavedChart | null>(null)
   const [songQuery, setSongQuery] = useState("")
+  const [undoBody, setUndoBody] = useState<string | null>(null)
+  const [phraseIdx, setPhraseIdx] = useState(0)
+  const [pasted, setPasted] = useState("")
+  const [pasteMsg, setPasteMsg] = useState("")
+  const [playNow, setPlayNow] = useState<number | null>(null)
 
   const active = charts.find(c => c.id === activeId) ?? null
   const mode: Mode = loaded && rawMode === "view" && !active ? "list" : rawMode
@@ -145,7 +154,36 @@ function ChartInner() {
     setShift(0)
     setScrolling(false)
     setMode("view")
+    setUndoBody(null)
+    setPhraseIdx(0)
     window.scrollTo(0, 0)
+  }
+
+  function reharmonize(mood: (typeof MOODS)[number]["id"]) {
+    if (!active) return
+    const k = keyFromString(active.key)
+    const body = mapChartChords(active.body, c => moodChord(c, mood, k))
+    if (body === active.body) return
+    setUndoBody(active.body)
+    setCharts(prev => prev.map(c => (c.id === active.id ? { ...c, body, updated: Date.now() } : c)))
+  }
+
+  function undoReharmonize() {
+    if (!active || undoBody === null) return
+    setCharts(prev => prev.map(c => (c.id === active.id ? { ...c, body: undoBody, updated: Date.now() } : c)))
+    setUndoBody(null)
+  }
+
+  function importPasted() {
+    const c = textToChart(pasted)
+    if (!c) {
+      setPasteMsg("Put the song title on the first line and the chords below it.")
+      return
+    }
+    setCharts(prev => [c, ...prev])
+    setPasted("")
+    setPasteMsg("")
+    open(c.id)
   }
 
   function startEdit(c: SavedChart) {
@@ -233,6 +271,22 @@ function ChartInner() {
           </ul>
           <div className="mt-3"><Hint>Chords only, simplified from memory. No lyrics. Check them against the recording and edit in the chart.</Hint></div>
         </Panel>
+        <Panel title="Bring in a chart">
+          <label htmlFor="jam-paste" className="sr-only">Paste a shared chart</label>
+          <textarea
+            id="jam-paste"
+            rows={4}
+            value={pasted}
+            onChange={e => { setPasted(e.target.value); setPasteMsg("") }}
+            placeholder={"Paste a chart a friend sent you.\nFirst line is the title, then Key: G, then the chords."}
+            spellCheck={false}
+            className={`${inputClass} font-mono text-[15px]`}
+          />
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            <BigButton tone="ghost" className="min-h-12 px-4 text-base" disabled={!pasted.trim()} onClick={importPasted}>Add this chart</BigButton>
+            <span role="status" aria-live="polite" className="text-sm font-semibold text-red-300">{pasteMsg}</span>
+          </div>
+        </Panel>
         <Hint>Write chords in brackets inside the lyric line, like [G]word. Or put a line of chords above the lyric. Both work, and both transpose.</Hint>
       </div>
     )
@@ -291,6 +345,8 @@ function ChartInner() {
   const flats = prefersFlats(nowKey)
   const shown = transposeChartText(active.body, shift, flats)
   const unique = Array.from(new Set(extractChordsFromChart(shown)))
+  const phrases = extractPhrases(shown)
+  const phrase = phrases[Math.min(phraseIdx, Math.max(0, phrases.length - 1))]
 
   return (
     <div className="space-y-4 pb-28">
@@ -302,6 +358,7 @@ function ChartInner() {
         <div className="flex shrink-0 gap-2">
           <Chip onClick={() => setMode("list")}>All</Chip>
           <Chip onClick={() => startEdit(active)}>Edit</Chip>
+          <ShareButton title={active.title} getText={() => chartToText({ ...active, body: shown, key: noteName(nowKey.root, flats) + (nowKey.minor ? "m" : "") })} />
         </div>
       </div>
 
@@ -322,6 +379,50 @@ function ChartInner() {
 
       <Hint>Tap any chord to see how to play it.</Hint>
 
+      {phrase && (
+        <Panel title="Hear it">
+          {phrases.length > 1 && (
+            <div className="-mx-1 mb-3 flex gap-1.5 overflow-x-auto px-1 pb-1" role="group" aria-label="Which part to play">
+              {phrases.map((ph, i) => (
+                <Chip key={ph.label} active={ph === phrase} onClick={() => { setPhraseIdx(i); setPlayNow(null) }} className="min-h-11 shrink-0 text-sm">{ph.label}</Chip>
+              ))}
+            </div>
+          )}
+          <p className="mb-3 flex flex-wrap gap-2 font-mono text-lg font-extrabold">
+            {phrase.chords.map((c, i) => (
+              <span key={i} className={`rounded-lg px-2 py-0.5 ${playNow === i ? "bg-amber-400 text-slate-950" : "bg-white/10 text-amber-300"}`}>{c}</span>
+            ))}
+          </p>
+          <PlayBar key={phrase.label} chords={phrase.chords} defaultBpm={90} onStep={setPlayNow} />
+        </Panel>
+      )}
+
+      <Panel title="Reharmonize this chart">
+        <p className="mb-3 text-sm text-white/80">Swap the chords for a different feel. It changes this chart, and you can undo it.</p>
+        <div className="flex flex-wrap gap-1.5" role="group" aria-label="Change the feel of the whole chart">
+          {MOODS.map(m => (
+            <button
+              key={m.id}
+              type="button"
+              title={m.hint}
+              onClick={() => reharmonize(m.id)}
+              className="min-h-11 rounded-xl border border-white/20 bg-white/10 px-3 text-sm font-bold text-white active:bg-white/20"
+            >
+              {m.label}
+            </button>
+          ))}
+          {undoBody !== null && (
+            <button
+              type="button"
+              onClick={undoReharmonize}
+              className="min-h-11 rounded-xl border border-amber-400/60 bg-amber-400/15 px-3 text-sm font-bold text-amber-200 active:bg-amber-400/30"
+            >
+              Undo
+            </button>
+          )}
+        </div>
+      </Panel>
+
       <Panel title="Chords in this song">
         <div className="flex flex-wrap gap-2">
           {unique.map(c => <Chip key={c} onClick={() => showChord(c)}>{c}</Chip>)}
@@ -334,6 +435,8 @@ function ChartInner() {
         keyRef={nowKey}
         onGenreChange={g => setCharts(prev => prev.map(c => (c.id === active.id ? { ...c, genre: g } : c)))}
       />
+
+      <NextSteps items={[{ href: "/jam/transpose", label: "Transpose" }, { href: "/jam/setlist", label: "Add to Setlist" }, { href: "/jam/patterns", label: "Strum patterns" }]} />
 
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/15 bg-slate-950/95 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur">
         <div className="mx-auto flex max-w-3xl items-center gap-3">

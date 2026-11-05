@@ -131,6 +131,14 @@ const MODULES: Module[] = [
     category: "chords",
   },
   {
+    href: "/chord-bible",
+    title: "Chord Bible",
+    description: "Look up any chord, from plain triads to 13ths, in all 12 keys. Hundreds of voicings: open, barre, shell and drop voicings, each with a diagram, tab and sound.",
+    cta: "Open the Bible",
+    tags: ["chord bible", "chord dictionary", "chord finder", "voicings", "9th", "11th", "13th", "extended chords", "jazz chords", "shell", "drop 2", "reference", "chords"],
+    category: "chords",
+  },
+  {
     href: "/triads",
     title: "Triads",
     description: "Master three-note chord shapes in all three inversions across every string set. Learn open voicings and smooth voice leading to connect chords without big hand leaps.",
@@ -165,7 +173,7 @@ const MODULES: Module[] = [
   {
     href: "/tonal-map",
     title: "Tonal Map",
-    description: "Visualise the gravitational field of any key. Explore tonal functions (tonic, subdominant, dominant), resolution paths, passing chords, and a spin wheel to build progressions.",
+    description: "Visualize the gravitational field of any key. Explore tonal functions (tonic, subdominant, dominant), resolution paths, passing chords, and a spin wheel to build progressions.",
     cta: "Open the Wheel",
     tags: ["tonal", "harmony", "function", "passing chords", "progression", "theory", "interactive", "tonic", "dominant"],
     category: "chords",

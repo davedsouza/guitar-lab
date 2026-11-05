@@ -56,7 +56,7 @@ function WhatMakesARiffTab() {
   return (
     <div>
       <h2 className="text-2xl font-bold text-white mb-2">What Makes a Great Riff?</h2>
-      <p className="text-purple-200 mb-6">A riff is a short, repeated musical phrase that forms the backbone of a song. The best riffs are immediately recognisable and impossible to get out of your head.</p>
+      <p className="text-purple-200 mb-6">A riff is a short, repeated musical phrase that forms the backbone of a song. The best riffs are immediately recognizable and impossible to get out of your head.</p>
 
       <Callout type="insight">
         The best riffs in history all share the same qualities: simplicity, rhythm, and a distinctive character. &quot;Smoke on the Water&quot; uses only 3 notes. &quot;Satisfaction&quot; uses a 5-note phrase. Complexity is not the point.
@@ -956,7 +956,7 @@ A|--2--------------------------------|
 E|--3--------------------------------|
 
 G chord rings underneath while melody moves on e string
-Fret 3 (G♯/Ab) is the chromatic upper neighbour — pure tension
+Fret 3 (G♯/Ab) is the chromatic upper neighbor — pure tension
 Resolve down through 2-0 to the open e
 Let every open string ring — Gilmour loved resonance and space`,
       },
@@ -1392,7 +1392,7 @@ E|------------------------------|
 
 A long, fast descent — chromatic-pentatonic blend
 Django could play this using only his index and middle finger
-The passing tones at 13 and 9 are chromatic neighbours
+The passing tones at 13 and 9 are chromatic neighbors
 This is the kind of run that made 1930s audiences fall silent in disbelief`,
       },
     ],

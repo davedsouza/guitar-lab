@@ -131,7 +131,7 @@ export default function Progressions() {
             <h2 className="text-xl font-bold text-white mb-4">Why Progressions Are Worth Studying</h2>
             <div className="grid sm:grid-cols-2 gap-3 mb-4">
               {[
-                { icon: "⚡", title: "Learn songs in minutes", body: "Once you recognise a progression by ear, you can pick up any song that uses it without looking up the chords." },
+                { icon: "⚡", title: "Learn songs in minutes", body: "Once you recognize a progression by ear, you can pick up any song that uses it without looking up the chords." },
                 { icon: "😢", title: "Understand why music feels the way it does", body: "Minor progressions feel sad, major feel bright, certain sequences create tension. You'll start hearing it intentionally." },
                 { icon: "✍️", title: "Write your own songs", body: "Most songwriters start with a progression they love. Understanding why it works gives you a foundation to build on." },
                 { icon: "🔄", title: "Same key, opposite emotion", body: "The same I–V–vi–IV in minor key feels completely different. Structure stays, emotion flips." },

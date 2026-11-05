@@ -47,7 +47,7 @@ const MELODIC_GUIDE: Record<string, { degreeRoles: DegreeInfo[]; sequences: Sequ
       { name: "Aeolian lament",  feel: "Dark & brooding",   emoji: "🌑", indices: [0,2,1,0] },
       { name: "Minor ascent",    feel: "Building tension",  emoji: "📈", indices: [0,1,2,3,4] },
       { name: "Descend home",    feel: "Sombre resolve",    emoji: "🎯", indices: [4,3,2,1,0] },
-      { name: "Dark colour",     feel: "Moody & cinematic", emoji: "🎬", indices: [0,6,5,4] },
+      { name: "Dark color",     feel: "Moody & cinematic", emoji: "🎬", indices: [0,6,5,4] },
       { name: "Minor sweep",     feel: "Deep & emotional",  emoji: "🌊", indices: [2,4,6,4,2,0] },
       { name: "Sad phrase",      feel: "Melancholic",       emoji: "🌧️", indices: [4,2,1,0] },
     ],
@@ -58,7 +58,7 @@ const MELODIC_GUIDE: Record<string, { degreeRoles: DegreeInfo[]; sequences: Sequ
       { degree: "b3", role: "color",   label: "Blues/soul character" },
       { degree: "4",  role: "passing", label: "Approach note" },
       { degree: "5",  role: "target",  label: "Power tone" },
-      { degree: "b7", role: "color",   label: "Soulful colour" },
+      { degree: "b7", role: "color",   label: "Soulful color" },
     ],
     sequences: [
       { name: "Root anchor",     feel: "Grounded & strong",  emoji: "⚓", indices: [0,3,0] },
@@ -97,11 +97,11 @@ const MELODIC_GUIDE: Record<string, { degreeRoles: DegreeInfo[]; sequences: Sequ
       { degree: "b7", role: "color",   label: "Soulful tone" },
     ],
     sequences: [
-      { name: "Dorian signature", feel: "That Dorian flavour",   emoji: "⭐", indices: [0,2,5,4] },
+      { name: "Dorian signature", feel: "That Dorian flavor",   emoji: "⭐", indices: [0,2,5,4] },
       { name: "Santana phrase",   feel: "Warm minor groove",     emoji: "🎸", indices: [0,2,4,5,4,2] },
-      { name: "Bright descent",   feel: "Dorian colour descend", emoji: "⬇️", indices: [4,5,4,2,0] },
+      { name: "Bright descent",   feel: "Dorian color descend", emoji: "⬇️", indices: [4,5,4,2,0] },
       { name: "Modal groove",     feel: "Smooth stepwise",       emoji: "🌊", indices: [0,1,2,3,4,3] },
-      { name: "Colour drop",      feel: "Moody with brightness", emoji: "🎨", indices: [0,6,5,4] },
+      { name: "Color drop",      feel: "Moody with brightness", emoji: "🎨", indices: [0,6,5,4] },
       { name: "ii chord guide",   feel: "Jazz minor feel",       emoji: "🎷", indices: [1,2,4,6] },
     ],
   },
@@ -109,7 +109,7 @@ const MELODIC_GUIDE: Record<string, { degreeRoles: DegreeInfo[]; sequences: Sequ
     degreeRoles: [
       { degree: "1",  role: "target",  label: "Home — dark and tense" },
       { degree: "b2", role: "tension", label: "The Phrygian signature ★" },
-      { degree: "b3", role: "color",   label: "Dark minor colour" },
+      { degree: "b3", role: "color",   label: "Dark minor color" },
       { degree: "4",  role: "passing", label: "Neutral step" },
       { degree: "5",  role: "target",  label: "Stable anchor" },
       { degree: "b6", role: "color",   label: "Dark & dramatic" },
@@ -166,7 +166,7 @@ const MELODIC_GUIDE: Record<string, { degreeRoles: DegreeInfo[]; sequences: Sequ
     degreeRoles: [
       { degree: "1",  role: "target",  label: "Home (unstable root)" },
       { degree: "b2", role: "tension", label: "Very dark half-step" },
-      { degree: "b3", role: "color",   label: "Dark colour" },
+      { degree: "b3", role: "color",   label: "Dark color" },
       { degree: "4",  role: "passing", label: "Neutral step" },
       { degree: "b5", role: "tension", label: "The unstable core ★" },
       { degree: "b6", role: "color",   label: "Dense & dark" },
@@ -231,7 +231,7 @@ function MelodicGuide({ scaleNotes, selectedScale, userSequence, setUserSequence
     tension: "text-red-300",
   }
   const ROLE_LABELS: Record<NoteRole, string> = {
-    target: "Landing tone", color: "Colour tone", passing: "Passing tone", tension: "Tension tone",
+    target: "Landing tone", color: "Color tone", passing: "Passing tone", tension: "Tension tone",
   }
 
   return (

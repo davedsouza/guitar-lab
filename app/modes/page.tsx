@@ -176,7 +176,7 @@ E|--------------------|
    A  B  C  D  E  F#  G`}
       </TabBlock>
 
-      <TabBlock label="A Dorian riff — emphasising the ♭3 and natural 6">
+      <TabBlock label="A Dorian riff — emphasizing the ♭3 and natural 6">
 {`e|-----------------------------|
 B|-----------------------------|
 G|----2------------------------| ← F# (the Dorian note)
@@ -307,7 +307,7 @@ function PhrygianTab() {
       <ModeHeader
         name="Phrygian"
         formula="H W W W H W W (1 ♭2 ♭3 4 5 ♭6 ♭7)"
-        character="Dark, menacing, Spanish, exotic. The ♭2 creates an instantly recognisable tension."
+        character="Dark, menacing, Spanish, exotic. The ♭2 creates an instantly recognizable tension."
         sound="Flamenco, metal, surf rock. Think Metallica, Rodrigo y Gabriela, Dick Dale"
         color="border-red-600"
       />
@@ -376,7 +376,7 @@ E|--0---------------|
 
       <Callout type="exercise">
         <p className="font-semibold mb-1">Phrygian Ear Exercise:</p>
-        Play an Em chord, then move to an F chord (just one fret up). That movement is Phrygian — the ♭2 chord (F) to the i chord (Em). Practice this vamp and solo over it using E Phrygian. You&apos;ll immediately recognise the flamenco sound.
+        Play an Em chord, then move to an F chord (just one fret up). That movement is Phrygian — the ♭2 chord (F) to the i chord (Em). Practice this vamp and solo over it using E Phrygian. You&apos;ll immediately recognize the flamenco sound.
       </Callout>
     </div>
   )
@@ -568,7 +568,7 @@ function ApplyingTab() {
         </ol>
       </Card>
 
-      <Card title="Step 3 — Emphasise the Characteristic Note">
+      <Card title="Step 3 — Emphasize the Characteristic Note">
         <p className="text-purple-200 text-sm mb-3">Each mode has one note that defines its sound. Target that note in your phrases:</p>
         <div className="space-y-2 text-sm">
           {[
@@ -619,7 +619,7 @@ Target the F (♭7) on beat 1 of bar 2`}
 
       <Callout type="exercise">
         <p className="font-semibold mb-1">The Ear-First Approach (Most Important Exercise):</p>
-        <p>Instead of thinking &quot;which mode is this&quot;, train your ear to recognise each mode&apos;s character:</p>
+        <p>Instead of thinking &quot;which mode is this&quot;, train your ear to recognize each mode&apos;s character:</p>
         <ol className="mt-2 space-y-1">
           <li>1. Dorian: play it and think &quot;smooth, cool, jazzy&quot;</li>
           <li>2. Mixolydian: play it and think &quot;rock, bluesy, driving&quot;</li>

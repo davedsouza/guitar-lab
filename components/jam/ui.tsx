@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import type { ReactNode } from "react"
 
 export function Panel({ title, children, className = "" }: { title?: string; children: ReactNode; className?: string }) {
@@ -58,3 +59,18 @@ export function Hint({ children }: { children: ReactNode }) {
 
 export const inputClass =
   "w-full rounded-xl border border-white/25 bg-slate-900 px-4 py-3 text-base text-white placeholder:text-white/40 focus:border-amber-400 focus:outline-none"
+
+export function NextSteps({ items }: { items: { href: string; label: string }[] }) {
+  return (
+    <nav aria-label="Next steps" className="rounded-2xl border border-white/15 bg-white/[0.04] p-3">
+      <p className="mb-2 text-xs font-bold uppercase tracking-wider text-purple-300">Where to next</p>
+      <div className="flex flex-wrap gap-2">
+        {items.map(i => (
+          <Link key={i.href} href={i.href} className="inline-flex min-h-12 items-center rounded-xl border border-white/20 bg-white/10 px-3 text-base font-semibold text-white active:scale-95 active:bg-white/20">
+            {i.label}
+          </Link>
+        ))}
+      </div>
+    </nav>
+  )
+}

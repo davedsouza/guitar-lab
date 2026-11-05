@@ -98,7 +98,7 @@ export default function CAGEDSystem() {
             </p>
             <div className="bg-white/10 rounded-xl p-4 border-l-4 border-amber-400">
               <p className="text-amber-200 text-sm leading-relaxed">
-                <span className="font-semibold text-amber-300">Think of it like a city grid.</span> Without it, you memorise individual routes. With it, you understand the whole layout and can navigate anywhere. CAGED turns a fretboard full of random dots into a system you can see and use.
+                <span className="font-semibold text-amber-300">Think of it like a city grid.</span> Without it, you memorize individual routes. With it, you understand the whole layout and can navigate anywhere. CAGED turns a fretboard full of random dots into a system you can see and use.
               </p>
             </div>
           </div>
@@ -106,7 +106,7 @@ export default function CAGEDSystem() {
             <h2 className="text-xl font-bold text-white mb-4">Why the CAGED System Changes Everything</h2>
             <div className="grid sm:grid-cols-2 gap-3">
               {[
-                { icon: "🗺️", title: "The whole neck becomes a map", body: "You stop memorising random shapes and start seeing connected patterns. Every position links to the next." },
+                { icon: "🗺️", title: "The whole neck becomes a map", body: "You stop memorizing random shapes and start seeing connected patterns. Every position links to the next." },
                 { icon: "🎸", title: "Not just for chords", body: "Scales, arpeggios, and solos all follow the same five shapes. Learn CAGED once and it unlocks every other concept." },
                 { icon: "🔍", title: "Find any chord anywhere", body: "Need a G chord at the 10th fret? CAGED shows you exactly where it is and how to finger it without thinking." },
                 { icon: "🚀", title: "The shortcut most players miss", body: "Many guitarists play for years without learning this. Those who do make a step change in how fluidly they play across the neck." },

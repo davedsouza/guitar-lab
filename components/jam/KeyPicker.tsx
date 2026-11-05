@@ -12,12 +12,17 @@ export default function KeyPicker({
     <div>
       <div className="mb-2 flex items-center justify-between">
         <span className="text-xs font-bold uppercase tracking-wider text-purple-300">{label}</span>
-        {allowMinor && (
-          <div className="flex gap-1.5">
+        <div className="flex gap-1.5">
+          <Chip active={flats} onClick={() => onChange({ ...value, flats: !flats })} ariaLabel={flats ? "Showing flats, tap for sharps" : "Showing sharps, tap for flats"} className="min-h-10 min-w-10 text-sm">
+            <span aria-hidden>{flats ? "♭" : "♯"}</span>
+          </Chip>
+          {allowMinor && (
+            <>
             <Chip active={!value.minor} onClick={() => onChange({ ...value, minor: false })} className="min-h-10 text-sm">Major</Chip>
             <Chip active={value.minor} onClick={() => onChange({ ...value, minor: true })} className="min-h-10 text-sm">Minor</Chip>
-          </div>
-        )}
+            </>
+          )}
+        </div>
       </div>
       <div className="grid grid-cols-6 gap-1.5">
         {names.map((n, i) => (

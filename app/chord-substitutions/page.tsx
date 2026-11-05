@@ -111,7 +111,7 @@ const SUBSTITUTION_TYPES: SubstitutionType[] = [
     id: "diatonic",
     name: "Diatonic Substitution",
     description: "Replace with another chord from the same key that shares harmonic function.",
-    explanation: "Tonic function: I, iii, vi. Subdominant function: IV, ii. Dominant function: V, vii°. Swap within a function group for a fresh colour.",
+    explanation: "Tonic function: I, iii, vi. Subdominant function: IV, ii. Dominant function: V, vii°. Swap within a function group for a fresh color.",
     example: "I → iii or vi, IV → ii, V → vii°",
     difficulty: "Intermediate",
     difficultyOrder: 2,
@@ -423,14 +423,14 @@ const SUBSTITUTION_RULES: Record<string, SubstitutionRule[]> = {
   ],
   "ii7": [
     { replacementRoman: "IV", degree: 5, quality: "Major", typeId: "diatonic", explanation: "IV shares subdominant function with ii7." },
-    { replacementRoman: "IVmaj7", degree: 5, quality: "Major 7th", typeId: "diatonic", explanation: "IVmaj7 is a richer subdominant colour — common in jazz." },
+    { replacementRoman: "IVmaj7", degree: 5, quality: "Major 7th", typeId: "diatonic", explanation: "IVmaj7 is a richer subdominant color — common in jazz." },
   ],
   "iii": [
     { replacementRoman: "I", degree: 0, quality: "Major", typeId: "diatonic", explanation: "iii has tonic function — can act as a lighter version of I." },
     { replacementRoman: "vi", degree: 9, quality: "Minor", typeId: "diatonic", explanation: "vi shares two notes with iii and sits in the same tonic area." },
   ],
   "iii7": [
-    { replacementRoman: "Imaj7", degree: 0, quality: "Major 7th", typeId: "diatonic", explanation: "Imaj7 and iii7 share tonic function — iii7 is the more colourful version." },
+    { replacementRoman: "Imaj7", degree: 0, quality: "Major 7th", typeId: "diatonic", explanation: "Imaj7 and iii7 share tonic function — iii7 is the more colorful version." },
     { replacementRoman: "vi7", degree: 9, quality: "Minor 7th", typeId: "diatonic", explanation: "vi7 and iii7 both sit in the tonic area and share common tones." },
   ],
   "IV": [
@@ -615,11 +615,11 @@ export default function ChordSubstitutions() {
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <h2 className="text-xl font-bold text-white mb-3">What are Chord Substitutions?</h2>
               <p className="text-purple-200 text-sm leading-relaxed mb-4">
-                A chord substitution is simply swapping one chord for another that serves the same harmonic role — but adds a different colour or feel. The music still makes sense to the ear, it just sounds richer or more unexpected.
+                A chord substitution is simply swapping one chord for another that serves the same harmonic role — but adds a different color or feel. The music still makes sense to the ear, it just sounds richer or more unexpected.
               </p>
               <div className="bg-white/10 rounded-xl p-4 border-l-4 border-amber-400">
                 <p className="text-amber-200 text-sm leading-relaxed">
-                  <span className="font-semibold text-amber-300">Think of it like language.</span> "Happy" and "joyful" mean the same thing but feel different. Chord substitutions work the same way — swap a chord for one that plays the same harmonic role, but brings new colour to the moment.
+                  <span className="font-semibold text-amber-300">Think of it like language.</span> "Happy" and "joyful" mean the same thing but feel different. Chord substitutions work the same way — swap a chord for one that plays the same harmonic role, but brings new color to the moment.
                 </p>
               </div>
             </div>
@@ -750,7 +750,7 @@ export default function ChordSubstitutions() {
                   { title: "Start Simple", body: "Take a song you know and substitute just one chord. Listen to how it changes the feel before moving on." },
                   { title: "Use Your Ears", body: "Not all substitutions work in every context. Trust your ears — the style of music matters." },
                   { title: "Voice Leading", body: "Choose substitutions that allow smooth voice leading — minimal finger movement between chords." },
-                  { title: "Study the Classics", body: "Jazz standards are full of sophisticated substitutions. Analyse them to see these techniques in action." },
+                  { title: "Study the Classics", body: "Jazz standards are full of sophisticated substitutions. Analyze them to see these techniques in action." },
                 ].map((tip) => (
                   <div key={tip.title} className="bg-white/10 rounded-lg p-4">
                     <div className="font-semibold text-white mb-1">{tip.title}</div>

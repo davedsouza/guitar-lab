@@ -49,7 +49,7 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
   )
 }
 
-// ─── Degree pill colours ──────────────────────────────────────────────────────
+// ─── Degree pill colors ──────────────────────────────────────────────────────
 const DEGREE_COLORS: Record<string, string> = {
   I:    "bg-emerald-600/30 text-emerald-300 border-emerald-500/40",
   ii:   "bg-blue-600/30   text-blue-300   border-blue-500/40",
@@ -80,7 +80,7 @@ function Pill({ degree }: { degree: string }) {
 function WhatIsItTab() {
   return (
     <div>
-      <h2 className="text-2xl font-bold text-white mb-2">What Is Diatonic Harmonisation?</h2>
+      <h2 className="text-2xl font-bold text-white mb-2">What Is Diatonic Harmonization?</h2>
       <p className="text-purple-200 mb-6">
         Every scale contains 7 notes. If you stack thirds on top of each note — using only notes from that same scale — you build a chord.
         Do this for every note in the scale and you get the <span className="text-white font-semibold">diatonic chords</span>: the family of chords that naturally live inside a key.
@@ -142,14 +142,14 @@ function WhatIsItTab() {
 
       <Callout type="tip">
         The pattern of chord types is always the same regardless of key: <strong className="text-white">Major Minor Minor Major Major Minor Diminished</strong>.
-        I ii iii IV V vi vii° — memorise this sequence and you can build the diatonic chords for any major key instantly.
+        I ii iii IV V vi vii° — memorize this sequence and you can build the diatonic chords for any major key instantly.
       </Callout>
 
       <Card title="Why This Matters for Guitar">
         <ul className="space-y-2 text-sm text-purple-200">
           <li>• <span className="text-white font-semibold">Songwriting:</span> Every chord in your progression should (usually) come from this family — instant harmony.</li>
           <li>• <span className="text-white font-semibold">Soloing:</span> When a chord changes, you know which scale notes belong to it — target chord tones confidently.</li>
-          <li>• <span className="text-white font-semibold">Ear training:</span> Recognise which degree a chord is by its sound. The IV always sounds 'lifting'; the V always sounds 'tense'.</li>
+          <li>• <span className="text-white font-semibold">Ear training:</span> Recognize which degree a chord is by its sound. The IV always sounds 'lifting'; the V always sounds 'tense'.</li>
           <li>• <span className="text-white font-semibold">Transposing:</span> Know the pattern, not the chord names — move to any key instantly.</li>
         </ul>
       </Card>
@@ -220,7 +220,7 @@ function MajorHarmonyTab() {
 
       <Callout type="insight">
         The pattern is always: <strong className="text-white">Major · Minor · Minor · Major · Major · Minor · Diminished</strong>.
-        In Nashville terms: 1 · 2m · 3m · 4 · 5 · 6m · 7°. Memorise this once — it works in every key.
+        In Nashville terms: 1 · 2m · 3m · 4 · 5 · 6m · 7°. Memorize this once — it works in every key.
       </Callout>
 
       <Card title="The Big 3 Diatonic Relationships">
@@ -640,7 +640,7 @@ function PracticeTab() {
     {
       title: "Exercise 4 — Identify Chord Degrees by Ear",
       difficulty: "Intermediate",
-      goal: "Train your ear to recognise chord function",
+      goal: "Train your ear to recognize chord function",
       steps: [
         "Play G (I) — notice it feels stable, at home",
         "Play C (IV) — notice the lift, the 'going somewhere' feeling",
@@ -670,7 +670,7 @@ function PracticeTab() {
       <p className="text-purple-200 mb-6">Five exercises that take you from &quot;knowing the theory&quot; to &quot;hearing and using it&quot;. Work through them in order.</p>
 
       <Callout type="insight">
-        The goal isn&apos;t to memorise chord names — it&apos;s to hear the function. When you can feel the difference between I, IV, V, and vi just by listening, diatonic harmony becomes instinctive.
+        The goal isn&apos;t to memorize chord names — it&apos;s to hear the function. When you can feel the difference between I, IV, V, and vi just by listening, diatonic harmony becomes instinctive.
       </Callout>
 
       <div className="space-y-3">
@@ -714,7 +714,7 @@ function PracticeTab() {
         })}
       </div>
 
-      <Card title="Quick Reference — The Pattern You Need to Memorise">
+      <Card title="Quick Reference — The Pattern You Need to Memorize">
         <div className="space-y-2">
           <div>
             <p className="text-amber-300 font-semibold text-sm mb-2">Major Key Chord Types:</p>

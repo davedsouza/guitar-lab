@@ -39,6 +39,7 @@ const NAV_CATEGORIES: NavCategory[] = [
     color: "text-violet-400",
     modules: [
       { href: "/chord-builder",      label: "Chord Building" },
+      { href: "/chord-bible",        label: "Chord Bible" },
       { href: "/progressions",       label: "Chord Progressions" },
       { href: "/diatonic-chords",    label: "Diatonic Chords" },
       { href: "/caged-system",       label: "CAGED System" },

@@ -275,7 +275,7 @@ E|--5--8--|
   {
     name: "Natural Minor",
     intervals: "1  2  ♭3  4  5  ♭6  ♭7",
-    description: "Seven notes, dark character. The foundation of rock and metal bass — more notes means more melodic colour.",
+    description: "Seven notes, dark character. The foundation of rock and metal bass — more notes means more melodic color.",
     feel: "Dark & powerful",
     usedIn: "Rock, metal, R&B, soul",
     character: "Three notes on E and A strings, two on D and G. More expressive than pentatonic once you have the box memorised.",
@@ -344,7 +344,7 @@ E|--5--7--|`,
   {
     name: "Blues",
     intervals: "1  ♭3  4  ♭5  5  ♭7",
-    description: "Pentatonic minor plus the ♭5 'blue note'. That one extra note gives an instantly gritty, expressive flavour.",
+    description: "Pentatonic minor plus the ♭5 'blue note'. That one extra note gives an instantly gritty, expressive flavor.",
     feel: "Gritty & expressive",
     usedIn: "Blues, rock, soul, shuffle",
     character: "The ♭5 sits between the 4th and 5th on the A string. Use it as a passing note — never sit on it.",
@@ -405,7 +405,7 @@ E|-------------------3-----------|`,
   {
     name: "Root–Fifth", style: "Rock", emoji: "🎸",
     description: "Add the 5th above the root. This is the essential rock bass pattern — it adds harmonic motion without overcrowding the song.",
-    pro: "The 5th is always in the same relative position: 2 frets higher on the next thinner string. Memorise this relationship.",
+    pro: "The 5th is always in the same relative position: 2 frets higher on the next thinner string. Memorize this relationship.",
     tab: `G|-------------------------------|
 D|---7--7--------9--9------------|
 A|---5--5--5--5--7--7--5--5------|
@@ -619,7 +619,7 @@ D|--5--7--|
 A|--4--7--|
 E|--5--|
    R→3→5→♭7→R, key of A7`,
-    tip: "The ♭7 (G when root is A) appears on D string at the SAME fret as the root. That relationship is always identical — memorise it.",
+    tip: "The ♭7 (G when root is A) appears on D string at the SAME fret as the root. That relationship is always identical — memorize it.",
     tabLine: `G|-------------------------------|
 D|------7--5--4------------------|
 A|--4--5------5--7---------------|
@@ -630,7 +630,7 @@ E|--5-----------5--7-------------|
     name: "Major 7", symbol: "Maj7 / △7",
     intervals: "R  3  5  7",
     chords: "Cmaj7, Fmaj7",
-    description: "The natural 7th (one fret below the octave) adds a dreamy, sophisticated colour. The sound of jazz and neo-soul.",
+    description: "The natural 7th (one fret below the octave) adds a dreamy, sophisticated color. The sound of jazz and neo-soul.",
     feel: "Dreamy & lush",
     usage: "Over Imaj7 and IVmaj7 chords in jazz, neo-soul, pop. Avoid over dominant and minor chords.",
     dots: [
@@ -989,7 +989,7 @@ E|--3--3----------------|`} />
 D|-----|
 A|-----|
 E|--5--|       ← root`,
-                        note: "This is the single most important shape on bass. Memorise it before anything else.",
+                        note: "This is the single most important shape on bass. Memorize it before anything else.",
                       },
                       {
                         name: "The 12-Fret Octave",
@@ -1093,7 +1093,7 @@ E|--5--|       ← these are identical pitches`,
                   )}
                 </div>
                 <TipBox>
-                  Start by memorising {"{"}A{"}"} on every string — A is E-str fret 5, A-str open, D-str fret 7, G-str fret 2. Then do D, G, C, E, and B. You&apos;ll own the neck in a week.
+                  Start by memorizing {"{"}A{"}"} on every string — A is E-str fret 5, A-str open, D-str fret 7, G-str fret 2. Then do D, G, C, E, and B. You&apos;ll own the neck in a week.
                 </TipBox>
               </div>
             )}

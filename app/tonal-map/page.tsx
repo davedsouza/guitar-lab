@@ -67,7 +67,7 @@ const DEGREES: DegInfo[] = [
   {
     degree:"vi", off:9, qual:"m7", fn:"tonic",
     resolves:[1,3,4], scale:"Aeolian (Natural Minor)",
-    info:"The relative minor. Darker version of I — shares its stability but with a melancholy colour. V→vi is the deceptive cadence.",
+    info:"The relative minor. Darker version of I — shares its stability but with a melancholy color. V→vi is the deceptive cadence.",
   },
   {
     degree:"vii°", off:11, qual:"ø7", fn:"dominant",
@@ -130,7 +130,7 @@ const CADENCES: CadenceInfo[] = [
   },
   {
     name:"Deceptive Cadence", abbr:"DC", from:4, to:5,
-    description:"Sounds like it's heading to V→I but sidesteps to vi instead. The ear expects I and gets vi — a chord that shares two notes with I and has the same tonic function, but with a darker, melancholy colour. The surprise extends the phrase.",
+    description:"Sounds like it's heading to V→I but sidesteps to vi instead. The ear expects I and gets vi — a chord that shares two notes with I and has the same tonic function, but with a darker, melancholy color. The surprise extends the phrase.",
     feel:"Surprising · Bittersweet · Extended",
     genres:"Classical, pop, film music",
     tip:"Use when you want to avoid ending a phrase too early — the deceptive cadence says 'not yet.' Very effective before the true resolution. Common in film scores to sustain emotional ambiguity.",
@@ -402,8 +402,8 @@ export default function TonalMapPage() {
         {tab === "map" && (
           <div>
             <HowToUse steps={[
-              { text: "Select a key at the top — the wheel updates to show all 7 diatonic chords in that key, each labelled with its degree (I, ii, iii, IV, V, vi, vii°)." },
-              { text: "Each chord is colour-coded by function: Tonic (green) = stable home, Subdominant (blue) = moving away, Dominant (amber) = tension pulling back to I." },
+              { text: "Select a key at the top — the wheel updates to show all 7 diatonic chords in that key, each labeled with its degree (I, ii, iii, IV, V, vi, vii°)." },
+              { text: "Each chord is color-coded by function: Tonic (green) = stable home, Subdominant (blue) = moving away, Dominant (amber) = tension pulling back to I." },
               { text: "Click any chord on the wheel to open its info panel — function, natural resolution targets, mode to play over it, passing chord approaches, and a chord diagram." },
               { text: "The arrows show harmonic gravity — following them (V→I, ii→V, IV→I) creates smooth, resolved motion. Going against them creates surprise or tension." },
               { text: "The tonal center in the middle is always the I chord. Everything else orbits it." },
@@ -624,7 +624,7 @@ function TonalCenterPanel({ keyStr }: { keyStr: string }) {
         <h2 className="text-lg font-bold text-white mb-4">The three functions</h2>
         <div className="space-y-3">
           {([
-            ["tonic",       `Stable home. ${DEGREES.filter(d=>d.fn==="tonic").map(d=>d.degree).join(", ")}. The I chord is the strongest; iii and vi share its stability but add colour.`],
+            ["tonic",       `Stable home. ${DEGREES.filter(d=>d.fn==="tonic").map(d=>d.degree).join(", ")}. The I chord is the strongest; iii and vi share its stability but add color.`],
             ["subdominant", `Moving away from home. ${DEGREES.filter(d=>d.fn==="subdominant").map(d=>d.degree).join(", ")}. Creates forward motion toward the dominant.`],
             ["dominant",    `Maximum tension. ${DEGREES.filter(d=>d.fn==="dominant").map(d=>d.degree).join(", ")}. The leading tone (${leadingTone}) pulls powerfully toward ${getRoot(keyStr)}. V7→I is the strongest cadence in tonal music.`],
           ] as [TonalFn, string][]).map(([fn, desc]) => {
@@ -890,7 +890,7 @@ function BorrowedTab({ keyStr }: { keyStr: string }) {
         <h2 className="text-xl font-bold text-white mb-2">Borrowed Chords</h2>
         <p className="text-slate-400 text-sm leading-relaxed mb-2">
           Modal interchange — borrowing chords from the parallel minor or related modes while staying in a major key.
-          The key centre doesn't change; you're just reaching into a darker colour palette for one or two chords.
+          The key center doesn't change; you're just reaching into a darker color palette for one or two chords.
         </p>
         <p className="text-slate-400 text-sm leading-relaxed">
           In <span className="text-purple-300 font-semibold">{getRoot(keyStr)} major</span> the parallel minor is{" "}
@@ -901,7 +901,7 @@ function BorrowedTab({ keyStr }: { keyStr: string }) {
 
       <HowToUse steps={[
         { text: "A borrowed chord is a diatonic chord from the parallel minor (same root, minor key) used temporarily in your major key progression." },
-        { text: "The key centre stays the same — you haven't modulated. The borrowed chord creates colour contrast before you return to major harmony." },
+        { text: "The key center stays the same — you haven't modulated. The borrowed chord creates color contrast before you return to major harmony." },
         { text: "bVII is the most common borrowed chord in rock and pop. iv (minor 4) adds a bittersweet melancholy. bVI is cinematic and dramatic." },
         { text: "Typical placement: insert a borrowed chord between two diatonic chords for contrast. Return to a diatonic chord immediately after for smooth voice-leading." },
         { text: "Listen to the 'famous songs' examples for each chord — borrowed chords are easier to hear than to explain theoretically." },

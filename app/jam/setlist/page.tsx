@@ -3,9 +3,12 @@
 import Link from "next/link"
 import { useState } from "react"
 import KeyPicker from "@/components/jam/KeyPicker"
-import { BigButton, Chip, Hint, Panel, inputClass } from "@/components/jam/ui"
+import ShareButton from "@/components/jam/ShareButton"
+import { BigButton, Chip, Hint, NextSteps, Panel, inputClass } from "@/components/jam/ui"
+import { setlistToText } from "@/lib/jam/share"
+import { POPULAR_ACOUSTIC } from "@/lib/jam/songs"
 import {
-  CHARTS_KEY, SETLIST_KEY, parseCharts, parseSetlist, uid, useLocalState, useWakeLock, type SavedChart, type SetlistItem,
+  CHARTS_KEY, SETLIST_KEY, makeChart, parseCharts, parseSetlist, prependChart, uid, useLocalState, useWakeLock, type SavedChart, type SetlistItem,
 } from "@/lib/jam/storage"
 import { keyLabel, noteName, parseNote, prefersFlats, type KeyRef } from "@/lib/jam/theory"
 
@@ -22,6 +25,9 @@ export default function Setlist() {
   const [editing, setEditing] = useState<SetlistItem | null>(null)
   const [gig, setGig] = useState(false)
   const [pos, setPos] = useState(0)
+  const [source, setSource] = useState<"charts" | "songs" | null>(null)
+  const [query, setQuery] = useState("")
+  const [added, setAdded] = useState("")
 
   useWakeLock(gig)
 
@@ -35,6 +41,20 @@ export default function Setlist() {
       ;[copy[i], copy[j]] = [copy[j], copy[i]]
       return copy
     })
+  }
+
+  function addChart(c: SavedChart) {
+    setItems(prev => [...prev, { id: uid(), title: c.title, key: c.key, capo: 0, bpm: null, notes: "", chartId: c.id }])
+    setAdded(`Added ${c.title}.`)
+  }
+
+  function addPopular(song: (typeof POPULAR_ACOUSTIC)[number]) {
+    const title = `${song.title} (${song.artist})`
+    const chart = makeChart({ title, key: song.key, genre: song.genre, body: song.body })
+    prependChart(chart)
+    const capo = /^Capo (\d+)/.exec(song.body)
+    setItems(prev => [...prev, { id: uid(), title, key: song.key, capo: capo ? parseInt(capo[1], 10) : 0, bpm: null, notes: "", chartId: chart.id }])
+    setAdded(`Added ${song.title}.`)
   }
 
   // ── Gig mode ──
@@ -125,6 +145,48 @@ export default function Setlist() {
         <BigButton onClick={() => setEditing({ ...BLANK })}>+ Add song</BigButton>
         <BigButton tone="ghost" disabled={items.length === 0} onClick={() => { setPos(0); setGig(true) }}>Start set</BigButton>
       </div>
+      <Panel title="Add in one tap">
+        <div className="flex flex-wrap gap-2">
+          <Chip active={source === "charts"} onClick={() => setSource(source === "charts" ? null : "charts")}>From my charts</Chip>
+          <Chip active={source === "songs"} onClick={() => setSource(source === "songs" ? null : "songs")}>Popular songs</Chip>
+        </div>
+        {source === "charts" && (
+          charts.length === 0 ? (
+            <p className="mt-3 text-sm text-purple-200">You have no saved charts yet. Make one in Chart or Song Builder.</p>
+          ) : (
+            <ul className="mt-3 space-y-2">
+              {charts.map(c => (
+                <li key={c.id}>
+                  <button type="button" onClick={() => addChart(c)} className="flex min-h-12 w-full items-center justify-between gap-3 rounded-xl bg-slate-950/60 px-4 text-left active:bg-white/15">
+                    <span className="min-w-0 truncate text-base font-bold">{c.title}</span>
+                    <span className="shrink-0 text-sm font-semibold text-amber-300">+ {c.key}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )
+        )}
+        {source === "songs" && (
+          <div className="mt-3">
+            <label htmlFor="sl-search" className="sr-only">Search popular songs</label>
+            <input id="sl-search" type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search by song or artist" className={`${inputClass} mb-3`} />
+            <ul className="max-h-80 space-y-2 overflow-y-auto">
+              {POPULAR_ACOUSTIC.filter(x => `${x.title} ${x.artist}`.toLowerCase().includes(query.trim().toLowerCase())).map(x => (
+                <li key={x.title}>
+                  <button type="button" onClick={() => addPopular(x)} className="flex min-h-12 w-full items-center justify-between gap-3 rounded-xl bg-slate-950/60 px-4 py-2 text-left active:bg-white/15">
+                    <span className="min-w-0">
+                      <span className="block truncate text-base font-bold">{x.title}</span>
+                      <span className="block truncate text-xs text-purple-200">{x.artist}</span>
+                    </span>
+                    <span className="shrink-0 text-sm font-semibold text-amber-300">+ {x.key}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <p role="status" aria-live="polite" className="mt-2 min-h-5 text-sm font-semibold text-amber-300">{added}</p>
+      </Panel>
       {items.length === 0 ? (
         <Panel><Hint>No songs yet. Add what you plan to play, with the key, capo and tempo, so you are not hunting for it on stage. Saved on this phone.</Hint></Panel>
       ) : (
@@ -149,6 +211,8 @@ export default function Setlist() {
           ))}
         </ol>
       )}
+      {items.length > 0 && <ShareButton title="Setlist" getText={() => setlistToText(items)} label="Share this setlist" />}
+      <NextSteps items={[{ href: "/jam/chart", label: "Charts" }, { href: "/jam/transpose", label: "Transpose" }, { href: "/jam/tools", label: "Tuner & Tempo" }]} />
     </div>
   )
 }

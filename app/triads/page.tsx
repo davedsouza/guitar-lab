@@ -453,7 +453,7 @@ function VoiceLeadingTab({ root, setRoot, quality, setQuality }: {
   const IV_root = (root + 5) % 12
   const V_root  = (root + 7) % 12
 
-  // Voice-led progression: choose inversions that minimise movement
+  // Voice-led progression: choose inversions that minimize movement
   // I root pos → IV 2nd inv → V 1st inv → I root pos
   const steps: { name: string; chordRoot: number; inv: 0|1|2; desc: string }[] = [
     { name: `I (${NOTES[key]})`,       chordRoot: key,     inv: 0, desc: "Root position — solid foundation" },
@@ -538,7 +538,7 @@ function VoiceLeadingTab({ root, setRoot, quality, setQuality }: {
         <div className="space-y-3">
           {[
             { rule: "Prefer stepwise motion", desc: "Move each voice to the nearest available note in the next chord — a half step or whole step. Big leaps sound disconnected." },
-            { rule: "Minimise movement", desc: "If a note is shared between two chords, keep it in the same voice. Common tones are your anchor points." },
+            { rule: "Minimize movement", desc: "If a note is shared between two chords, keep it in the same voice. Common tones are your anchor points." },
             { rule: "Contrary motion is elegant", desc: "When one voice moves up, have another move down. This prevents all voices crowding in the same direction." },
           ].map(r => (
             <div key={r.rule} className="flex gap-3">

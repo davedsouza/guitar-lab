@@ -28,7 +28,7 @@ export const GENRES: GenreInfo[] = [
     progressions: [
       { name: "One-chord vamp", chords: ["19", "19", "19", "19"], bpm: [95, 110], feel: "16ths, muted scratches", note: "Stay on one dominant 9th chord for the whole verse. The rhythm is the song." },
       { name: "Dorian two-chord", chords: ["1m7", "1m7", "47", "1m7"], minor: true, bpm: [95, 115], feel: "Syncopated 16ths", note: "Minor 7 up to a dominant IV7. That major 6th is the Dorian sound. Keep the IV short and punchy." },
-      { name: "Dominant IV vamp", chords: ["17", "17", "47", "17"], bpm: [90, 110], feel: "Tight 8ths and 16ths", note: "Blues-flavoured. Hit the 4 chord on the 'and' of beat 4 to push into it." },
+      { name: "Dominant IV vamp", chords: ["17", "17", "47", "17"], bpm: [90, 110], feel: "Tight 8ths and 16ths", note: "Blues-flavored. Hit the 4 chord on the 'and' of beat 4 to push into it." },
       { name: "Minor 7 slide", chords: ["1m7", "b27", "1m7", "b77"], minor: true, bpm: [100, 120], feel: "Chromatic stabs", note: "Slide up a half step and back for tension, then drop to the b7. Think horn-section stabs." },
       { name: "ii-V funk loop", chords: ["2m7", "57", "1maj7", "57"], bpm: [90, 105], feel: "Smooth, behind the beat", note: "Jazzier funk. Ghost notes between the chords." },
       { name: "Minor 9 hang", chords: ["1m9", "1m9", "b79", "49"], minor: true, bpm: [85, 100], feel: "Laid back pocket", note: "Rich chords, very few notes per chord. Think two or three strings at a time." },
@@ -81,7 +81,7 @@ export const GENRES: GenreInfo[] = [
       { name: "I-IV-V", chords: ["1", "4", "5", "1"], bpm: [90, 140], feel: "Boom-chick", note: "The classic. Bass on 1 and 3, strum on 2 and 4." },
       { name: "I-V-vi-IV", chords: ["1", "5", "6m", "4"], bpm: [90, 130], feel: "Steady strum", note: "Modern country-pop favorite.", example: "Wagon Wheel" },
       { name: "I-IV-I-V", chords: ["1", "4", "1", "5"], bpm: [100, 140], feel: "Two-step", note: "Great for verses. Switch to I-IV-V-I for a turnaround." },
-      { name: "V-IV-I", chords: ["5", "4", "1", "1"], bpm: [95, 125], feel: "Rolling", note: "Backwards three-chord loop. Southern rock flavour.", example: "Sweet Home Alabama" },
+      { name: "V-IV-I", chords: ["5", "4", "1", "1"], bpm: [95, 125], feel: "Rolling", note: "Backwards three-chord loop. Southern rock flavor.", example: "Sweet Home Alabama" },
       { name: "I-iii-IV-V", chords: ["1", "3m", "4", "5"], bpm: [80, 110], feel: "Ballad", note: "The iii adds a gentle lift before the IV. Great for slower tunes." },
       { name: "Walk-down", chords: ["1", "5/7", "6m", "5"], bpm: [70, 100], feel: "Slow waltz or ballad", note: "A descending bass line (1, 7, 6, 5) under the chords. The 5/7 slash chord (G/B in C) carries the 7." },
     ],
@@ -130,7 +130,7 @@ export const GENRES: GenreInfo[] = [
     label: "Gospel",
     blurb: "Rich and uplifting. Passing chords, 7ths and a plagal 'amen' ending.",
     progressions: [
-      { name: "I-IV-I-V", chords: ["1", "4", "1", "5"], bpm: [70, 120], feel: "Call and response", note: "The foundation. Add 7ths for flavour." },
+      { name: "I-IV-I-V", chords: ["1", "4", "1", "5"], bpm: [70, 120], feel: "Call and response", note: "The foundation. Add 7ths for flavor." },
       { name: "Amen cadence", chords: ["4", "1", "4", "1"], bpm: [60, 90], feel: "Slow, sustained", note: "IV to I, over and over. The 'amen' ending." },
       { name: "I-iii-IV-V", chords: ["1", "3m", "4", "5"], bpm: [70, 110], feel: "Building", note: "Walks up the scale. Great for lifts." },
       { name: "ii-V-I", chords: ["2m7", "57", "1maj7", "4"], bpm: [70, 110], feel: "Smooth", note: "Jazz-influenced gospel. Smooth 7ths." },

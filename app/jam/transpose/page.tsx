@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react"
 import { ChordTap } from "@/components/jam/ChordSheet"
 import KeyPicker from "@/components/jam/KeyPicker"
-import { BigButton, Chip, Hint, Panel, inputClass } from "@/components/jam/ui"
+import { BigButton, Chip, Hint, NextSteps, Panel, inputClass } from "@/components/jam/ui"
 import {
   capoOptions, extractChordsFromChart, guessKeys, keyLabel, prefersFlats, transposeChartText, type KeyRef,
 } from "@/lib/jam/theory"
@@ -103,6 +103,7 @@ export default function TransposePage() {
           ))}
         </ul>
       </Panel>
+      <NextSteps items={[{ href: "/jam/chart", label: "Chart" }, { href: "/jam/setlist", label: "Setlist" }, { href: "/jam/key-finder", label: "Key Finder" }]} />
     </div>
   )
 }

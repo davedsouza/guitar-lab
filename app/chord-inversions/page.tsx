@@ -69,7 +69,7 @@ function TabWhatAreInversions() {
       <p className="text-purple-200 text-sm leading-relaxed mb-4">
         A chord is a group of notes. Normally the root (the note the chord is named after) sits at the
         bottom. An inversion simply means you've moved a different note to the bottom — the chord stays
-        the same, but the colour, weight, and smoothness changes completely.
+        the same, but the color, weight, and smoothness changes completely.
       </p>
 
       <Card>
@@ -170,7 +170,7 @@ function TabTriadInversions() {
       <h2 className="text-xl font-bold text-white mb-4">Triad Inversions on Guitar</h2>
       <p className="text-purple-200 text-sm leading-relaxed mb-4">
         On guitar, triad inversions are best played on three adjacent strings. Each string set gives
-        you a different tonal colour — the higher the strings, the brighter and more chime-like the
+        you a different tonal color — the higher the strings, the brighter and more chime-like the
         inversion sounds.
       </p>
 
@@ -491,7 +491,7 @@ E  |---x---|              E  |---3---|   (leap of 3)
 Total movement: large, disjointed — each string jumps independently`}
       </TabBlock>
 
-      <TabBlock label="GOOD — inversions used to minimise movement">
+      <TabBlock label="GOOD — inversions used to minimize movement">
 {`C major (root pos):       G/B (1st inversion):
 e  |---0---| (E)       →   e  |---3---| (G)   move 3
 B  |---1---| (C)       →   B  |---0---| (B)   move 1 step down
@@ -769,7 +769,7 @@ function TabPractice() {
       <Card>
         <h3 className="text-white font-bold mb-2">Exercise 1 — C Major Triad Through All Inversions</h3>
         <p className="text-purple-300 text-xs mb-3">
-          Play each inversion on all three string sets. Listen to how the same chord changes colour.
+          Play each inversion on all three string sets. Listen to how the same chord changes color.
         </p>
       </Card>
       <TabBlock label="C major — all inversions, strings 1-2-3 then 2-3-4 then 3-4-5">
@@ -900,7 +900,7 @@ Bass: C – B – A – G – F – E – D – G
         </div>
       </Card>
 
-      <h3 className="text-white font-bold mb-3">What to Practise Daily</h3>
+      <h3 className="text-white font-bold mb-3">What to Practice Daily</h3>
       <Card>
         <div className="space-y-2 text-sm">
           {[

@@ -222,7 +222,7 @@ const SONGS: Song[] = [
     ],
     recommendedScales: [
       { name: "Natural Minor", why: "The i, iv and ♭III all come from natural minor" },
-      { name: "Dorian", why: "Over the iv and ♭VII7 chords, Dorian's natural 6 adds a jazzier colour" },
+      { name: "Dorian", why: "Over the iv and ♭VII7 chords, Dorian's natural 6 adds a jazzier color" },
     ],
   },
   {
@@ -270,7 +270,7 @@ const SONGS: Song[] = [
     ],
     recommendedScales: [
       { name: "Major", why: "The ii–V–I is the core of major key jazz harmony" },
-      { name: "Dorian", why: "Play Dorian over the ii chord for a distinctly jazzy flavour" },
+      { name: "Dorian", why: "Play Dorian over the ii chord for a distinctly jazzy flavor" },
     ],
   },
 
@@ -348,7 +348,7 @@ const SONGS: Song[] = [
     ],
     recommendedScales: [
       { name: "Natural Minor", why: "The full diatonic minor scale handles the ♭VI, ♭III, and iv chords perfectly" },
-      { name: "Pentatonic Minor", why: "Start here — then add the ♭6 and ♭7 for the full Aeolian flavour" },
+      { name: "Pentatonic Minor", why: "Start here — then add the ♭6 and ♭7 for the full Aeolian flavor" },
     ],
   },
   {
@@ -438,7 +438,7 @@ const SONGS: Song[] = [
       { roman: "I", semitones: 0, quality: "Major" },
       { roman: "V", semitones: 7, quality: "Major" },
     ],
-    theoryCallout: "Pure I–IV–I–V — the oldest rock and roll formula. Just the three primary chords, no colour. The secret of Brown Eyed Girl's joy isn't harmonic complexity, it's rhythmic momentum. Master these three chords and you can play hundreds of classics from every decade.",
+    theoryCallout: "Pure I–IV–I–V — the oldest rock and roll formula. Just the three primary chords, no color. The secret of Brown Eyed Girl's joy isn't harmonic complexity, it's rhythmic momentum. Master these three chords and you can play hundreds of classics from every decade.",
     relatedModules: [
       { href: "/progressions", label: "Chord Progressions" },
       { href: "/beginner", label: "Beginner Module" },
@@ -469,7 +469,7 @@ const SONGS: Song[] = [
     ],
     recommendedScales: [
       { name: "Natural Minor", why: "The descending i–♭VII–♭VI–iv motion is pure Aeolian — natural minor is essential here" },
-      { name: "Pentatonic Minor", why: "Gilmour's verse tone is rooted in minor pentatonic with added ♭6 colour tones" },
+      { name: "Pentatonic Minor", why: "Gilmour's verse tone is rooted in minor pentatonic with added ♭6 color tones" },
     ],
   },
 ]

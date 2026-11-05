@@ -33,6 +33,7 @@ export const LEARNING_PATHS: LearningPath[] = [
     labelColor: "text-blue-400",
     steps: [
       { href: "/chord-builder",           label: "Chord Building" },
+      { href: "/chord-bible",             label: "Chord Bible" },
       { href: "/nashville-number-system", label: "Nashville Numbers" },
       { href: "/diatonic-chords",         label: "Diatonic Chords" },
       { href: "/rhythm-trainer",          label: "Rhythm Trainer" },

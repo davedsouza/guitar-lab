@@ -8,7 +8,10 @@ export function progressionChords(p: JamProgression, key: KeyRef): string[] {
 }
 
 export function progressionToChartBody(p: JamProgression, key: KeyRef): string {
-  const chords = progressionChords(p, key)
+  return chordsToChartBody(progressionChords(p, key))
+}
+
+export function chordsToChartBody(chords: string[]): string {
   const lines: string[] = ["Verse"]
   const perLine = chords.length > 8 ? 4 : chords.length > 4 ? 4 : chords.length
   for (let i = 0; i < chords.length; i += perLine) {

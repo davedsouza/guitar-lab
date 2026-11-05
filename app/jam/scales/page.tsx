@@ -7,7 +7,7 @@ import GuitarTonePicker from "@/components/GuitarTonePicker"
 import KeyPicker from "@/components/jam/KeyPicker"
 import TabImage from "@/components/jam/TabImage"
 import { Fretboard, HarpGrid, Keyboard } from "@/components/jam/ScaleViews"
-import { BigButton, Chip, Hint, Panel } from "@/components/jam/ui"
+import { BigButton, Chip, Hint, Panel, NextSteps } from "@/components/jam/ui"
 import { useBand } from "@/components/jam/BandContext"
 import { GENRES, type GenreId } from "@/lib/jam/genres"
 import { KEY_NAMES, POSITIONS, holeMidi } from "@/lib/harmonicaData"
@@ -282,6 +282,7 @@ function ScalesInner() {
           <li>Leave space. Two notes and a pause beat a fast run.</li>
         </ul>
       </Panel>
+      <NextSteps items={[{ href: "/jam/progressions", label: "Ideas" }, { href: "/jam/circle", label: "Circle of 5ths" }, { href: "/chord-bible", label: "Chord Bible" }]} />
     </div>
   )
 }

@@ -4,25 +4,20 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import BandGuidance from "@/components/jam/BandGuidance"
 import { ChordTap } from "@/components/jam/ChordSheet"
+import ChordLab, { applySwaps, type Swaps } from "@/components/jam/ChordLab"
+import PlayBar from "@/components/jam/PlayBar"
 import KeyPicker from "@/components/jam/KeyPicker"
-import { BigButton, Chip, Hint, Panel, inputClass } from "@/components/jam/ui"
+import PartPlanner from "@/components/jam/PartPlanner"
+import { BigButton, Chip, Hint, NextSteps, Panel, inputClass } from "@/components/jam/ui"
 import { GROUPS, keyCandidates, keyChordList, loopBack, romanLine, suggestNext, type Suggestion } from "@/lib/jam/next"
-import { makeChart, prependChart, useLocalState } from "@/lib/jam/storage"
+import { chordsToChartBody } from "@/lib/jam/charts"
+import { getGenre } from "@/lib/jam/genres"
+import { makeChart, prependChart, useLocalState, useRememberedKey } from "@/lib/jam/storage"
 import { BUILDER_KEY, EMPTY, MAX, parseSaved, type Saved } from "@/lib/jam/next"
-import { capoOptions, keyLabel, noteName, parseChord, prefersFlats, type KeyRef } from "@/lib/jam/theory"
+import { PLAN_EMPTY, PLAN_KEY, STYLES, getStyle, parsePlan, readChordInput as readChords, type PlanState } from "@/lib/jam/plan"
+import { capoOptions, keyLabel, noteName, prefersFlats, type KeyRef } from "@/lib/jam/theory"
 
 const START = ["G", "C", "D", "Em", "Am", "A", "E", "F"]
-
-function readChords(input: string): { ok: string[]; bad: string[] } {
-  const ok: string[] = []
-  const bad: string[] = []
-  for (const raw of input.split(/[\s,|>→]+/).filter(Boolean)) {
-    const t = raw.charAt(0).toUpperCase() + raw.slice(1)
-    if (parseChord(t)) ok.push(t)
-    else bad.push(raw)
-  }
-  return { ok, bad }
-}
 
 const same = (a: KeyRef | null, b: KeyRef) => a !== null && a.root === b.root && a.minor === b.minor
 
@@ -58,12 +53,17 @@ function SuggestionRow({ s, onAdd }: { s: Suggestion; onAdd: () => void }) {
 export default function BuilderPage() {
   const router = useRouter()
   const [saved, setSaved] = useLocalState<Saved>(BUILDER_KEY, EMPTY, parseSaved)
+  const [plan, setPlan] = useLocalState<PlanState>(PLAN_KEY, PLAN_EMPTY, parsePlan)
   const [sevenths, setSevenths] = useState(false)
   const [input, setInput] = useState("")
   const [error, setError] = useState("")
   const [note, setNote] = useState("")
+  const [lastKey, setLastKey] = useRememberedKey({ root: 7, minor: false })
+  const [swaps, setSwaps] = useState<Swaps>({})
+  const [now, setNow] = useState<number | null>(null)
 
   const { chords } = saved
+  const style = getStyle(plan.style)
   const candidates = chords.length ? keyCandidates(chords) : []
   const key: KeyRef | null = saved.key ?? candidates[0] ?? null
   const flats = key ? prefersFlats(key) : false
@@ -71,6 +71,9 @@ export default function BuilderPage() {
   const suggestions = key ? suggestNext(chords, key, sevenths) : []
   const loop = key ? loopBack(chords) : null
   const inKey = key ? keyChordList(key, sevenths) : []
+  const played = applySwaps(chords, swaps)
+  const genreBpm = getGenre(style.genre)?.progressions[0]?.bpm
+  const defaultBpm = genreBpm ? Math.round((genreBpm[0] + genreBpm[1]) / 2) : 90
 
   function setChords(next: string[], msg: string) {
     setSaved(s => ({ ...s, chords: next.slice(0, MAX) }))
@@ -99,9 +102,7 @@ export default function BuilderPage() {
 
   function toChart() {
     if (!key) return
-    const lines: string[] = ["Verse"]
-    for (let i = 0; i < chords.length; i += 4) lines.push("| " + chords.slice(i, i + 4).join(" | ") + " |")
-    const chart = makeChart({ title: "My progression", key: keyLabel(key), genre: "general", body: lines.join("\n") })
+    const chart = makeChart({ title: "My progression", key: keyLabel(key), genre: style.genre, body: chordsToChartBody(played) })
     prependChart(chart)
     router.push(`/jam/chart?id=${chart.id}`)
   }
@@ -114,9 +115,49 @@ export default function BuilderPage() {
       ? `Capo ${bestCapo.capo} turns these into ${bestCapo.shapes.join(" ")}, which are easier shapes.`
       : null
 
+  function loadIdea(next: string[], k: KeyRef) {
+    setSaved({ chords: next.slice(0, MAX), key: k })
+    setPlan(p => ({ ...p, mode: "steps" }))
+    setNote(`Loaded ${next.length} chords into the builder.`)
+    setError("")
+  }
+
+  const styleBlock = (
+    <Panel title="Style">
+      <div className="flex flex-wrap gap-1.5" role="group" aria-label="Style of music">
+        {STYLES.map(st => (
+          <Chip key={st.id} active={plan.style === st.id} onClick={() => setPlan(p => ({ ...p, style: st.id }))} className="text-sm">
+            {st.label}
+          </Chip>
+        ))}
+      </div>
+      <p className="mt-3 text-sm text-white/80">{style.blurb}</p>
+    </Panel>
+  )
+
+  const modeBlock = (
+    <div className="grid grid-cols-2 gap-2" role="group" aria-label="How do you want to build?">
+      <Chip active={plan.mode === "steps"} onClick={() => setPlan(p => ({ ...p, mode: "steps" }))}>Step by step</Chip>
+      <Chip active={plan.mode === "plan"} onClick={() => setPlan(p => ({ ...p, mode: "plan" }))}>Plan a part</Chip>
+    </div>
+  )
+
+  if (plan.mode === "plan") {
+    return (
+      <div className="space-y-4">
+        {modeBlock}
+        {styleBlock}
+        <PartPlanner plan={plan} setPlan={setPlan} onUse={loadIdea} />
+        <p className="sr-only" role="status" aria-live="polite">{note}</p>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-4">
+      {modeBlock}
       <Hint>Add a few chords. We guess the key and suggest what to play next, with the reason for each.</Hint>
+      {styleBlock}
 
       <Panel title="Your progression">
         {chords.length === 0 ? (
@@ -179,7 +220,7 @@ export default function BuilderPage() {
           </div>
           <p className="mt-4 text-sm text-purple-200">Or choose a key and we will suggest where to begin.</p>
           <div className="mt-3">
-            <KeyPicker value={saved.key ?? { root: 7, minor: false }} onChange={k => setSaved(s => ({ ...s, key: k }))} label="Key" />
+            <KeyPicker value={saved.key ?? lastKey} onChange={k => { setLastKey(k); setSaved(s => ({ ...s, key: k })) }} label="Key" />
           </div>
         </Panel>
       )}
@@ -262,14 +303,30 @@ export default function BuilderPage() {
       {chords.length >= 2 && key && (
         <>
           {capoHint && <p className="rounded-xl border border-amber-400/40 bg-amber-400/10 p-3 text-sm text-amber-100">{capoHint}</p>}
-          <BigButton className="w-full" onClick={toChart}>Save to Chart</BigButton>
+          <Panel title="Play it and try changes">
+            <div className="flex flex-wrap gap-2" aria-label="Your chords, playing now">
+              {played.map((c, i) => (
+                <ChordTap
+                  key={i}
+                  chord={c}
+                  className={`min-h-11 rounded-xl border px-3 text-lg font-extrabold ${
+                    now === i ? "border-amber-400 bg-amber-400 text-slate-950" : c !== chords[i] ? "border-amber-400/70 text-amber-300" : "border-white/20 bg-white/10 text-white"
+                  }`}
+                />
+              ))}
+            </div>
+            <PlayBar className="mt-3" chords={played} original={chords} defaultBpm={defaultBpm} onStep={setNow} />
+            <ChordLab written={chords} swaps={swaps} setSwaps={u => setSwaps(u)} genre={style.genre} keyRef={key} title="My progression" />
+          </Panel>
+          <BigButton className="w-full" onClick={toChart}>{Object.keys(swaps).length ? "Save my version to Chart" : "Save to Chart"}</BigButton>
           <BandGuidance
-            genre="general"
+            genre={style.genre}
             title="Who plays what over this"
-            progressions={[{ label: "Your progression", chords, key }]}
+            progressions={[{ label: "Your progression", chords: played, key }]}
           />
         </>
       )}
+      <NextSteps items={[{ href: "/jam/progressions", label: "Ideas" }, { href: "/jam/scales", label: "Scales" }, { href: "/jam/circle", label: "Circle of 5ths" }]} />
     </div>
   )
 }

@@ -201,7 +201,7 @@ function MotifsTab() {
 
       <Card title="The 3-Step Motif Technique">
         <ol className="space-y-3 text-sm text-purple-200">
-          <li><span className="text-white font-semibold">Step 1 — State it:</span> Play your motif clearly. Let the listener hear it and recognise it.</li>
+          <li><span className="text-white font-semibold">Step 1 — State it:</span> Play your motif clearly. Let the listener hear it and recognize it.</li>
           <li><span className="text-white font-semibold">Step 2 — Vary it:</span> Repeat it higher, lower, faster, slower, with bends, with rhythm changes.</li>
           <li><span className="text-white font-semibold">Step 3 — Resolve it:</span> Bring the motif home — play it one final time and land on the root. Full circle.</li>
         </ol>

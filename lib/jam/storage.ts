@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react"
+import type { KeyRef } from "./theory"
 
 /** Turns whatever was saved into a safe value, or null if it is the wrong shape. */
 export type Parser<T> = (raw: unknown) => T | null
@@ -138,6 +139,20 @@ export const parseSetlist: Parser<SetlistItem[]> = raw => {
   }))
 }
 
+export const parseKeyRef: Parser<KeyRef> = raw => {
+  if (!isObj(raw) || typeof raw.root !== "number" || !Number.isInteger(raw.root) || raw.root < 0 || raw.root > 11) return null
+  const k: KeyRef = { root: raw.root, minor: raw.minor === true }
+  if (typeof raw.flats === "boolean") k.flats = raw.flats
+  return k
+}
+
+/** The key the player picked last, shared across Jam screens. */
+export function useRememberedKey(fallback: KeyRef, allowMinor = true): [KeyRef, (k: KeyRef) => void] {
+  const [stored, setStored] = useLocalState<KeyRef>(LAST_KEY, fallback, parseKeyRef)
+  const key = useMemo(() => (allowMinor || !stored.minor ? stored : { ...stored, minor: false }), [stored, allowMinor])
+  return [key, setStored]
+}
+
 export const parseFont: Parser<number> = raw => (typeof raw === "number" && raw >= 12 && raw <= 64 ? raw : null)
 
 export function makeChart(fields: Omit<SavedChart, "id" | "updated">): SavedChart {
@@ -152,11 +167,11 @@ export function useWakeLock(active: boolean) {
   useEffect(() => {
     if (!active || typeof navigator === "undefined" || !("wakeLock" in navigator)) return
     let lock: WakeLockSentinel | null = null
-    let cancelled = false
+    let canceled = false
     const request = async () => {
       try {
         const l = await navigator.wakeLock.request("screen")
-        if (cancelled) l.release().catch(() => {})
+        if (canceled) l.release().catch(() => {})
         else lock = l
       } catch {
         // wake lock can be refused when the tab is hidden or battery is low
@@ -166,7 +181,7 @@ export function useWakeLock(active: boolean) {
     const onVis = () => document.visibilityState === "visible" && request()
     document.addEventListener("visibilitychange", onVis)
     return () => {
-      cancelled = true
+      canceled = true
       document.removeEventListener("visibilitychange", onVis)
       lock?.release().catch(() => {})
     }

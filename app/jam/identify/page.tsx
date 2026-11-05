@@ -171,6 +171,39 @@ export default function IdentifyPage() {
 
   return (
     <div className="space-y-5">
+      <div
+        role="status"
+        aria-live="polite"
+        className="sticky top-[4.25rem] z-10 rounded-2xl border border-amber-400/70 bg-slate-900/95 px-4 py-3 shadow-xl backdrop-blur"
+      >
+        {best ? (
+          <>
+            <p className="flex flex-wrap items-baseline gap-x-3">
+              <span className="sr-only">This chord is </span>
+              <span className="text-4xl font-extrabold leading-tight text-amber-300">{best.name}</span>
+              <span className="text-sm text-white/85">
+                {best.long}
+                {best.slash && `, with ${best.bassName} in the bass`}
+              </span>
+            </p>
+          </>
+        ) : pcs.length === 0 ? (
+          <p className="text-base text-white/85">
+            {mode === "board" ? "Tap the fretboard to place notes. The chord name shows up here." : "Type at least two notes. The chord name shows up here."}
+          </p>
+        ) : pcs.length === 1 ? (
+          <p className="text-base text-white/85">One note so far ({noteName(pcs[0], false)}). Add another to name the chord.</p>
+        ) : (
+          <>
+            <p className="text-xl font-bold text-white">No standard name for these notes</p>
+            <p className="text-sm text-white/80">
+              {pcs.map(p => noteName(p, false)).join(" ")}
+              {pcs.length <= 2 ? " could be part of a bigger chord. See below." : " do not spell a common chord."}
+            </p>
+          </>
+        )}
+      </div>
+
       <Panel title="How do you want to enter notes?">
         <div className="flex gap-2">
           <Chip className="flex-1" active={mode === "board"} onClick={() => setMode("board")}>Tap the fretboard</Chip>
@@ -263,39 +296,6 @@ export default function IdentifyPage() {
           )}
         </Panel>
       )}
-
-      <div
-        role="status"
-        aria-live="polite"
-        className="sticky bottom-3 z-10 rounded-2xl border border-amber-400/70 bg-slate-900/95 px-4 py-3 shadow-xl backdrop-blur"
-      >
-        {best ? (
-          <>
-            <p className="flex flex-wrap items-baseline gap-x-3">
-              <span className="sr-only">This chord is </span>
-              <span className="text-4xl font-extrabold leading-tight text-amber-300">{best.name}</span>
-              <span className="text-sm text-white/85">
-                {best.long}
-                {best.slash && `, with ${best.bassName} in the bass`}
-              </span>
-            </p>
-          </>
-        ) : pcs.length === 0 ? (
-          <p className="text-base text-white/85">
-            {mode === "board" ? "Tap the fretboard to place notes. The chord name shows up here." : "Type at least two notes. The chord name shows up here."}
-          </p>
-        ) : pcs.length === 1 ? (
-          <p className="text-base text-white/85">One note so far ({noteName(pcs[0], false)}). Add another to name the chord.</p>
-        ) : (
-          <>
-            <p className="text-xl font-bold text-white">No standard name for these notes</p>
-            <p className="text-sm text-white/80">
-              {pcs.map(p => noteName(p, false)).join(" ")}
-              {pcs.length <= 2 ? " could be part of a bigger chord. See below." : " do not spell a common chord."}
-            </p>
-          </>
-        )}
-      </div>
 
       {best && (
         <Panel title="Notes in this chord">

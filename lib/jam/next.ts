@@ -5,12 +5,12 @@ import {
   type KeyRef,
 } from "./theory"
 
-export type Group = "safe" | "colour" | "surprise"
-type Q = "M" | "m" | "d"
+export type Group = "safe" | "color" | "surprise"
+export type Q = "M" | "m" | "d"
 
 export const GROUPS: { id: Group; label: string; blurb: string }[] = [
   { id: "safe", label: "Safe and common", blurb: "Moves you will hear in thousands of songs." },
-  { id: "colour", label: "Adds colour", blurb: "Still natural, but with a different mood." },
+  { id: "color", label: "Adds color", blurb: "Still natural, but with a different mood." },
   { id: "surprise", label: "A surprise", blurb: "Bolder moves. Use them once, then come home." },
 ]
 
@@ -34,7 +34,7 @@ function labelOf(off: number, q: Q, minorKey: boolean): string {
   return q === "d" ? lower + "°" : lower
 }
 
-type Rule = [to: string, group: Group, why: string]
+export type Rule = [to: string, group: Group, why: string]
 
 const MAJOR_RULES: Record<string, Rule[]> = {
   I: [
@@ -42,44 +42,44 @@ const MAJOR_RULES: Record<string, Rule[]> = {
     ["V", "safe", "Builds tension that wants to fall back to I."],
     ["vi", "safe", "The relative minor. Same notes, a softer mood."],
     ["ii", "safe", "Sets up V, so it feels like you are heading somewhere."],
-    ["iii", "colour", "Floaty and gentle. It usually walks down to IV or vi."],
-    ["bVII", "colour", "A rock chord borrowed from the minor key. Big and open."],
-    ["iv", "colour", "The minor IV, borrowed. Wistful, like a cloud passing over."],
+    ["iii", "color", "Floaty and gentle. It usually walks down to IV or vi."],
+    ["bVII", "color", "A rock chord borrowed from the minor key. Big and open."],
+    ["iv", "color", "The minor IV, borrowed. Wistful, like a cloud passing over."],
     ["bVI", "surprise", "Borrowed and cinematic. Lifts the song in a big way."],
     ["bIII", "surprise", "Borrowed. A bluesy, rock sound."],
-    ["VI", "surprise", "Major VI is a pull towards ii. Jazzy and bright."],
+    ["VI", "surprise", "Major VI is a pull toward ii. Jazzy and bright."],
   ],
   ii: [
     ["V", "safe", "The classic setup. ii to V to I is everywhere."],
     ["IV", "safe", "Both are \"away from home\" chords, so they swap easily."],
     ["I", "safe", "Lands home early, softer than going through V."],
-    ["vi", "colour", "Stays in minor land for a moment longer."],
-    ["iii", "colour", "A gentle step up. Leads towards IV."],
+    ["vi", "color", "Stays in minor land for a moment longer."],
+    ["iii", "color", "A gentle step up. Leads toward IV."],
     ["bII", "surprise", "A half step above home. Dark, flamenco-like tension."],
   ],
   iii: [
     ["vi", "safe", "Falls a fifth, which sounds natural."],
     ["IV", "safe", "A half step up. A very popular pairing."],
-    ["ii", "colour", "Starts a stepwise walk down to I."],
-    ["V", "colour", "Skips ahead to the tension chord."],
+    ["ii", "color", "Starts a stepwise walk down to I."],
+    ["V", "color", "Skips ahead to the tension chord."],
     ["III", "surprise", "Major III points hard at vi. Dramatic."],
   ],
   IV: [
     ["I", "safe", "The \"amen\" ending. Gentle and settled."],
     ["V", "safe", "The classic step up. Tension, then release."],
     ["vi", "safe", "Slides into the relative minor."],
-    ["ii", "colour", "Stays in the \"away from home\" area."],
-    ["iv", "colour", "Major IV turns minor. A famous sad turn."],
-    ["bVII", "colour", "Mixes in a bluesy rock chord."],
-    ["iii", "colour", "Steps down to a soft minor."],
+    ["ii", "color", "Stays in the \"away from home\" area."],
+    ["iv", "color", "Major IV turns minor. A famous sad turn."],
+    ["bVII", "color", "Mixes in a bluesy rock chord."],
+    ["iii", "color", "Steps down to a soft minor."],
     ["#iv°", "surprise", "A tense diminished chord that leads up to V."],
   ],
   V: [
     ["I", "safe", "The big release. V wants to go home."],
     ["vi", "safe", "A \"deceptive\" ending. You expect I, and get a minor."],
-    ["IV", "colour", "Goes back instead of home. Common in rock."],
-    ["ii", "colour", "Turns the corner and loops the verse."],
-    ["iii", "colour", "A gentle detour."],
+    ["IV", "color", "Goes back instead of home. Common in rock."],
+    ["ii", "color", "Turns the corner and loops the verse."],
+    ["iii", "color", "A gentle detour."],
     ["bVI", "surprise", "Borrowed chord instead of the expected home."],
   ],
   vi: [
@@ -87,51 +87,51 @@ const MAJOR_RULES: Record<string, Rule[]> = {
     ["V", "safe", "Climbs to tension."],
     ["ii", "safe", "Keeps the circle of fifths going."],
     ["I", "safe", "Goes back to the major home."],
-    ["iii", "colour", "Stays in minor and floats."],
+    ["iii", "color", "Stays in minor and floats."],
     ["III", "surprise", "Major III points back at vi. Dramatic."],
     ["bVII", "surprise", "Borrowed. Opens the sound up."],
   ],
   "vii°": [
     ["I", "safe", "Leading-tone chord. It pulls straight home."],
-    ["iii", "colour", "Resolves up a third."],
-    ["vi", "colour", "Steps down into the relative minor."],
+    ["iii", "color", "Resolves up a third."],
+    ["vi", "color", "Steps down into the relative minor."],
   ],
   bVII: [
     ["IV", "safe", "I, bVII, IV is a rock classic."],
     ["I", "safe", "Falls home with a swagger."],
-    ["V", "colour", "Climbs back to normal tension."],
-    ["vi", "colour", "Settles into minor."],
+    ["V", "color", "Climbs back to normal tension."],
+    ["vi", "color", "Settles into minor."],
     ["bVI", "surprise", "Walks further down the borrowed chords."],
   ],
   iv: [
     ["I", "safe", "Sad turn, then a bright resolve."],
-    ["V", "colour", "Goes to tension from a different side."],
-    ["bVII", "colour", "Stays in the borrowed world."],
-    ["vi", "colour", "Settles into the relative minor."],
-    ["bVI", "surprise", "Moves deeper into minor colours."],
+    ["V", "color", "Goes to tension from a different side."],
+    ["bVII", "color", "Stays in the borrowed world."],
+    ["vi", "color", "Settles into the relative minor."],
+    ["bVI", "surprise", "Moves deeper into minor colors."],
   ],
   bVI: [
     ["bVII", "safe", "The rock staircase: bVI, bVII, I."],
-    ["V", "colour", "Climbs into tension."],
-    ["I", "colour", "Direct to home with some drama."],
-    ["iv", "colour", "More minor colour."],
+    ["V", "color", "Climbs into tension."],
+    ["I", "color", "Direct to home with some drama."],
+    ["iv", "color", "More minor color."],
   ],
   bIII: [
     ["IV", "safe", "Steps up. Works in many rock songs."],
-    ["bVII", "colour", "Goes the borrowed route."],
-    ["I", "colour", "Returns home."],
+    ["bVII", "color", "Goes the borrowed route."],
+    ["I", "color", "Returns home."],
   ],
   II: [
     ["V", "safe", "Major II is the dominant of V. It leads in strongly."],
-    ["IV", "colour", "Skips the usual V."],
+    ["IV", "color", "Skips the usual V."],
   ],
   III: [
     ["vi", "safe", "Major III is the dominant of vi. Leads in strongly."],
-    ["IV", "colour", "Resolves up instead."],
+    ["IV", "color", "Resolves up instead."],
   ],
   VI: [
     ["ii", "safe", "Major VI is the dominant of ii. Leads in strongly."],
-    ["V", "colour", "Another way to climb."],
+    ["V", "color", "Another way to climb."],
   ],
 }
 
@@ -141,67 +141,67 @@ const MINOR_RULES: Record<string, Rule[]> = {
     ["VII", "safe", "A rock staircase back up to home."],
     ["iv", "safe", "Away from home. The most natural minor move."],
     ["III", "safe", "The relative major. A bright lift."],
-    ["v", "colour", "Minor v keeps the sound dark."],
-    ["V", "colour", "Major V pulls hard to i. Strong, classical finish."],
-    ["IV", "colour", "A major IV in a minor key. The Dorian sound."],
-    ["ii°", "colour", "A diminished chord that leads to v or V."],
-    ["bII", "surprise", "A half step up. Dark, flamenco-like colour."],
+    ["v", "color", "Minor v keeps the sound dark."],
+    ["V", "color", "Major V pulls hard to i. Strong, classical finish."],
+    ["IV", "color", "A major IV in a minor key. The Dorian sound."],
+    ["ii°", "color", "A diminished chord that leads to v or V."],
+    ["bII", "surprise", "A half step up. Dark, flamenco-like color."],
   ],
   III: [
-    ["VII", "safe", "A staircase back towards home."],
+    ["VII", "safe", "A staircase back toward home."],
     ["VI", "safe", "Steps down. Warm and flowing."],
     ["iv", "safe", "Moves into the away chord."],
-    ["i", "colour", "Returns home in minor."],
-    ["v", "colour", "A relaxed alternative."],
+    ["i", "color", "Returns home in minor."],
+    ["v", "color", "A relaxed alternative."],
   ],
   iv: [
     ["i", "safe", "Back home. A classic minor feel."],
     ["VII", "safe", "Pushes the sound upward."],
-    ["V", "colour", "Climbs to the strong chord, then home."],
-    ["VI", "colour", "Steps up to the major chord."],
-    ["III", "colour", "Brightens into the relative major."],
+    ["V", "color", "Climbs to the strong chord, then home."],
+    ["VI", "color", "Steps up to the major chord."],
+    ["III", "color", "Brightens into the relative major."],
     ["bII", "surprise", "A dramatic, Spanish-style approach."],
   ],
   v: [
     ["i", "safe", "Soft landing home."],
     ["VI", "safe", "Steps up. Smooth."],
-    ["iv", "colour", "Steps back."],
-    ["III", "colour", "Lifts into the relative major."],
+    ["iv", "color", "Steps back."],
+    ["III", "color", "Lifts into the relative major."],
   ],
   V: [
     ["i", "safe", "The big release home. Strongest minor ending."],
     ["VI", "safe", "A \"deceptive\" ending. You expect i, and get VI."],
-    ["iv", "colour", "Goes back instead of home."],
+    ["iv", "color", "Goes back instead of home."],
     ["III", "surprise", "Skips to the relative major."],
   ],
   VI: [
     ["VII", "safe", "VI, VII, i is a rock and pop staircase."],
     ["III", "safe", "Moves up to the relative major."],
     ["iv", "safe", "Falls into the away chord."],
-    ["i", "colour", "Goes home with a gentle fall."],
-    ["V", "colour", "Climbs to tension for a strong finish."],
-    ["v", "colour", "Stays soft."],
+    ["i", "color", "Goes home with a gentle fall."],
+    ["V", "color", "Climbs to tension for a strong finish."],
+    ["v", "color", "Stays soft."],
   ],
   VII: [
     ["i", "safe", "Falls home. A very common ending."],
     ["III", "safe", "Lifts to the relative major."],
     ["VI", "safe", "Walks down to a warm major chord."],
-    ["iv", "colour", "A different way to leave."],
-    ["V", "colour", "Climbs to tension."],
+    ["iv", "color", "A different way to leave."],
+    ["V", "color", "Climbs to tension."],
   ],
   "ii°": [
     ["V", "safe", "ii° to V is the minor setup chord."],
-    ["v", "colour", "Same movement, softer."],
-    ["i", "colour", "Resolves home."],
+    ["v", "color", "Same movement, softer."],
+    ["i", "color", "Resolves home."],
   ],
   IV: [
     ["i", "safe", "The Dorian sound resolves home."],
     ["VII", "safe", "Keeps the modal sound going."],
-    ["v", "colour", "Stays in the minor pull."],
+    ["v", "color", "Stays in the minor pull."],
   ],
   bII: [
     ["i", "safe", "Falls a half step home. Very dramatic."],
-    ["V", "colour", "Detours to tension."],
+    ["V", "color", "Detours to tension."],
   ],
 }
 
@@ -209,27 +209,27 @@ const MAJOR_START: Rule[] = [
   ["I", "safe", "Home. The most natural place to begin."],
   ["vi", "safe", "Starts in the relative minor for a mood."],
   ["IV", "safe", "Starts away from home. Open and hopeful."],
-  ["ii", "colour", "A gentle start that leads towards V."],
-  ["V", "colour", "Begins with tension."],
+  ["ii", "color", "A gentle start that leads toward V."],
+  ["V", "color", "Begins with tension."],
 ]
 const MINOR_START: Rule[] = [
   ["i", "safe", "Home. The most natural place to begin."],
   ["VI", "safe", "Starts warm and dramatic."],
   ["iv", "safe", "Starts away from home."],
-  ["III", "colour", "Starts in the relative major."],
-  ["V", "colour", "Begins with tension."],
+  ["III", "color", "Starts in the relative major."],
+  ["V", "color", "Begins with tension."],
 ]
 const MAJOR_FALLBACK: Rule[] = [
   ["I", "safe", "Home settles any odd chord."],
   ["V", "safe", "Tension that points home."],
   ["IV", "safe", "A friendly step away."],
-  ["vi", "colour", "The relative minor."],
+  ["vi", "color", "The relative minor."],
 ]
 const MINOR_FALLBACK: Rule[] = [
   ["i", "safe", "Home settles any odd chord."],
   ["V", "safe", "Tension that points home."],
   ["iv", "safe", "A friendly step away."],
-  ["VI", "colour", "A warm major chord."],
+  ["VI", "color", "A warm major chord."],
 ]
 
 // ─── Slots ────────────────────────────────────────────────────────────────────
@@ -267,10 +267,28 @@ function chordFor(label: string, key: KeyRef, sevenths: boolean): string | null 
   return name + SEVENTH[slot.q]
 }
 
-function isDominantLabel(label: string, minorKey: boolean): boolean {
+export function isDominantLabel(label: string, minorKey: boolean): boolean {
   if (label === "V") return true
   if (label === "VII" && minorKey) return true
   return label === "II" || label === "III" || label === "VI" ? !minorKey : false
+}
+
+export function resolveLabel(label: string, key: KeyRef): { off: number; q: Q } | null {
+  return LOOKUP[key.minor ? "minor" : "major"].get(label) ?? null
+}
+
+export function ruleTargets(from: string, key: KeyRef): Rule[] {
+  return (key.minor ? MINOR_RULES : MAJOR_RULES)[from] ?? []
+}
+
+export function ruleSources(key: KeyRef): string[] {
+  return Object.keys(key.minor ? MINOR_RULES : MAJOR_RULES)
+}
+
+// 3 = safe move, 2 = color, 1 = surprise, 0 = not in the rule table
+export function moveScore(from: string, to: string, key: KeyRef): number {
+  const hit = ruleTargets(from, key).find(r => r[0] === to)
+  return hit ? (hit[1] === "safe" ? 3 : hit[1] === "color" ? 2 : 1) : 0
 }
 
 export function isOpenShape(sym: string): boolean | null {
@@ -411,6 +429,6 @@ export const parseSaved: Parser<Saved> = raw => {
   const r = raw as Record<string, unknown>
   const chords = Array.isArray(r.chords) ? r.chords.filter((c): c is string => typeof c === "string" && parseChord(c) !== null).slice(0, MAX) : []
   const k = r.key as Record<string, unknown> | null
-  const key = k && typeof k.root === "number" && k.root >= 0 && k.root < 12 && typeof k.minor === "boolean" ? { root: Math.floor(k.root), minor: k.minor } : null
+  const key = k && typeof k.root === "number" && k.root >= 0 && k.root < 12 && typeof k.minor === "boolean" ? { root: Math.floor(k.root), minor: k.minor, ...(typeof k.flats === "boolean" ? { flats: k.flats } : {}) } : null
   return { chords, key }
 }

@@ -265,7 +265,7 @@ function StaffClefTab() {
         </div>
         <p className="text-center text-indigo-400 font-bold tracking-widest text-lg mb-1">F · A · C · E</p>
         <p className="text-center text-purple-300 text-sm">
-          The four spaces spell <strong>FACE</strong> — easy to memorise
+          The four spaces spell <strong>FACE</strong> — easy to memorize
         </p>
       </Card>
 
@@ -302,7 +302,7 @@ function StaffClefTab() {
       </Card>
 
       <Callout type="tip">
-        <strong className="text-white">The fast shortcut:</strong> memorise the lines first (EGBDF), then the spaces fall naturally in between.
+        <strong className="text-white">The fast shortcut:</strong> memorize the lines first (EGBDF), then the spaces fall naturally in between.
         Once you know E and G are lines 1 and 2, F between them is obvious. Work outward from there.
       </Callout>
     </div>
@@ -467,7 +467,7 @@ function KeySigsTab() {
       <Card title="Flat Keys — Order of Flats: B E A D G C F">
         <p className="text-purple-200 text-sm mb-4">
           Flats are added in the opposite order. To find the key: the second-to-last flat IS the key name.
-          (One flat = F major — just memorise this one.)
+          (One flat = F major — just memorize this one.)
         </p>
         <div className="space-y-2">
           {flats.map(k => (
@@ -528,7 +528,7 @@ function TimeSigsTab() {
     {
       sig: "3/4", name: "Waltz Time", feel: "3 quarter-note beats per bar",
       count: "1  2  3", use: "Waltzes, ballads, folk — has a lilt or sway",
-      example: "Amazing Grace, Happy Birthday, My Favourite Things",
+      example: "Amazing Grace, Happy Birthday, My Favorite Things",
     },
     {
       sig: "6/8", name: "Compound Time", feel: "6 eighth-note beats (2 strong groups of 3)",
@@ -650,12 +650,12 @@ TAB:        e|──────────────────|
       <Card title="Technique Markings in Standard Notation">
         <div className="space-y-3 text-sm">
           {[
-            { symbol: "⌒ (curved line)", name: "Bend",    desc: "Curved line with arrow above the note. Often labelled '½' (half step) or 'full' (whole step)." },
+            { symbol: "⌒ (curved line)", name: "Bend",    desc: "Curved line with arrow above the note. Often labeled '½' (half step) or 'full' (whole step)." },
             { symbol: "~~ (wavy line)",  name: "Vibrato",  desc: "Wavy line above the note — oscillate pitch rapidly. Width of wave = depth of vibrato." },
             { symbol: "/ (slash)",       name: "Slide up", desc: "Diagonal line rising before the note head — slide into the note from below." },
             { symbol: "\\ (backslash)",  name: "Slide down", desc: "Diagonal line falling after the note head — slide away after striking." },
-            { symbol: "H.O.",            name: "Hammer-on", desc: "Slur mark over ascending notes, sometimes labelled 'H'. Fret without picking." },
-            { symbol: "P.O.",            name: "Pull-off",  desc: "Slur mark over descending notes, sometimes labelled 'P'. Pull string sideways." },
+            { symbol: "H.O.",            name: "Hammer-on", desc: "Slur mark over ascending notes, sometimes labeled 'H'. Fret without picking." },
+            { symbol: "P.O.",            name: "Pull-off",  desc: "Slur mark over descending notes, sometimes labeled 'P'. Pull string sideways." },
             { symbol: "P.M. ─┐",        name: "Palm mute", desc: "P.M. over a bracket — mute with heel of picking hand for the bracketed notes." },
             { symbol: "harm.",           name: "Harmonic",  desc: "Note in diamond shape, or 'harm.' label. Touch string lightly — don't press." },
           ].map(r => (

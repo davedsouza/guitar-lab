@@ -101,7 +101,7 @@ const EXERCISES: Record<Level, Record<FocusArea, Array<{ name: string; descripti
     Chords: [
       { name: "Chord Transitions", category: "chords", description: "G → C → D → Em — 1 min each, focus on clean finger placement and smooth changes" },
       { name: "Open Chord Shapes", category: "chords", description: "Hold each chord for 10 sec, check every string rings clearly before moving on" },
-      { name: "Simple Song Run-Through", category: "repertoire", description: "Play a song you know using the chords you've been practising — aim for no stops" },
+      { name: "Simple Song Run-Through", category: "repertoire", description: "Play a song you know using the chords you've been practicing — aim for no stops" },
     ],
     Scales: [
       { name: "Pentatonic Position 1", category: "scales", description: "A minor pentatonic, low E to high E and back — start at 60bpm, no rushing" },
@@ -114,7 +114,7 @@ const EXERCISES: Record<Level, Record<FocusArea, Array<{ name: string; descripti
       { name: "Simple Chord Song", category: "repertoire", description: "Apply technique in context — play a 2-chord song slowly and cleanly" },
     ],
     Theory: [
-      { name: "Note Names on E String", category: "theory", description: "Memorise frets 1–12 on the low E string — say the note name as you play each fret" },
+      { name: "Note Names on E String", category: "theory", description: "Memorize frets 1–12 on the low E string — say the note name as you play each fret" },
       { name: "Major Scale Formula", category: "theory", description: "W-W-H-W-W-W-H — play a C major scale and feel where the half steps land" },
       { name: "Apply Theory to Song", category: "repertoire", description: "Identify the chords in a song you know — what key is it in?" },
     ],
@@ -125,13 +125,13 @@ const EXERCISES: Record<Level, Record<FocusArea, Array<{ name: string; descripti
     ],
     Rhythm: [
       { name: "Down Strum Groove", category: "rhythm", description: "Quarter note down strums on muted strings at 80bpm — feel the pulse" },
-      { name: "D-DU Strum Pattern", category: "rhythm", description: "Count 1-2-& → D-D-U. Use Em and Am to practise changing while strumming" },
+      { name: "D-DU Strum Pattern", category: "rhythm", description: "Count 1-2-& → D-D-U. Use Em and Am to practice changing while strumming" },
       { name: "Strummed Song", category: "repertoire", description: "Play a full song using your strum pattern — aim for steady tempo throughout" },
     ],
     Repertoire: [
       { name: "Run Current Song", category: "repertoire", description: "Play your current song from start to finish — note any trouble spots" },
       { name: "Drill Trouble Spots", category: "technique", description: "Isolate any bar or transition that broke down and repeat it 10 times slowly" },
-      { name: "Slow + Clean Pass", category: "repertoire", description: "Play the whole song at 75% speed — prioritise clean notes over tempo" },
+      { name: "Slow + Clean Pass", category: "repertoire", description: "Play the whole song at 75% speed — prioritize clean notes over tempo" },
     ],
     "Sight Reading": [
       { name: "Open String Notes", category: "sight-reading", description: "Identify E-A-D-G-B-e on the staff — draw and label them from memory" },
@@ -148,7 +148,7 @@ const EXERCISES: Record<Level, Record<FocusArea, Array<{ name: string; descripti
     Scales: [
       { name: "Pentatonic Positions 1+2", category: "scales", description: "Connect position 1 and 2 without stopping — use a ii-V-I backing track" },
       { name: "Major Scale (2 octaves)", category: "scales", description: "G major across the full neck, multiple positions — 100bpm, in 3rds" },
-      { name: "Improvisation Study", category: "improvisation", description: "Solo over a one-chord vamp (Am) using only scales you practised — listen back" },
+      { name: "Improvisation Study", category: "improvisation", description: "Solo over a one-chord vamp (Am) using only scales you practiced — listen back" },
     ],
     Technique: [
       { name: "Legato Runs", category: "technique", description: "Hammer-on/pull-off sequences on one string — aim for even volume between picked and legato notes" },
@@ -167,7 +167,7 @@ const EXERCISES: Record<Level, Record<FocusArea, Array<{ name: string; descripti
     ],
     Rhythm: [
       { name: "Syncopated Strumming", category: "rhythm", description: "DDUUDU pattern — mute on beat 3. Use Em and A. Aim for 110bpm" },
-      { name: "Funk 16th Notes", category: "rhythm", description: "Muted strings with ghost notes — emphasise the upbeats for that funk feel" },
+      { name: "Funk 16th Notes", category: "rhythm", description: "Muted strings with ghost notes — emphasize the upbeats for that funk feel" },
       { name: "Groove Song", category: "repertoire", description: "Play a full song with your syncopated pattern — record yourself and listen back" },
     ],
     Repertoire: [
@@ -184,11 +184,11 @@ const EXERCISES: Record<Level, Record<FocusArea, Array<{ name: string; descripti
   Advanced: {
     Chords: [
       { name: "Chord Substitutions", category: "chords", description: "Tritone substitutions over a ii-V-I — replace G7 with Db7 and hear the tension" },
-      { name: "Upper Structure Triads", category: "chords", description: "Play a triad a major 2nd above the root over dominant chords — creates 9th/13th colour" },
+      { name: "Upper Structure Triads", category: "chords", description: "Play a triad a major 2nd above the root over dominant chords — creates 9th/13th color" },
       { name: "Chord Melody Arrangement", category: "repertoire", description: "Arrange a jazz standard as a chord melody solo piece — work on one 8-bar section" },
     ],
     Scales: [
-      { name: "All 5 Pentatonic Positions", category: "scales", description: "Connect all 5 positions with no pauses — visualise the whole neck as one shape" },
+      { name: "All 5 Pentatonic Positions", category: "scales", description: "Connect all 5 positions with no pauses — visualize the whole neck as one shape" },
       { name: "Melodic Minor Applications", category: "scales", description: "Use melodic minor over a minor major 7th chord — identify the characteristic #6 and #7" },
       { name: "Improvise over Changes", category: "improvisation", description: "Solo over a full 12-bar blues or rhythm changes, targeting chord tones as they change" },
     ],
@@ -205,7 +205,7 @@ const EXERCISES: Record<Level, Record<FocusArea, Array<{ name: string; descripti
     Improvisation: [
       { name: "Motivic Development", category: "improvisation", description: "Build a 2-minute solo from one 3-note motif — vary it rhythmically and harmonically" },
       { name: "Outside Playing", category: "improvisation", description: "Intentionally play outside the key for 1-2 bars, then resolve back — tension and release" },
-      { name: "Transcription Study", category: "improvisation", description: "Transcribe and analyse 8 bars from a master improviser — identify their device" },
+      { name: "Transcription Study", category: "improvisation", description: "Transcribe and analyze 8 bars from a master improviser — identify their device" },
     ],
     Rhythm: [
       { name: "Odd Time Groove", category: "rhythm", description: "Strum a groove in 7/8 or 5/4 — subdivide as 4+3 or 3+2 to feel it naturally" },
@@ -213,7 +213,7 @@ const EXERCISES: Record<Level, Record<FocusArea, Array<{ name: string; descripti
       { name: "Studio-Quality Take", category: "repertoire", description: "Record a rhythm part to a click track aiming for a usable take — no punch-ins" },
     ],
     Repertoire: [
-      { name: "Concert-Ready Performance", category: "repertoire", description: "Play your piece from memory at performance tempo — visualise the audience" },
+      { name: "Concert-Ready Performance", category: "repertoire", description: "Play your piece from memory at performance tempo — visualize the audience" },
       { name: "Technical Breakdown", category: "technique", description: "Identify the single hardest bar and do 20 focused repetitions with a metronome" },
       { name: "Arrangement Refinement", category: "repertoire", description: "Polish dynamics, phrasing, and expression — the notes are the skeleton, make it breathe" },
     ],
@@ -281,7 +281,7 @@ function WhyRoutineTab() {
       <h2 className="text-xl font-bold text-white mb-4">Why Routine Matters</h2>
 
       <Card>
-        <h3 className="text-lg font-semibold text-purple-300 mb-2">Noodling vs. Practising</h3>
+        <h3 className="text-lg font-semibold text-purple-300 mb-2">Noodling vs. Practicing</h3>
         <p className="text-white/80 text-sm leading-relaxed mb-3">
           Most guitarists pick up their guitar, play what they already know, noodle around for 30 minutes,
           and put it down. That feels good — but it is not practice. It does not make you better.
@@ -313,7 +313,7 @@ function WhyRoutineTab() {
       <Callout type="insight">
         Shorter focused sessions beat long unfocused ones every time. Your brain can only absorb deep
         learning for about 20-30 minutes before diminishing returns set in. When your mind starts
-        wandering, stop — you are no longer practising.
+        wandering, stop — you are no longer practicing.
       </Callout>
 
       <Card>
@@ -352,7 +352,7 @@ function WhyRoutineTab() {
 
       <Callout type="warning">
         Your fingers need sleep too. Muscle memory and motor skills solidify during rest — specifically
-        during sleep. If you practise something new, the neural pathways are still forming overnight.
+        during sleep. If you practice something new, the neural pathways are still forming overnight.
         Playing for 3 hours straight does not give you 9x the benefit of a 20-minute session.
       </Callout>
 
@@ -360,7 +360,7 @@ function WhyRoutineTab() {
         <h3 className="text-lg font-semibold text-purple-300 mb-2">Keep a Practice Journal</h3>
         <p className="text-white/80 text-sm leading-relaxed mb-3">
           The simplest habit that separates improving players from plateaued ones: write down what you
-          practised, at what tempo, and how it felt. Even three lines in a notes app is enough.
+          practiced, at what tempo, and how it felt. Even three lines in a notes app is enough.
         </p>
         <ul className="space-y-1 text-sm text-white/75">
           <li className="flex items-start gap-2"><span className="text-purple-400 mt-0.5">•</span>Date and duration of session</li>
@@ -562,7 +562,7 @@ function WarmUpTab() {
         <h3 className="text-lg font-semibold text-purple-300 mb-1">1. Chromatic Exercise (Spider Walk)</h3>
         <p className="text-white/70 text-sm mb-3">
           One finger per fret, in order, ascending and descending on every string. The most fundamental
-          warm-up for finger independence and synchronisation between picking hand and fretting hand.
+          warm-up for finger independence and synchronization between picking hand and fretting hand.
         </p>
         <TabNotation lines={[
           "e|--1-2-3-4--|",
@@ -721,8 +721,8 @@ const EXERCISE_LIBRARY: ExerciseGroup[] = [
       },
       {
         name: "Chord Quality Comparison",
-        description: "Play the same root note as major, minor, dominant 7th, and major 7th chords back to back. Listen to the colour of each.",
-        tip: "Train your ear to recognise these sounds in isolation before you hear them in music.",
+        description: "Play the same root note as major, minor, dominant 7th, and major 7th chords back to back. Listen to the color of each.",
+        tip: "Train your ear to recognize these sounds in isolation before you hear them in music.",
       },
     ],
   },
@@ -748,7 +748,7 @@ const EXERCISE_LIBRARY: ExerciseGroup[] = [
       {
         name: "Connecting Positions",
         description: "Play position 1 → shift to position 2 → shift to position 3 without stopping. Use a slow backing track.",
-        tip: "The shift should be invisible to the listener. Visualise the next position before you arrive at it.",
+        tip: "The shift should be invisible to the listener. Visualize the next position before you arrive at it.",
       },
     ],
   },
@@ -839,7 +839,7 @@ function ExerciseLibraryTab() {
     <div>
       <h2 className="text-xl font-bold text-white mb-2">Exercise Library</h2>
       <p className="text-white/60 text-sm mb-6">
-        A curated library of drills organised by category. Expand a category to see individual
+        A curated library of drills organized by category. Expand a category to see individual
         exercises with full descriptions and tips.
       </p>
 
@@ -919,7 +919,7 @@ const WEEKLY_PLANS: WeeklyPlan[] = [
     color: "border-purple-500 bg-purple-500/10",
     days: [
       { day: "Monday", focus: "Technique Focus", details: "Warm-up (7 min) → Metronome drills: speed build a lick from 80% to max (20 min) → Sweep picking or economy picking patterns (18 min)" },
-      { day: "Tuesday", focus: "Theory + Composition", details: "Warm-up (7 min) → Analyse a song or mode in depth (15 min) → Write/record a short 8-16 bar original idea (23 min)" },
+      { day: "Tuesday", focus: "Theory + Composition", details: "Warm-up (7 min) → Analyze a song or mode in depth (15 min) → Write/record a short 8-16 bar original idea (23 min)" },
       { day: "Wednesday", focus: "Scales + Modes", details: "Warm-up (7 min) → All 5 pentatonic positions connected (15 min) → Modal playing: establish Dorian or Lydian over a drone (23 min)" },
       { day: "Thursday", focus: "Repertoire + Song Learning", details: "Warm-up (7 min) → Performance run-through of current piece (15 min) → Deep work on a new song — 2 sections (23 min)" },
       { day: "Friday", focus: "Jam / Record / Free Play", details: "Warm-up (7 min) → Record a full take of something — no punch-ins, performance mindset (20 min) → Free improvisation over a backing track (18 min)" },
@@ -1001,7 +1001,7 @@ function WeeklyPlansTab() {
         </div>
         <Callout type="insight">
           Guitarists who follow the "One Thing" method for a full year (12 focused monthly skills) make
-          more measurable progress than players who practise randomly for 3+ years. Focused
+          more measurable progress than players who practice randomly for 3+ years. Focused
           improvement compounds — each skill you master makes learning the next one easier.
         </Callout>
       </div>

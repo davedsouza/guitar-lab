@@ -4,7 +4,7 @@ import { Suspense, useState } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { ChordTap } from "@/components/jam/ChordSheet"
-import { Chip, Panel } from "@/components/jam/ui"
+import { Chip, Panel, NextSteps } from "@/components/jam/ui"
 import {
   MAJOR_PROGRESSIONS, MINOR_PROGRESSIONS, accidentals, chordsFor, circleLabel, keyAt, posOfKey, roleAt, signature,
   type Role,
@@ -192,6 +192,7 @@ function CircleInner() {
           <li>Straight across from a key (six steps) is the most distant sound.</li>
         </ul>
       </Panel>
+      <NextSteps items={[{ href: "/jam/progressions", label: "Ideas" }, { href: "/jam/scales", label: "Scales" }, { href: "/jam/builder", label: "Song Builder" }]} />
     </div>
   )
 }

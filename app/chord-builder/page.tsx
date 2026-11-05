@@ -50,7 +50,7 @@ const CHORD_SCALE_MAP: Record<string, { name: string; description: string; feel:
     { name: "Pentatonic Minor", description: "Use for brief passing phrases over diminished chords", feel: "Edgy blues" },
   ],
   "Augmented": [
-    { name: "Major", description: "Augmented appears as a chromatic colour in major contexts", feel: "Mysterious" },
+    { name: "Major", description: "Augmented appears as a chromatic color in major contexts", feel: "Mysterious" },
     { name: "Pentatonic Major", description: "Avoids the tension tones — smooth approach", feel: "Open & floating" },
   ],
   "Sus4": [

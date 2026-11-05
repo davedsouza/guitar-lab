@@ -179,7 +179,7 @@ const TROUBLE_ITEMS = [
       "The F chord is the most notorious because it requires maximum barre pressure AND precise finger placement.",
       "Start by barring only strings 1 and 2 at fret 1. Get those clean, then add string 3, then strings 4–6.",
       "Try playing just the top four strings of F (strings 1–4) at first — it sounds great and is much more manageable.",
-      "Practise the open E major shape with ring–pinky–middle, then slide it up one fret and add the barre separately.",
+      "Practice the open E major shape with ring–pinky–middle, then slide it up one fret and add the barre separately.",
     ],
   },
   {
@@ -728,7 +728,7 @@ export default function BarreChordsPage() {
               </Callout>
 
               <Callout type="tip">
-                A cheap and effective trick: practise barre chords on an acoustic guitar. Acoustics usually have
+                A cheap and effective trick: practice barre chords on an acoustic guitar. Acoustics usually have
                 higher action and need more hand strength than electrics. If you get clean barre chords on an
                 acoustic, an electric will feel effortless by comparison.
               </Callout>
@@ -784,7 +784,7 @@ export default function BarreChordsPage() {
                         "Alternate: F major (barre) → C major (open) → F → C. Aim for 60 BPM, 4 beats per chord.",
                         "Add G major (E-shape, fret 3) into the rotation: F → C → G → C.",
                         "Try the I–IV–V in F: F → Bb (A-shape fret 1) → C → F.",
-                        "Practise the sliding drill: F → F# → G → G# ... to fret 12.",
+                        "Practice the sliding drill: F → F# → G → G# ... to fret 12.",
                       ],
                     },
                     {
@@ -793,9 +793,9 @@ export default function BarreChordsPage() {
                       color: "border-green-500",
                       tasks: [
                         "Learn Bm (E-shape minor, fret 7 OR A-shape minor, fret 2).",
-                        "Practise I–V–vi–IV in G: G → D → Em (open) → C.",
+                        "Practice I–V–vi–IV in G: G → D → Em (open) → C.",
                         "Now try it with barre chords only: G (E-shape fret 3) → D (A-shape fret 5) → Bm → C.",
-                        "Practise F#m (E-shape minor, fret 2) — common in songs in D and A.",
+                        "Practice F#m (E-shape minor, fret 2) — common in songs in D and A.",
                       ],
                     },
                     {
@@ -891,7 +891,7 @@ export default function BarreChordsPage() {
                       title: "Wish You Were Here — Pink Floyd",
                       difficulty: "Beginner–Intermediate",
                       chords: "C, D, Am, G — Am and Dm as A-shape minors",
-                      notes: "The intro is fingerpicked in open position, but the chord progression uses Am and Dm naturally. Try substituting the A-shape barre versions to practise transitions.",
+                      notes: "The intro is fingerpicked in open position, but the chord progression uses Am and Dm naturally. Try substituting the A-shape barre versions to practice transitions.",
                       tab: `  Am (A-shape barre, fret 5)   Dm (A-shape barre, fret 5... wait:)
   Note: Dm root = fret 5 on A string
   e |--5--|                      e |--5--|

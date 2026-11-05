@@ -341,7 +341,7 @@ function PatternsTab() {
     <div>
       <h2 className="text-2xl font-bold text-white mb-2">Classic Funk Patterns</h2>
       <p className="text-purple-200 mb-6">
-        Five iconic patterns from the funk canon. Learn each one, then analyse the rhythmic logic behind it.
+        Five iconic patterns from the funk canon. Learn each one, then analyze the rhythmic logic behind it.
       </p>
 
       <Card title="Pattern 1 — The James Brown Stab (E9 position)">
@@ -513,7 +513,7 @@ These compact shapes move quickly across the neck for fast chord changes.`}
                 { type: "Dominant 9 (E9, A9)", char: "Rich, groovy, tense", use: "Main groove chord — the funk workhorse", eg: "Sex Machine, Good Times" },
                 { type: "Dominant 7 (E7, A7)", char: "Bluesy, raw", use: "Blues-funk, rougher feel", eg: "Give It Up or Turnit a Loose" },
                 { type: "Minor 7 (Em7, Am7)",  char: "Smooth, soulful", use: "Smooth funk, soul, R&B", eg: "What Is Hip, many Isley Brothers" },
-                { type: "13th (A13)",           char: "Jazz-funk, sophisticated", use: "When you want the jazziest colour", eg: "Chic extended progressions" },
+                { type: "13th (A13)",           char: "Jazz-funk, sophisticated", use: "When you want the jazziest color", eg: "Chic extended progressions" },
                 { type: "Sus2 / Sus4",          char: "Open, unresolved", use: "Breakdown sections, space", eg: "Prince atmospheric sections" },
               ].map(r => (
                 <tr key={r.type}>
@@ -635,7 +635,7 @@ function WahToneTab() {
       </Card>
 
       <Callout type="tip">
-        You don&apos;t need a wah pedal to play great funk. Nile Rodgers rarely used wah. Start with a clean tone and focus entirely on the right and left hand technique. Add wah later as a colour — never as a substitute for groove.
+        You don&apos;t need a wah pedal to play great funk. Nile Rodgers rarely used wah. Start with a clean tone and focus entirely on the right and left hand technique. Add wah later as a color — never as a substitute for groove.
       </Callout>
     </div>
   )
@@ -715,7 +715,7 @@ function FunkPracticeTab() {
       <p className="text-purple-200 mb-6">Five focused sessions to build from zero to functional funk groove.</p>
 
       <Callout type="insight">
-        The entire skill of funk guitar can be summarised: <strong className="text-white">keep the 16th note grid moving, control what sounds with both hands, leave space</strong>.
+        The entire skill of funk guitar can be summarized: <strong className="text-white">keep the 16th note grid moving, control what sounds with both hands, leave space</strong>.
         These five sessions build each layer. Do them in order.
       </Callout>
 

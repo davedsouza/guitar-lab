@@ -27,15 +27,22 @@ export default function ChordDiagram({ chordName, fingers, frets, size = 'medium
 
     const minFret = Math.min(...numericFrets)
     const maxFret = Math.max(...numericFrets)
+    const hasOpen = fingers.some(f => f === 0 || f === '0')
 
     // If chord fits in open position (0-4), use that
     if (maxFret <= 4) {
       return [0, 1, 2, 3, 4]
     }
 
-    // Otherwise, create a 5-fret window starting from minFret
-    const startFret = Math.max(1, minFret - 1) // Start one fret before the lowest finger
-    return [startFret, startFret + 1, startFret + 2, startFret + 3, startFret + 4]
+    // Open strings with a fifth-fret note: show the nut and five rows
+    if (hasOpen && maxFret <= 5) {
+      return [0, 1, 2, 3, 4, 5]
+    }
+
+    // Otherwise start one fret before the lowest finger, and grow past four rows if the shape needs it
+    const startFret = Math.max(1, minFret) - 1
+    const endFret = Math.max(startFret + 4, maxFret)
+    return Array.from({ length: endFret - startFret + 1 }, (_, i) => startFret + i)
   })()
 
   const numFrets = calculatedFrets.length - 1
@@ -56,7 +63,7 @@ export default function ChordDiagram({ chordName, fingers, frets, size = 'medium
   return (
     <div className="flex flex-col items-center">
       <div className="text-white font-bold mb-2 text-center">{chordName}</div>
-      <svg width={dims.width} height={dims.height} className="bg-amber-50/10 rounded-lg">
+      <svg width={dims.width} height={dims.height + (numFrets - 4) * dims.fretGap} className="bg-amber-50/10 rounded-lg">
         {/* Nut (thick line at top if showing fret 0) */}
         {calculatedFrets[0] === 0 && (
           <line

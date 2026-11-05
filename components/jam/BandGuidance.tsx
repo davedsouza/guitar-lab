@@ -3,10 +3,12 @@
 import Link from "next/link"
 import { useState } from "react"
 import { getGuidance, bandSummary, type GuidanceGenre } from "@/lib/jam/band"
-import { GENRES } from "@/lib/jam/genres"
+import { GENRES, getGenre } from "@/lib/jam/genres"
 import { keyLabel, type KeyRef } from "@/lib/jam/theory"
 import { chordInfo, getProgression, tabLegend, voicingFor, type TabSpec } from "@/lib/jam/tabs"
 import { ChordTap } from "./ChordSheet"
+import ChordLab, { applySwaps, type Swaps } from "./ChordLab"
+import PlayBar from "./PlayBar"
 import { TabText } from "./ChordView"
 import TabImage from "./TabImage"
 import { useBand } from "./BandContext"
@@ -29,6 +31,12 @@ function TabView({ spec }: { spec: TabSpec }) {
       )}
     </div>
   )
+}
+
+function bpmFor(genre: GuidanceGenre): number {
+  const g = genre === "general" ? undefined : getGenre(genre)
+  const b = g?.progressions[0]?.bpm
+  return b ? Math.round((b[0] + b[1]) / 2) : 90
 }
 
 function ChordShapes({ chords }: { chords: string[] }) {
@@ -61,12 +69,17 @@ export default function BandGuidance({
   const { band } = useBand()
   const [open, setOpen] = useState(defaultOpen)
   const [tabsOpen, setTabsOpen] = useState<Record<string, boolean>>({})
+  const [tipsOpen, setTipsOpen] = useState<Record<string, boolean>>({})
   const [picked, setPicked] = useState(0)
   const [shapesOpen, setShapesOpen] = useState(false)
+  const [tryOpen, setTryOpen] = useState(false)
+  const [swaps, setSwaps] = useState<Swaps>({})
+  const [now, setNow] = useState<number | null>(null)
   const custom = progressions && progressions.length > 0 ? progressions : null
   const sel = custom ? custom[Math.min(picked, custom.length - 1)] : null
   const defaults = getProgression(genre)
-  const chords = sel ? sel.chords : defaults.chords
+  const written = sel ? sel.chords : defaults.chords
+  const chords = applySwaps(written, swaps)
   const selKey = sel ? (sel.key ?? keyRef) : defaults.keyRef
   const keyText = sel ? (selKey ? keyLabel(selKey) : null) : defaults.key
   const { roles, extras } = getGuidance(band, genre, { chords, key: selKey })
@@ -111,9 +124,25 @@ export default function BandGuidance({
             </p>
             <div className="mt-2 flex flex-wrap gap-1.5">
               {chords.map((c, i) => (
-                <ChordTap key={i} chord={c} className="min-h-12 min-w-12 rounded-lg bg-white/10 px-2 py-1.5 text-center text-base font-bold text-white" />
+                <ChordTap
+                  key={i}
+                  chord={c}
+                  className={`min-h-12 min-w-12 rounded-lg px-2 py-1.5 text-center text-base font-bold ${
+                    now === i ? "bg-amber-400 text-slate-950" : c !== written[i] ? "border border-amber-400 bg-amber-400/20 text-amber-200" : "bg-white/10 text-white"
+                  }`}
+                />
               ))}
             </div>
+            <PlayBar className="mt-3" chords={chords} original={written} defaultBpm={bpmFor(genre)} onStep={setNow} />
+            <button
+              type="button"
+              aria-expanded={tryOpen}
+              onClick={() => setTryOpen(o => !o)}
+              className="mt-3 min-h-12 w-full rounded-xl border border-purple-300/50 bg-purple-400/15 px-3 text-base font-bold text-purple-100 active:bg-purple-400/30"
+            >
+              {tryOpen ? "Close the chord lab" : Object.keys(swaps).length ? "Chord lab (testing)" : "Open the chord lab"}
+            </button>
+            {tryOpen && <ChordLab written={written} swaps={swaps} setSwaps={u => setSwaps(u)} genre={genre} keyRef={selKey} />}
             <button
               type="button"
               aria-expanded={shapesOpen}
@@ -135,7 +164,27 @@ export default function BandGuidance({
                 <p className="text-sm font-bold text-white">
                   {r.who} <span className="font-semibold text-amber-300">· {r.role}</span>
                 </p>
-                <p className="mt-1 text-sm leading-relaxed text-white/80">{r.tip}</p>
+                {(() => {
+                  const cut = r.tip.search(/[.!?]\s/)
+                  const first = cut > 0 ? r.tip.slice(0, cut + 1) : r.tip
+                  const rest = cut > 0 ? r.tip.slice(cut + 2) : ""
+                  const more = !!tipsOpen[r.who]
+                  return (
+                    <>
+                      <p className="mt-1 text-sm leading-relaxed text-white/90">{first}{more && rest ? ` ${rest}` : ""}</p>
+                      {rest && (
+                        <button
+                          type="button"
+                          aria-expanded={more}
+                          onClick={() => setTipsOpen(t => ({ ...t, [r.who]: !t[r.who] }))}
+                          className="mt-1 min-h-10 text-sm font-bold text-amber-300 underline"
+                        >
+                          {more ? "Less" : "More detail"}
+                        </button>
+                      )}
+                    </>
+                  )
+                })()}
                 {r.tab?.kind === "harp" && (
                   <Link
                     href={selKey ? `/harmonica?key=${selKey.root}&mode=${selKey.minor ? "minor" : "major"}` : "/harmonica"}

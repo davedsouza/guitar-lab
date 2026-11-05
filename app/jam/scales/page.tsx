@@ -10,11 +10,11 @@ import { Fretboard, HarpGrid, Keyboard } from "@/components/jam/ScaleViews"
 import { BigButton, Chip, Hint, Panel, NextSteps } from "@/components/jam/ui"
 import { useBand } from "@/components/jam/BandContext"
 import { GENRES, type GenreId } from "@/lib/jam/genres"
-import { KEY_NAMES, POSITIONS, holeMidi } from "@/lib/harmonicaData"
+import { KEY_NAMES, holeMidi } from "@/lib/harmonicaData"
 import { playSequence, preloadSound, stopAll } from "@/lib/harmonicaAudio"
 import { playScale, stopScale } from "@/lib/jam/scaleAudio"
 import {
-  BASS_TUNING, GENRE_SCALES, GUITAR_TUNING, HARP_POSITION_NS, SCALES, SCALE_BY_ID,
+  BASS_TUNING, GENRE_SCALES, GUITAR_TUNING, HARP_POSITION_NS, POSITIONS, SCALES, SCALE_BY_ID,
   flatsFor, harpGrid, harpKeyFor, harpRun, harpTab, isScaleId, nameOf, positions, relativeLine,
   runTab, scaleMidis, scalePcs, wholeNeck, DEGREE, type ScaleId,
 } from "@/lib/jam/scales"
@@ -222,7 +222,7 @@ function ScalesInner() {
               </p>
               <p className="mt-2 text-sm text-purple-200">
                 {harpPosition.n} position ({harpPosition.name.toLowerCase()}): {harpPosition.feel}{" "}
-                <Link href={`/harmonica?key=${root}&mode=${["minor", "minPent", "blues", "dorian"].includes(scale.id) ? "minor" : "major"}`} className="font-semibold text-amber-300 underline">Learn it on harmonica</Link>
+                <Link href={`/harmonica?key=${root}&mode=${["minor", "minPent", "blues", "dorian", "phrygian", "locrian"].includes(scale.id) ? "minor" : "major"}`} className="font-semibold text-amber-300 underline">Learn it on harmonica</Link>
               </p>
             </>
           )}

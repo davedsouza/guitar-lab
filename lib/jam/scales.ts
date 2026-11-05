@@ -1,8 +1,9 @@
+import type { Position as HarpPosition } from "../harmonicaData"
 import type { GenreId } from "./genres"
 import { SHARP_NAMES, FLAT_NAMES, prefersFlats } from "./theory"
-import { BLOW, DRAW, MAX_BEND, POSITIONS, harpForSong, harpShift, tokText } from "../harmonicaData"
+import { BLOW, DRAW, MAX_BEND, POSITIONS as HARP_POSITIONS, harpForSong, harpShift, tokText } from "../harmonicaData"
 
-export type ScaleId = "major" | "minor" | "majPent" | "minPent" | "blues" | "mixo" | "dorian"
+export type ScaleId = "major" | "minor" | "majPent" | "minPent" | "blues" | "mixo" | "dorian" | "phrygian" | "lydian" | "locrian"
 
 export interface ScaleDef {
   id: ScaleId
@@ -33,6 +34,12 @@ export const SCALES: ScaleDef[] = [
     feel: "Major with a flat 7. The sound of dominant 7th chords, rock and bluesy major songs." },
   { id: "dorian", name: "Dorian", steps: [0, 2, 3, 5, 7, 9, 10], base: [0, 2, 3, 5, 7, 9, 10], per: 3, parent: 10, harpPos: "3rd",
     feel: "Minor with a lifted 6th. Smooth and funky. Santana, Miles Davis, minor groove tunes." },
+  { id: "phrygian", name: "Phrygian", steps: [0, 1, 3, 5, 7, 8, 10], base: [0, 1, 3, 5, 7, 8, 10], per: 3, parent: 8, harpPos: "5th",
+    feel: "Dark, Spanish and flamenco. Minor with a flat 2nd that pulls hard toward the root. Metal and film-score tension." },
+  { id: "lydian", name: "Lydian", steps: [0, 2, 4, 6, 7, 9, 11], base: [0, 2, 4, 6, 7, 9, 11], per: 3, parent: 7, harpPos: "12th",
+    feel: "Major with a raised 4th. Bright, dreamy and floating. Satriani, Vai, film themes." },
+  { id: "locrian", name: "Locrian", steps: [0, 1, 3, 5, 6, 8, 10], base: [0, 1, 3, 5, 6, 8, 10], per: 3, parent: 1, harpPos: "6th",
+    feel: "The darkest mode, with a flat 2nd and a flat 5th. Unstable and tense. Use it over a m7b5 chord." },
 ]
 
 export const SCALE_BY_ID: Record<ScaleId, ScaleDef> = Object.fromEntries(SCALES.map(s => [s.id, s])) as Record<ScaleId, ScaleDef>
@@ -126,6 +133,9 @@ export function relativeLine(root: number, scale: ScaleDef): string | null {
     case "minPent": return `Same notes as ${at(3)} major pentatonic.`
     case "mixo": return `Same notes as ${at(5)} major.`
     case "dorian": return `Same notes as ${at(10)} major.`
+    case "phrygian": return `Same notes as ${at(8)} major.`
+    case "lydian": return `Same notes as ${at(7)} major.`
+    case "locrian": return `Same notes as ${at(1)} major.`
     default: return "Minor pentatonic plus the flat 5."
   }
 }
@@ -292,7 +302,14 @@ export function harpTab(run: HarpCell[]) {
   return { kind: "harp" as const, chords: bars.map(() => ""), bars, caption: "" }
 }
 
-export const HARP_POSITION_NS = ["1st", "2nd", "3rd", "4th"]
+// The harmonica module lists the positions players use most; 6th (Locrian) is added here so every Jam scale has a harp.
+export const POSITIONS: HarpPosition[] = [
+  ...HARP_POSITIONS.filter(p => p.n !== "12th"),
+  { n: "6th", name: "Locrian", mode: "Locrian", up: 11, feel: "Dark and unstable. Very rare on harmonica, played over a minor 7 flat 5 chord.", home: "Draw 3 (also draw 7)" },
+  ...HARP_POSITIONS.filter(p => p.n === "12th"),
+]
+
+export const HARP_POSITION_NS = POSITIONS.map(p => p.n)
 
 export function harpKeyFor(root: number, posN: string): number {
   const pos = POSITIONS.find(p => p.n === posN) ?? POSITIONS[1]

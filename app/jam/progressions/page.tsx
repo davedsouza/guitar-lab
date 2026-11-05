@@ -116,7 +116,7 @@ export default function ProgressionIdeas() {
         defaultOpen
         progressions={shown.map(p => ({ label: p.name, chords: progressionChords(p, key), key: { root: key.root, minor: p.minor ?? key.minor } }))}
       />
-      <NextSteps items={[{ href: "/jam/builder", label: "Song Builder" }, { href: "/jam/chart", label: "Chart" }, { href: "/jam/scales", label: "Scales" }]} />
+      <NextSteps items={[{ href: "/jam/builder", label: "Song Builder" }, { href: "/jam/chart", label: "Chart" }, { href: "/jam/scales", label: "Scales" }, { href: "/jam/solo", label: "Solo over these" }]} />
     </div>
   )
 }

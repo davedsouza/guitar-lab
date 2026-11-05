@@ -282,7 +282,7 @@ function ScalesInner() {
           <li>Leave space. Two notes and a pause beat a fast run.</li>
         </ul>
       </Panel>
-      <NextSteps items={[{ href: "/jam/progressions", label: "Ideas" }, { href: "/jam/circle", label: "Circle of 5ths" }, { href: "/chord-bible", label: "Chord Bible" }]} />
+      <NextSteps items={[{ href: "/jam/solo", label: "Solo over changes" }, { href: "/jam/progressions", label: "Ideas" }, { href: "/jam/circle", label: "Circle of 5ths" }, { href: "/chord-bible", label: "Chord Bible" }]} />
     </div>
   )
 }

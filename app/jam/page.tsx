@@ -18,6 +18,7 @@ const TILES = [
   { href: "/jam/key-finder", title: "Key Finder", sub: "What key are we in?" },
   { href: "/jam/chart", title: "Chart", sub: "Big lyrics and chords" },
   { href: "/jam/scales", title: "Scales", sub: "What to play over a key" },
+  { href: "/jam/solo", title: "Solo Over Changes", sub: "Land on the chord changes" },
   { href: "/jam/circle", title: "Circle of 5ths", sub: "Keys and what fits" },
   { href: "/jam/patterns", title: "Patterns", sub: "Strums, endings, blues" },
   { href: "/jam/tools", title: "Tuner & Tempo", sub: "Mic tuner, tap tempo" },

@@ -19,6 +19,7 @@ const TITLES: Record<string, string> = {
   "/jam/builder": "Song Builder",
   "/jam/identify": "Chord Identifier",
   "/jam/scales": "Scales",
+  "/jam/solo": "Solo Over Changes",
   "/jam/circle": "Circle of Fifths",
   "/jam/patterns": "Patterns & Endings",
   "/jam/tools": "Tuner & Tempo",
